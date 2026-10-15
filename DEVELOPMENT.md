@@ -6,8 +6,8 @@ This project is intentionally small and easy to edit. Keep changes simple, local
 
 - Prefer plain HTML, CSS, and JavaScript.
 - Keep the code split into small, focused files.
-- Reuse the shared modules in `client/js/` instead of duplicating logic.
-- Keep the shared stylesheet in `client/css/style.css` for both the hub and games.
+- Reuse the shared modules in `client/shared/js/` instead of duplicating logic.
+- Keep shared styles in `client/shared/css/` and page-specific styles next to each game.
 - Keep paths relative and verify them after moving files.
 - Avoid introducing build tools unless they are clearly needed.
 - Preserve the kid-friendly tone, layout, and accessibility.
@@ -33,9 +33,9 @@ When updating the project, follow this order:
 
 ## Good places to extend
 
-- Add new games under `client/<game-name>/`
-- Add shared helpers in `client/js/`
-- Add shared styles in `client/css/style.css`
+- Add new games under `client/games/<game-name>/`
+- Add shared helpers in `client/shared/js/`
+- Add shared styles in `client/shared/css/`
 - Add docs here if the project grows
 
 ## Suggested standards for future changes

@@ -7,7 +7,6 @@ const rootDir = __dirname;
 const port = Number(process.env.PORT || 3000);
 const host = '127.0.0.1';
 const hubPath = path.join(rootDir, 'index.html');
-const roboPath = path.join(rootDir, 'client/robo/index.html');
 
 const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
@@ -38,47 +37,50 @@ function sendFile(res, filePath) {
   });
 }
 
+function sendIndexFromDirectory(res, dirPath, onMissing) {
+  const indexPath = path.join(dirPath, 'index.html');
+  fs.stat(indexPath, (err, stats) => {
+    if (!err && stats.isFile()) {
+      sendFile(res, indexPath);
+      return;
+    }
+
+    onMissing();
+  });
+}
+
+function serveCandidate(res, candidatePath, onMissing) {
+  fs.stat(candidatePath, (err, stats) => {
+    if (!err && stats.isFile()) {
+      sendFile(res, candidatePath);
+      return;
+    }
+
+    if (!err && stats.isDirectory()) {
+      sendIndexFromDirectory(res, candidatePath, onMissing);
+      return;
+    }
+
+    onMissing();
+  });
+}
+
 const server = http.createServer((req, res) => {
   const urlPath = decodeURIComponent((req.url || '/').split('?')[0]);
   const safePath = path.normalize(urlPath).replace(/^([.]{2}[\/\\])+/, '');
   const rootPath = path.join(rootDir, safePath);
   const clientPath = path.join(rootDir, 'client', safePath);
-  const filePath = urlPath === '/' || urlPath === '/index.html'
-    ? hubPath
-    : urlPath === '/robo/' || urlPath === '/robo' || urlPath === '/robo/index.html'
-      ? roboPath
-      : rootPath;
 
-  fs.stat(filePath, (err, stats) => {
-    if (!err && stats.isFile()) {
-      sendFile(res, filePath);
-      return;
-    }
+  if (urlPath === '/' || urlPath === '/index.html') {
+    sendFile(res, hubPath);
+    return;
+  }
 
-    if (urlPath === '/' || urlPath === '/index.html') {
-      sendFile(res, hubPath);
-      return;
-    }
-
-    if (urlPath === '/robo/' || urlPath === '/robo' || urlPath === '/robo/index.html') {
-      sendFile(res, roboPath);
-      return;
-    }
-
-    if (urlPath !== '/' && urlPath !== '/index.html') {
-      fs.stat(clientPath, (clientErr, clientStats) => {
-        if (!clientErr && clientStats.isFile()) {
-          sendFile(res, clientPath);
-          return;
-        }
-        res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
-        res.end('Not found');
-      });
-      return;
-    }
-
-    res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
-    res.end('Not found');
+  serveCandidate(res, rootPath, () => {
+    serveCandidate(res, clientPath, () => {
+      res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end('Not found');
+    });
   });
 });
 

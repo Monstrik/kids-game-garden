@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mini Game Hub</title>
+  <link rel="stylesheet" href="client/shared/css/shared.css" />
   <link rel="stylesheet" href="client/css/style.css" />
 </head>
 <body class="page-hub">
@@ -20,7 +21,7 @@
     </section>
     <section class="content">
       <div class="grid">
-        <a class="card gameCard" href="/robo/" aria-label="Open Robo Saves the Cookies">
+        <a class="card gameCard" href="/games/robo/" aria-label="Open Robo Saves the Cookies">
           <div class="gameTop">
             <div>
               <div class="badge">🟢 Available now</div>
@@ -43,10 +44,10 @@
       </div>
     </section>
     <div class="footer">
-      Tip: each new game can live in its own folder under `client/`.
+      Tip: each new game can live in its own folder under `client/games/`, with shared assets in `client/shared/`.
     </div>
   </main>
-  <script src="client/js/theme.js" defer></script>
+  <script src="client/shared/js/theme.js" defer></script>
   <script src="client/js/hub.js" defer></script>
 </body>
 </html>
