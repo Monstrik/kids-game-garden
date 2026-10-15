@@ -4,7 +4,8 @@
   RoboGame.constants = {
     STORAGE_KEYS: {
       words: 'robo-saves-cookies.words',
-      sound: 'robo-saves-cookies.sound'
+      sound: 'robo-saves-cookies.sound',
+      theme: 'robo-saves-cookies.theme'
     },
     FUN_MESSAGES: [
       'More cookies!',

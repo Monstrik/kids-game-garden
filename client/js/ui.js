@@ -10,6 +10,12 @@
     localStorage.setItem(RoboGame.constants.STORAGE_KEYS.sound, String(state.soundOn));
   };
 
+  ui.updateThemeButton = function updateThemeButton(theme) {
+    const isDark = theme === 'dark';
+    els.themeBtn.textContent = isDark ? '☀️ Light mode' : '🌙 Dark mode';
+    els.themeBtn.setAttribute('aria-pressed', String(isDark));
+  };
+
   ui.updateRoboAccessory = function updateRoboAccessory() {
     els.accessory.textContent = getAccessoryForCookies(state.cookies);
     els.roboEmoji.classList.remove('wiggle');

@@ -8,6 +8,7 @@
     wordInput: document.getElementById('wordInput'),
     startBtn: document.getElementById('startBtn'),
     clearBtn: document.getElementById('clearBtn'),
+    themeBtn: document.getElementById('themeBtn'),
     soundBtn: document.getElementById('soundBtn'),
     cookieCount: document.getElementById('cookieCount'),
     accessory: document.getElementById('accessory'),

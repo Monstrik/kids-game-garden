@@ -57,6 +57,25 @@
     return localStorage.getItem(STORAGE_KEYS.words) || DEFAULT_WORDS;
   }
 
+  function getPreferredTheme() {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  }
+
+  function loadSavedTheme() {
+    return localStorage.getItem(STORAGE_KEYS.theme) || getPreferredTheme();
+  }
+
+  function saveTheme(theme) {
+    localStorage.setItem(STORAGE_KEYS.theme, theme);
+  }
+
+  function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+  }
+
   function setScreen(name) {
     els.setupScreen.classList.toggle('active', name === 'setup');
     els.gameScreen.classList.toggle('active', name === 'game');
@@ -104,7 +123,11 @@
     saveWordsToLocalStorage,
     setScreen,
     playTone,
-    speakWord
+    speakWord,
+    getPreferredTheme,
+    loadSavedTheme,
+    saveTheme,
+    applyTheme
   };
 
   RoboGame.utils.loadSavedWords = loadSavedWords;

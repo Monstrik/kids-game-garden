@@ -10,6 +10,9 @@
 </head>
 <body>
   <div class="app">
+    <div class="appChrome">
+      <button id="themeBtn" class="themeBtn" type="button" aria-pressed="false">🌙 Dark mode</button>
+    </div>
     <!-- Setup Screen -->
     <section id="setupScreen" class="screen active" aria-labelledby="setupTitle">
       <div class="header">
@@ -79,7 +82,7 @@
           <div class="progressWrap" aria-label="Progress bar">
             <div id="progressFill" class="progressFill"></div>
           </div>
-          <div style="display:flex; justify-content:space-between; gap:10px; margin-top:8px; font-weight:800; color:#64748b;">
+          <div style="display:flex; justify-content:space-between; gap:10px; margin-top:8px; font-weight:800; color:var(--ink-soft);">
             <span id="progressText">0 of 0 words</span>
             <span id="wordPosition">Word 0 / 0</span>
           </div>
@@ -91,7 +94,7 @@
           <div id="slots" class="slots" aria-label="Answer slots"></div>
 
           <div class="bankWrap">
-            <div class="bigWordLabel" style="margin-bottom:12px; text-align:center; color:#c2410c;">Scrambled letters</div>
+            <div class="bigWordLabel" style="margin-bottom:12px; text-align:center; color:var(--accent-warning-start);">Scrambled letters</div>
             <div id="letterBank" class="letterBank" aria-label="Scrambled letters"></div>
           </div>
 
