@@ -37,7 +37,7 @@
     state.solved = 0;
     state.currentWord = state.gameWords[0];
     utils.setScreen('game');
-    ui.showMessage('Choose a letter to start!');
+    ui.showMessage('Listen first, then choose a letter to start!');
     ui.setHint('');
     game.loadCurrentWord();
     utils.playTone(523, 0.08, 'triangle', 0.03);
@@ -50,11 +50,12 @@
     }
 
     els.emojiHint.textContent = state.currentWord.emoji;
-    els.roboStatus.textContent = `Spell ${state.currentWord.answer.length} letters for a cookie!`;
-    ui.showMessage('Choose a letter to start!');
+    els.roboStatus.textContent = `Listen closely, then spell ${state.currentWord.answer.length} letters for a cookie!`;
+    ui.showMessage('Listen carefully!');
     ui.setHint('');
     ui.clearBoard();
     ui.updateHeaderStats();
+    setTimeout(() => utils.speakWord(state.currentWord.answer), 180);
   };
 
   game.placeLetterInNextOpenSlot = function placeLetterInNextOpenSlot(letterIndex) {
@@ -129,7 +130,7 @@
 
   game.handleWrongAnswer = function handleWrongAnswer() {
     ui.showMessage('Try Again!', 'bad');
-    els.roboStatus.textContent = 'Almost there — keep trying!';
+    els.roboStatus.textContent = 'Almost there — listen again and keep trying!';
     els.slots.querySelectorAll('.slot').forEach(slot => {
       slot.classList.remove('correctPulse');
       slot.classList.add('wrongPulse');
@@ -153,8 +154,9 @@
   game.resetCurrentWord = function resetCurrentWord() {
     if (!state.currentWord) return;
     ui.clearBoard();
-    els.roboStatus.textContent = 'Try the word again!';
-    ui.showMessage('Choose a letter to start!');
+    els.roboStatus.textContent = 'Try the word again — listen closely!';
+    ui.showMessage('Listen carefully!');
+    utils.speakWord(state.currentWord.answer);
   };
 
   game.giveHint = function giveHint() {

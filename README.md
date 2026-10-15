@@ -13,7 +13,7 @@ A tiny game hub for kids built with plain HTML, CSS, and JavaScript.
 - `client/shared/css/shared.css` — small shared styles used by the hub and games
 - `client/shared/css/game-shell.css` — shared page layout styles used by the hub and Robo game
 - `client/shared/js/theme.js` — shared theme toggle and persistence
-- `client/games/robo/index.html` — Robo Saves the Cookies game
+- `client/games/robo/index.html` — Robo's Spelling Adventure game
 - `client/games/robo/js/` — Robo-specific logic split into small files
 - `client/css/style.css` — hub-specific CSS variables that import the shared game shell
 - `client/js/hub.js` — hub bootstrap that initializes theme toggling
@@ -26,7 +26,7 @@ cd /Users/ayakovis/dev/playground/kids-game-garden
 npm start
 ```
 
-Open `http://127.0.0.1:3000/` in your browser for the hub, or `http://127.0.0.1:3000/games/robo/` for the game.
+Open `http://127.0.0.1:3000/` in your browser for the hub, or `http://127.0.0.1:3000/games/robo/` for Robo's Spelling Adventure.
 
 ## Easy to improve
 
