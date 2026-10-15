@@ -32,7 +32,7 @@ npm start
 
 Open `http://127.0.0.1:3000/` in your browser for the hub, `http://127.0.0.1:3000/games/robo/` for Robo's Spelling Adventure, `http://127.0.0.1:3000/games/robo-hero/` for Robo Spelling Hero, or `http://127.0.0.1:3000/games/spell-match/` for Robo Spell Match.
 
-For GitHub Pages, publish the repository root and use the same `/games/.../` routes. The small wrapper pages in `games/` forward to the actual game implementations under `client/games/`.
+For GitHub Pages, publish the repository root and use the same `games/.../` routes from the hub.
 
 ## Easy to improve
 

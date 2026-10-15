@@ -1,5 +1,5 @@
 @import url('../../../shared/css/game-shell.css');
-body.page-spell-match {
+body.page-robo {
   color-scheme: light;
   --page-bg: linear-gradient(135deg, #6ee7ff, #f9a8d4);
   --surface: rgba(255, 255, 255, 0.92);
@@ -53,7 +53,7 @@ body.page-spell-match {
   --message-bad-text: #991b1b;
   --example-words-bg: rgba(108, 40, 175, 0.75);
 }
-html[data-theme="dark"] body.page-spell-match {
+html[data-theme="dark"] body.page-robo {
   color-scheme: dark;
   --page-bg: linear-gradient(135deg, #0f172a, #1e1b4b);
   --surface: rgba(15, 23, 42, 0.92);
