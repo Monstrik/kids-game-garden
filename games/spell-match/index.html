@@ -24,7 +24,7 @@
             <div class="subtitle">Listen to Robo, then tap the correct spelling for a cookie!</div>
           </div>
           <div class="pillRow">
-            <div class="pill">💾 Saved words in this browser</div>
+            <div class="pill">💾 Saved word lists in this browser</div>
             <div class="pill">📱 Mobile friendly</div>
           </div>
         </div>
@@ -32,13 +32,32 @@
 
       <div class="content">
         <div class="setupGrid">
-          <div class="card">
+          <div class="card dictionaryManager">
+            <div class="dictionaryToolbar">
+              <div class="dictionaryField">
+                <label for="dictionarySelect">Word list</label>
+                <select id="dictionarySelect"></select>
+              </div>
+              <div class="dictionaryActions">
+                <button id="newListBtn" class="btn ghost" type="button">New List</button>
+                <button id="deleteListBtn" class="btn ghost" type="button">Delete List</button>
+              </div>
+            </div>
+
+            <div class="dictionaryField">
+              <label for="dictionaryNameInput">List name</label>
+              <input id="dictionaryNameInput" type="text" autocomplete="off" spellcheck="false" />
+            </div>
+
             <label for="wordInput">Enter spelling words (one per line)</label>
             <textarea id="wordInput" spellcheck="false" placeholder="apple\nbanana\nrobot\nschool\nfriend"></textarea>
+
             <div class="btnRow">
               <button id="startBtn" class="btn">Start Game</button>
-              <button id="clearBtn" class="btn ghost" type="button">Clear</button>
+              <button id="clearBtn" class="btn ghost" type="button">Clear Words</button>
             </div>
+
+            <div id="dictionaryInfo" class="dictionaryInfo">Changes save automatically in this browser.</div>
           </div>
 
           <div class="exampleBox">
@@ -48,6 +67,7 @@
               Robo says each word out loud and your child taps the correct spelling.
             </p>
             <p style="margin: 10px 0 0; line-height: 1.6;">
+              ✅ Choose a saved list by name, or make a new one<br />
               ✅ Tap letters or drag them<br />
               ✅ Get a cookie for each correct word<br />
               ✅ Every 5 cookies gives Robo a new accessory
@@ -142,6 +162,7 @@
     </section>
   </div>
   <script src="../../client/shared/js/theme.js" defer></script>
+  <script src="../../client/shared/js/dictionaries.js" defer></script>
   <script src="../../client/games/spell-match/js/constants.js" defer></script>
   <script src="../../client/games/spell-match/js/state.js" defer></script>
   <script src="../../client/games/spell-match/js/utils.js" defer></script>
