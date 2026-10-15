@@ -2,6 +2,11 @@
 
 A tiny spelling game for kids built with plain HTML, CSS, and JavaScript.
 
+## Project docs
+
+- `DEVELOPMENT.md` — AI-friendly rules for editing and extending the codebase
+- `README.md` — quick project overview and local run instructions
+
 ## Files
 
 - `index.html` — root game hub
@@ -31,6 +36,7 @@ Open `http://127.0.0.1:3000/` in your browser for the hub, or `http://127.0.0.1:
 - Edit the word list behavior in `client/js/game.js`
 - Tweak colors, layout, and animations in `client/robo/index.html` or `index.html`
 - Add or remove UI sections in `client/robo/index.html`
+- Follow the editing rules in `DEVELOPMENT.md` before making larger changes
 
 ## Folder pattern for new games
 
@@ -38,4 +44,3 @@ Create each new game in its own subfolder under `client/`, for example:
 
 - `client/space-runner/index.html`
 - `client/space-runner/js/...`
-
