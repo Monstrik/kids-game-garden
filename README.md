@@ -5,13 +5,13 @@ A tiny spelling game for kids built with plain HTML, CSS, and JavaScript.
 ## Files
 
 - `index.html` — game structure and page layout
-- `style.css` — all styling and animations
-- `constants.js` — shared game text and configuration
-- `state.js` — DOM references and mutable game state
-- `utils.js` — helper functions, storage, audio, and screen switching
-- `ui.js` — rendering and visual updates
-- `game.js` — game flow and word/answer logic
-- `main.js` — bootstrap file that wires events and starts the game
+- `client/css/style.css` — all styling and animations
+- `client/js/constants.js` — shared game text and configuration
+- `client/js/state.js` — DOM references and mutable game state
+- `client/js/utils.js` — helper functions, storage, audio, and screen switching
+- `client/js/ui.js` — rendering and visual updates
+- `client/js/game.js` — game flow and word/answer logic
+- `client/js/main.js` — bootstrap file that wires events and starts the game
 - `server.js` — local static server that opens the game in your browser
 
 ## Run locally
@@ -25,7 +25,7 @@ Or open `index.html` directly in your browser.
 
 ## Easy to improve
 
-- Edit the word list behavior in `game.js`
-- Tweak colors, layout, and animations in `style.css`
+- Edit the word list behavior in `client/js/game.js`
+- Tweak colors, layout, and animations in `client/css/style.css`
 - Add or remove UI sections in `index.html`
 
