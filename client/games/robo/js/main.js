@@ -23,10 +23,6 @@
     els.playAgainBtn.addEventListener('click', game.restartWithSameWords);
     els.newWordsBtn.addEventListener('click', game.enterNewWords);
 
-    els.wordInput.addEventListener('input', () => {
-      utils.saveWordsToLocalStorage(els.wordInput.value);
-    });
-
     // Support keyboard entry in the textarea and quick start with Ctrl/Cmd+Enter.
     els.wordInput.addEventListener('keydown', event => {
       if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
@@ -36,6 +32,9 @@
   }
 
   function init() {
+    if (window.GameDictionaries?.initDictionaryManager) {
+      window.GameDictionaries.initDictionaryManager(els);
+    }
     els.wordInput.value = utils.loadSavedWords();
     state.soundOn = localStorage.getItem(RoboGame.constants.STORAGE_KEYS.sound) !== 'false';
     GameTheme.initTheme(els.themeBtn);

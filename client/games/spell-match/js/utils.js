@@ -2,6 +2,7 @@
   const RoboGame = (window.RoboGame = window.RoboGame || {});
   const { STORAGE_KEYS, FUN_MESSAGES, ACCESSORY_REWARDS, WORD_EMOJIS, DEFAULT_WORDS } = RoboGame.constants;
   const { state, els } = RoboGame;
+  const dictionaryManager = window.GameDictionaries;
 
   function normalizeWord(raw) {
     return raw
@@ -50,10 +51,15 @@
   }
 
   function saveWordsToLocalStorage(text) {
+    if (dictionaryManager?.setActiveWords) {
+      dictionaryManager.setActiveWords(text);
+      return;
+    }
     localStorage.setItem(STORAGE_KEYS.words, text);
   }
 
   function loadSavedWords() {
+    if (dictionaryManager?.getActiveWords) return dictionaryManager.getActiveWords();
     return localStorage.getItem(STORAGE_KEYS.words)
       || localStorage.getItem('robo-saves-cookies.words')
       || localStorage.getItem('robo-spelling-hero.words')
