@@ -145,6 +145,18 @@
       font-size: 1.2rem;
     }
 
+    body.page-dictionaries .howItWorksPanel {
+      background: rgba(255, 255, 255, 0.55);
+      border: 2px dashed rgba(124, 58, 237, 0.22);
+      color: var(--muted);
+    }
+
+    html[data-theme="dark"] body.page-dictionaries .howItWorksPanel {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: rgba(167, 139, 250, 0.24);
+      color: var(--muted);
+    }
+
     body.page-dictionaries label {
       display: block;
       font-weight: 800;
@@ -181,8 +193,7 @@
     }
 
     body.page-dictionaries .toolbar,
-    body.page-dictionaries .actions,
-    body.page-dictionaries .links {
+    body.page-dictionaries .actions {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
@@ -194,16 +205,27 @@
       margin-bottom: 14px;
     }
 
+    body.page-dictionaries .dictionaryPreview {
+      margin: 0 0 14px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 2px dashed rgba(124, 58, 237, 0.22);
+      background: rgba(255, 255, 255, 0.55);
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    html[data-theme="dark"] body.page-dictionaries .dictionaryPreview {
+      border-color: rgba(167, 139, 250, 0.24);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--muted);
+    }
+
     body.page-dictionaries .field {
       flex: 1 1 240px;
       min-width: 220px;
-    }
-
-    body.page-dictionaries .btnRow {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 14px;
     }
 
     body.page-dictionaries .btn {
@@ -335,6 +357,8 @@
             </div>
           </div>
 
+          <div id="dictionaryPreview" class="dictionaryPreview">Select a list to see a preview.</div>
+
           <div class="field">
             <label for="dictionaryNameInput">List name</label>
             <input id="dictionaryNameInput" type="text" autocomplete="off" spellcheck="false" />
@@ -349,7 +373,7 @@
           <div id="dictionaryInfo" class="info">Loading word lists...</div>
         </div>
 
-        <div class="card">
+        <div class="card howItWorksPanel">
           <h2>How it works</h2>
           <div class="summary">
             <div class="badge">✅ Named lists saved in local storage</div>

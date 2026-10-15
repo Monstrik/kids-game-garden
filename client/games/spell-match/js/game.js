@@ -12,7 +12,7 @@
   }
 
   game.parseWordsFromTextarea = function parseWordsFromTextarea() {
-    return els.wordInput.value
+    return utils.loadSavedWords()
       .split(/\r?\n/)
       .map(utils.normalizeWord)
       .filter(Boolean)
@@ -82,12 +82,11 @@
   game.startGame = function startGame() {
     const words = game.parseWordsFromTextarea();
     if (!words.length) {
-      ui.showMessage('Please enter at least one spelling word!', 'bad');
+      ui.showMessage('Please choose a word list with words in it!', 'bad');
       utils.setScreen('setup');
       return;
     }
 
-    utils.saveWordsToLocalStorage(els.wordInput.value);
     state.allWords = words;
     state.gameWords = game.buildGameWords(words);
     state.currentIndex = 0;
@@ -209,7 +208,7 @@
 
   game.enterNewWords = function enterNewWords() {
     utils.setScreen('setup');
-    els.wordInput.focus();
+    document.getElementById('dictionarySelect')?.focus();
   };
 
   RoboGame.game = game;

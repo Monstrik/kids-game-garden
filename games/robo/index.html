@@ -30,30 +30,13 @@
         <div class="setupGrid">
           <div class="card dictionaryManager">
             <div class="dictionaryToolbar">
-              <div class="dictionaryField">
-                <label for="dictionarySelect">Word list</label>
-                <select id="dictionarySelect"></select>
-              </div>
-              <div class="dictionaryActions">
-                <button id="newListBtn" class="btn ghost" type="button">New List</button>
-                <button id="deleteListBtn" class="btn ghost" type="button">Delete List</button>
-              </div>
+              <select id="dictionarySelect" aria-label="Choose a word list"></select>
+              <button id="dictionaryManagerBtn" class="btn ghost" type="button" aria-label="Open Dictionary Manager" title="Open Dictionary Manager">📚</button>
             </div>
-
-            <div class="dictionaryField">
-              <label for="dictionaryNameInput">List name</label>
-              <input id="dictionaryNameInput" type="text" autocomplete="off" spellcheck="false" />
-            </div>
-
-            <label for="wordInput">Enter spelling words (one per line)</label>
-            <textarea id="wordInput" spellcheck="false" placeholder="apple\nbanana\nrobot\nschool\nfriend"></textarea>
-
+            <div id="dictionaryPreview" class="dictionaryPreview">Select a list to see a preview.</div>
             <div class="btnRow">
               <button id="startBtn" class="btn">Start Game</button>
-              <button id="clearBtn" class="btn ghost" type="button">Clear Words</button>
             </div>
-
-            <div id="dictionaryInfo" class="dictionaryInfo">Changes save automatically in this browser.</div>
           </div>
 
           <div class="exampleBox">

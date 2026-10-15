@@ -2,13 +2,12 @@
   const RoboGame = window.RoboGame;
   const { state, els } = RoboGame;
   const { utils, ui, game } = RoboGame;
+  const dictionaryManagerUrl = new URL('../../../games/dictionary-manager/', window.location.href).toString();
 
   function attachEvents() {
     els.startBtn.addEventListener('click', game.startGame);
-    els.clearBtn.addEventListener('click', () => {
-      els.wordInput.value = '';
-      utils.saveWordsToLocalStorage('');
-      ui.showMessage('Type some words, then start!', 'good');
+    document.getElementById('dictionaryManagerBtn')?.addEventListener('click', () => {
+      window.location.href = dictionaryManagerUrl;
     });
     els.soundBtn.addEventListener('click', () => {
       state.soundOn = !state.soundOn;
@@ -23,19 +22,12 @@
     els.playAgainBtn.addEventListener('click', game.restartWithSameWords);
     els.newWordsBtn.addEventListener('click', game.enterNewWords);
 
-    // Support keyboard entry in the textarea and quick start with Ctrl/Cmd+Enter.
-    els.wordInput.addEventListener('keydown', event => {
-      if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
-        game.startGame();
-      }
-    });
   }
 
   function init() {
     if (window.GameDictionaries?.initDictionaryManager) {
       window.GameDictionaries.initDictionaryManager(els);
     }
-    els.wordInput.value = utils.loadSavedWords();
     state.soundOn = localStorage.getItem(RoboGame.constants.STORAGE_KEYS.sound) !== 'false';
     GameTheme.initTheme(els.themeBtn);
     ui.updateSoundButton();

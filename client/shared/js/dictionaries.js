@@ -133,6 +133,18 @@
     return getActiveDictionary()?.words || '';
   }
 
+  function getWordPreviewText(words) {
+    const list = String(words || '')
+      .split(/\r?\n/)
+      .map(word => word.trim())
+      .filter(Boolean);
+
+    if (!list.length) return 'No words in this list yet.';
+
+    const preview = list.slice(0, 4).join(' · ');
+    return list.length > 4 ? `${preview} · +${list.length - 4} more` : preview;
+  }
+
   function renderSelectOptions() {
     const { select } = boundElements;
     if (!select) return;
@@ -195,10 +207,30 @@
     }
   }
 
+  function updatePreview() {
+    const { preview } = boundElements;
+    if (!preview) return;
+
+    const state = getState();
+    const activeDictionary = getActiveDictionary(state);
+    if (!activeDictionary) {
+      preview.textContent = 'No list selected.';
+      return;
+    }
+
+    const wordCount = activeDictionary.words
+      .split(/\r?\n/)
+      .map(word => word.trim())
+      .filter(Boolean).length;
+
+    preview.textContent = `${wordCount} word${wordCount === 1 ? '' : 's'}: ${getWordPreviewText(activeDictionary.words)}`;
+  }
+
   function applyView() {
     renderSelectOptions();
     syncInputsFromActive();
     updateInfo();
+    updatePreview();
   }
 
   function setActiveDictionary(id) {
@@ -276,7 +308,8 @@
       wordsInput: elements.wordInput || elements.wordsInput || document.getElementById('wordInput'),
       newBtn: elements.newListBtn || elements.newBtn || document.getElementById('newListBtn'),
       deleteBtn: elements.deleteListBtn || elements.deleteBtn || document.getElementById('deleteListBtn'),
-      info: elements.dictionaryInfo || elements.info || document.getElementById('dictionaryInfo')
+      info: elements.dictionaryInfo || elements.info || document.getElementById('dictionaryInfo'),
+      preview: elements.dictionaryPreview || elements.preview || document.getElementById('dictionaryPreview')
     };
 
     applyView();
