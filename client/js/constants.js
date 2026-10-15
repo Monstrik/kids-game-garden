@@ -5,7 +5,7 @@
     STORAGE_KEYS: {
       words: 'robo-saves-cookies.words',
       sound: 'robo-saves-cookies.sound',
-      theme: 'robo-saves-cookies.theme'
+      theme: 'mini-game-hub.theme'
     },
     FUN_MESSAGES: [
       'More cookies!',

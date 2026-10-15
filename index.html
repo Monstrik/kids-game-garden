@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mini Game Hub</title>
+  <link rel="stylesheet" href="client/css/style.css" />
+</head>
+<body class="page-hub">
+  <main class="hub">
+    <div class="appChrome">
+      <button id="themeBtn" class="themeBtn" type="button" aria-pressed="false">🌙 Dark mode</button>
+    </div>
+    <section class="hero">
+      <div class="eyebrow">🎮 Mini Game Hub</div>
+      <h1>Welcome to the Game Hub</h1>
+      <p class="subtitle">
+        Start with <strong>Robo Saves the Cookies</strong> and grow this space into a collection of fun learning games.
+      </p>
+    </section>
+    <section class="content">
+      <div class="grid">
+        <a class="card gameCard" href="/robo/" aria-label="Open Robo Saves the Cookies">
+          <div class="gameTop">
+            <div>
+              <div class="badge">🟢 Available now</div>
+              <h2 class="gameName">Robo Saves the Cookies</h2>
+            </div>
+            <div class="gameIcon">🤖🍪</div>
+          </div>
+          <p>
+            A colorful spelling game for kids with drag-and-drop letters, hints, speech, cookies, and dark mode.
+          </p>
+          <span class="playBtn">Play now →</span>
+        </a>
+        <div class="card comingSoon">
+          <h2>More games coming soon</h2>
+          <p>
+            Add new games here later. This hub is ready for learning games, puzzles, and more kid-friendly fun.
+          </p>
+          <div class="badge">✨ Future game slot</div>
+        </div>
+      </div>
+    </section>
+    <div class="footer">
+      Tip: each new game can live in its own folder under `client/`.
+    </div>
+  </main>
+  <script src="client/js/theme.js" defer></script>
+  <script src="client/js/hub.js" defer></script>
+</body>
+</html>

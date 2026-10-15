@@ -58,6 +58,7 @@
   }
 
   function getPreferredTheme() {
+    if (window.GameTheme?.getPreferredTheme) return window.GameTheme.getPreferredTheme();
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       return 'dark';
     }
@@ -65,14 +66,24 @@
   }
 
   function loadSavedTheme() {
-    return localStorage.getItem(STORAGE_KEYS.theme) || getPreferredTheme();
+    if (window.GameTheme?.loadTheme) return window.GameTheme.loadTheme();
+    return localStorage.getItem(STORAGE_KEYS.theme) || localStorage.getItem('robo-saves-cookies.theme') || getPreferredTheme();
   }
 
   function saveTheme(theme) {
+    if (window.GameTheme?.saveTheme) {
+      window.GameTheme.saveTheme(theme);
+      return;
+    }
     localStorage.setItem(STORAGE_KEYS.theme, theme);
+    localStorage.setItem('robo-saves-cookies.theme', theme);
   }
 
   function applyTheme(theme) {
+    if (window.GameTheme?.applyTheme) {
+      window.GameTheme.applyTheme(theme);
+      return;
+    }
     document.documentElement.dataset.theme = theme;
   }
 

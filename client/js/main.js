@@ -4,14 +4,6 @@
   const { utils, ui, game } = RoboGame;
 
   function attachEvents() {
-    els.themeBtn.addEventListener('click', () => {
-      const currentTheme = document.documentElement.dataset.theme || utils.getPreferredTheme();
-      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      utils.applyTheme(nextTheme);
-      utils.saveTheme(nextTheme);
-      ui.updateThemeButton(nextTheme);
-    });
-
     els.startBtn.addEventListener('click', game.startGame);
     els.clearBtn.addEventListener('click', () => {
       els.wordInput.value = '';
@@ -46,9 +38,7 @@
   function init() {
     els.wordInput.value = utils.loadSavedWords();
     state.soundOn = localStorage.getItem(RoboGame.constants.STORAGE_KEYS.sound) !== 'false';
-    const theme = utils.loadSavedTheme();
-    utils.applyTheme(theme);
-    ui.updateThemeButton(theme);
+    GameTheme.initTheme(els.themeBtn);
     ui.updateSoundButton();
     utils.setScreen('setup');
     ui.showMessage('Choose a word list and start the game!', 'good');
