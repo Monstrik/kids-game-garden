@@ -54,7 +54,9 @@
   }
 
   function loadSavedWords() {
-    return localStorage.getItem(STORAGE_KEYS.words) || DEFAULT_WORDS;
+    return localStorage.getItem(STORAGE_KEYS.words)
+      || localStorage.getItem('robo-spelling-hero.words')
+      || DEFAULT_WORDS;
   }
 
   function getPreferredTheme() {

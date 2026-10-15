@@ -3,7 +3,7 @@
 
   RoboGame.constants = {
     STORAGE_KEYS: {
-      words: 'robo-saves-cookies.words',
+      words: 'kids-game-garden.words',
       sound: 'robo-saves-cookies.sound',
       theme: 'mini-game-hub.theme'
     },

@@ -54,7 +54,9 @@
   }
 
   function loadSavedWords() {
-    return localStorage.getItem(STORAGE_KEYS.words) || DEFAULT_WORDS;
+    return localStorage.getItem(STORAGE_KEYS.words)
+      || localStorage.getItem('robo-saves-cookies.words')
+      || DEFAULT_WORDS;
   }
 
   function getPreferredTheme() {
@@ -63,11 +65,6 @@
       return 'dark';
     }
     return 'light';
-  }
-
-  function loadSavedTheme() {
-    if (window.GameTheme?.loadTheme) return window.GameTheme.loadTheme();
-    return localStorage.getItem(STORAGE_KEYS.theme) || localStorage.getItem('robo-saves-cookies.theme') || getPreferredTheme();
   }
 
   function saveTheme(theme) {
@@ -136,7 +133,6 @@
     playTone,
     speakWord,
     getPreferredTheme,
-    loadSavedTheme,
     saveTheme,
     applyTheme
   };
