@@ -6,7 +6,7 @@ const { spawn } = require('node:child_process');
 const rootDir = __dirname;
 const port = Number(process.env.PORT || 3000);
 const host = '127.0.0.1';
-const indexPath = path.join(rootDir, 'index.html');
+const indexPath = path.join(rootDir, 'client/index.html');
 
 const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
@@ -40,11 +40,26 @@ function sendFile(res, filePath) {
 const server = http.createServer((req, res) => {
   const urlPath = decodeURIComponent((req.url || '/').split('?')[0]);
   const safePath = path.normalize(urlPath).replace(/^([.]{2}[\/\\])+/, '');
-  const filePath = urlPath === '/' ? indexPath : path.join(rootDir, safePath);
+  const rootPath = path.join(rootDir, safePath);
+  const clientPath = path.join(rootDir, 'client', safePath);
+  const filePath = urlPath === '/' ? indexPath : rootPath;
 
   fs.stat(filePath, (err, stats) => {
     if (!err && stats.isFile()) {
       sendFile(res, filePath);
+      return;
+    }
+
+    if (urlPath !== '/' && urlPath !== '/index.html') {
+      fs.stat(clientPath, (clientErr, clientStats) => {
+        if (!clientErr && clientStats.isFile()) {
+          sendFile(res, clientPath);
+          return;
+        }
+
+        res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+        res.end('Not found');
+      });
       return;
     }
 

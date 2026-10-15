@@ -4,7 +4,7 @@ A tiny spelling game for kids built with plain HTML, CSS, and JavaScript.
 
 ## Files
 
-- `index.html` — game structure and page layout
+- `client/index.html` — game structure and page layout
 - `client/css/style.css` — all styling and animations
 - `client/js/constants.js` — shared game text and configuration
 - `client/js/state.js` — DOM references and mutable game state
@@ -21,11 +21,11 @@ cd /Users/ayakovis/dev/games/spell
 npm start
 ```
 
-Or open `index.html` directly in your browser.
+Or open `client/index.html` directly in your browser.
 
 ## Easy to improve
 
 - Edit the word list behavior in `client/js/game.js`
 - Tweak colors, layout, and animations in `client/css/style.css`
-- Add or remove UI sections in `index.html`
+- Add or remove UI sections in `client/index.html`
 
