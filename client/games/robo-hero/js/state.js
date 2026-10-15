@@ -19,6 +19,7 @@
     progressText: document.getElementById('progressText'),
     wordPosition: document.getElementById('wordPosition'),
     emojiHint: document.getElementById('emojiHint'),
+    keyboard: document.getElementById('keyboard'),
     messageBox: document.getElementById('messageBox'),
     replayBtn: document.getElementById('replayBtn'),
     checkBtn: document.getElementById('checkBtn'),

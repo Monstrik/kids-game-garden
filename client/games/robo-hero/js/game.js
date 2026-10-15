@@ -61,6 +61,29 @@
     utils.speakWord(state.currentWord.answer);
   };
 
+  game.insertKeyboardCharacter = function insertKeyboardCharacter(character) {
+    if (!state.currentWord || state.locked || !character) return;
+    const nextValue = `${els.answerInput.value}${character}`;
+    els.answerInput.value = nextValue;
+    state.typedAnswer = nextValue;
+    els.answerInput.focus();
+  };
+
+  game.removeKeyboardCharacter = function removeKeyboardCharacter() {
+    if (!state.currentWord || state.locked) return;
+    const nextValue = els.answerInput.value.slice(0, -1);
+    els.answerInput.value = nextValue;
+    state.typedAnswer = nextValue;
+    els.answerInput.focus();
+  };
+
+  game.clearTypedAnswer = function clearTypedAnswer() {
+    if (!state.currentWord || state.locked) return;
+    els.answerInput.value = '';
+    state.typedAnswer = '';
+    els.answerInput.focus();
+  };
+
   game.placeLetterInNextOpenSlot = function placeLetterInNextOpenSlot() {};
 
   game.placeLetterInSlot = function placeLetterInSlot() {};
