@@ -11,10 +11,11 @@ A tiny game hub for kids built with plain HTML, CSS, and JavaScript.
 
 - `index.html` — root game hub
 - `client/shared/css/shared.css` — small shared styles used by the hub and games
+- `client/shared/css/game-shell.css` — shared page layout styles used by the hub and Robo game
 - `client/shared/js/theme.js` — shared theme toggle and persistence
 - `client/games/robo/index.html` — Robo Saves the Cookies game
 - `client/games/robo/js/` — Robo-specific logic split into small files
-- `client/css/style.css` — current page styling while the CSS split is being expanded
+- `client/css/style.css` — hub-specific CSS variables that import the shared game shell
 - `client/js/hub.js` — hub bootstrap that initializes theme toggling
 - `server.js` — local static server that opens the hub in your browser
 
