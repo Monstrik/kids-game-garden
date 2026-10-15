@@ -15,7 +15,7 @@ A tiny game hub for kids built with plain HTML, CSS, and JavaScript.
 - `client/games/robo/index.html` — Robo Saves the Cookies game
 - `client/games/robo/js/` — Robo-specific logic split into small files
 - `client/css/style.css` — current page styling while the CSS split is being expanded
-- `client/js/` — legacy entry points kept during the migration
+- `client/js/hub.js` — hub bootstrap that initializes theme toggling
 - `server.js` — local static server that opens the hub in your browser
 
 ## Run locally
