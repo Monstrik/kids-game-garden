@@ -10,17 +10,19 @@ A tiny game hub for kids built with plain HTML, CSS, and JavaScript.
 ## Files
 
 - `index.html` — root game hub
-- `client/shared/css/shared.css` — small shared styles used by the hub and games
-- `client/shared/css/game-shell.css` — shared page layout styles used by the hub and games
-- `client/shared/js/theme.js` — shared theme toggle and persistence
-- `client/games/robo/index.html` — Robo's Spelling Adventure game
-- `client/games/robo/js/` — Robo-specific logic split into small files
-- `client/games/robo-hero/index.html` — Robo Spelling Hero typing game
-- `client/games/robo-hero/js/` — Robo Spelling Hero-specific logic split into small files
-- `client/games/spell-match/index.html` — Robo Spell Match multiple-choice spelling game
-- `client/games/spell-match/js/` — Robo Spell Match-specific logic split into small files
-- `client/css/style.css` — hub-specific CSS variables that import the shared game shell
-- `client/js/hub.js` — hub bootstrap that initializes theme toggling
+- `shared/css/shared.css` — small shared styles used by the hub and games
+- `shared/css/game-shell.css` — shared page layout styles used by the hub and games
+- `shared/js/theme.js` — shared theme toggle and persistence
+- `shared/js/dictionaries.js` — shared dictionary manager used by the games and manager page
+- `games/robo/index.html` — Robo's Spelling Adventure game
+- `games/robo/js/` — Robo-specific logic split into small files
+- `games/robo-hero/index.html` — Robo Spelling Hero typing game
+- `games/robo-hero/js/` — Robo Spelling Hero-specific logic split into small files
+- `games/spell-match/index.html` — Robo Spell Match multiple-choice spelling game
+- `games/spell-match/js/` — Robo Spell Match-specific logic split into small files
+- `css/style.css` — hub-specific CSS variables that import the shared game shell
+- `js/hub.js` — hub bootstrap that initializes theme toggling
+- `games/dictionary-manager/index.html` — standalone dictionary manager page
 - `server.js` — local static server that opens the hub in your browser
 
 ## Run locally
@@ -36,16 +38,16 @@ For GitHub Pages, publish the repository root and use the same `games/.../` rout
 
 ## Easy to improve
 
-- Edit the word list behavior in `client/games/robo/js/game.js`
-- Tweak colors, layout, and animations in `client/games/robo/index.html` or `index.html`
-- Add or remove UI sections in `client/games/robo/index.html`
+- Edit the word list behavior in `games/robo/js/game.js`
+- Tweak colors, layout, and animations in `games/robo/index.html` or `index.html`
+- Add or remove UI sections in `games/robo/index.html`
 - Follow the editing rules in `DEVELOPMENT.md` before making larger changes
 
 ## Folder pattern for new games
 
-Create each new game in its own subfolder under `client/games/`, for example:
+Create each new game in its own subfolder under `games/`, for example:
 
-- `client/games/space-runner/index.html`
-- `client/games/space-runner/js/...`
+- `games/space-runner/index.html`
+- `games/space-runner/js/...`
 
-Shared utilities and styles should live under `client/shared/`.
+Shared utilities and styles should live under `shared/`.
