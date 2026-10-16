@@ -13,6 +13,7 @@ A tiny game hub for kids built with plain HTML, CSS, and JavaScript.
 - `shared/css/shared.css` — small shared styles used by the hub and games
 - `shared/css/game-shell.css` — shared page layout styles used by the hub and games
 - `shared/js/theme.js` — shared theme toggle and persistence
+- `shared/js/game-common.js` — shared helpers used by every game
 - `shared/js/dictionaries.js` — shared dictionary manager used by the games and manager page
 - `games/robo/index.html` — Robo's Spelling Adventure game
 - `games/robo/js/` — Robo-specific logic split into small files
