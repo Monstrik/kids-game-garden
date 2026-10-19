@@ -879,6 +879,10 @@ html[data-theme="dark"] .keyboardKey:hover {
 }
 
 @media (max-width: 560px) {
+  body.page-robo {
+    --mobile-keyboard-bleed: 38px;
+  }
+
   .keyboardModeToggle {
     width: 100%;
     justify-content: center;
@@ -887,19 +891,25 @@ html[data-theme="dark"] .keyboardKey:hover {
   .keyboardWrap {
     padding: 10px 0 8px 0;
     min-width: 0;
+    width: calc(100% + (var(--mobile-keyboard-bleed) * 2));
+    max-width: none;
+    margin-left: calc(var(--mobile-keyboard-bleed) * -1);
+    margin-right: calc(var(--mobile-keyboard-bleed) * -1);
     border-radius: 18px;
-    overflow-x: auto;
+    overflow-x: hidden;
   }
 
   .keyboardRows {
     gap: 8px;
-    min-width: 386px;
-    padding: 0 8px;
+    min-width: 0;
+    width: 100%;
+    padding: 0 6px;
   }
 
   .keyboardRow {
     gap: 6px;
-    justify-content: flex-start;
+    width: 100%;
+    justify-content: space-between;
     flex-wrap: nowrap;
   }
 
@@ -917,23 +927,24 @@ html[data-theme="dark"] .keyboardKey:hover {
     padding: 0 6px;
     border-radius: 10px;
     font-size: 1.25rem;
+    flex: 1 1 0;
   }
 
   .keyboardKeyWide {
-    min-width: 72px;
+    flex: 2 1 0;
   }
 }
 
 @media (max-width: 380px) {
   .keyboardKey {
-    min-width: 28px;
+    min-width: 0;
     min-height: 36px;
     padding: 0 4px;
     font-size: 1rem;
   }
 
   .keyboardKeyWide {
-    min-width: 64px;
+    min-width: 0;
   }
 
   .keyboardRowIndented,
