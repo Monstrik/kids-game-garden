@@ -17,7 +17,6 @@
     });
     els.replayBtn.addEventListener('click', game.replayWord);
     els.nextBtn.addEventListener('click', game.nextWord);
-    els.resetBtn.addEventListener('click', game.resetCurrentWord);
     els.playAgainBtn.addEventListener('click', game.restartWithSameWords);
     els.newWordsBtn.addEventListener('click', game.enterNewWords);
 
