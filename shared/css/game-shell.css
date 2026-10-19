@@ -731,6 +731,59 @@ body.page-robo {
       box-shadow: 0 10px 18px rgba(2, 6, 23, 0.34);
     }
 
+    @media (max-width: 560px) {
+      .keyboardWrap {
+        padding: 10px 8px 8px;
+        border-radius: 18px;
+      }
+
+      .keyboardRows {
+        gap: 8px;
+      }
+
+      .keyboardRow {
+        gap: 6px;
+      }
+
+      .keyboardRowIndented {
+        padding: 0 8px;
+      }
+
+      .keyboardRowIndentedMore {
+        padding: 0 14px;
+      }
+
+      .keyboardKey {
+        min-width: 32px;
+        min-height: 40px;
+        padding: 0 6px;
+        border-radius: 10px;
+        font-size: 1.25rem;
+      }
+
+      .keyboardKeyWide {
+        min-width: 72px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .keyboardKey {
+        min-width: 28px;
+        min-height: 36px;
+        padding: 0 4px;
+        font-size: 1rem;
+      }
+
+      .keyboardKeyWide {
+        min-width: 64px;
+      }
+
+      .keyboardRowIndented,
+      .keyboardRowIndentedMore {
+        padding: 0;
+      }
+    }
+
     .choiceGrid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -1080,12 +1133,15 @@ body.page-robo {
     }
 
     .fireworkParticle {
+      --hue: 200;
+      --dx: 0px;
+      --dy: 0px;
       position: absolute;
       width: 8px;
       height: 8px;
       border-radius: 999px;
-      background: hsl(var(--hue), 95%, 62%);
-      box-shadow: 0 0 12px hsl(var(--hue), 100%, 70%);
+      background: hsl(var(--hue, 200), 95%, 62%);
+      box-shadow: 0 0 12px hsl(var(--hue, 200), 100%, 70%);
       transform: translate(-50%, -50%);
       opacity: 0;
       animation: fireworkBurst 1s ease-out forwards;
@@ -1131,7 +1187,7 @@ body.page-robo {
         opacity: 1;
       }
       100% {
-        transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.85);
+        transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px))) scale(0.85);
         opacity: 0;
       }
     }
