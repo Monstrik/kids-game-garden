@@ -60,6 +60,7 @@
     const openIndex = state.selected.findIndex(item => item === null);
     if (openIndex === -1 || state.locked) return;
     state.selected[openIndex] = letterIndex;
+    utils.speakWord(state.currentWord.letters[letterIndex]);
     ui.renderSlots();
     ui.renderLetterBank();
     ui.showMessage('Keep going!');
@@ -71,6 +72,7 @@
   game.placeLetterInSlot = function placeLetterInSlot(letterIndex, slotIndex) {
     if (state.locked) return;
     state.selected[slotIndex] = letterIndex;
+    utils.speakWord(state.currentWord.letters[letterIndex]);
     ui.renderSlots();
     ui.renderLetterBank();
     ui.showMessage('Nice move!');
