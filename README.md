@@ -1,4 +1,4 @@
-# Kids Game Garden
+# Y Kids Game Garden
 
 A tiny game hub for kids built with plain HTML, CSS, and JavaScript.
 
