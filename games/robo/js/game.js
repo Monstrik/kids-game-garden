@@ -3,31 +3,59 @@
   const { state, els } = RoboGame;
   const { utils, ui } = RoboGame;
 
-  let game;
-  game = window.RoboGameKit.createWordGameCore({
-    state,
-    els,
-    utils,
-    ui,
-    messages: {
-      start: 'Listen first, then choose a letter to start!',
-      emptyWords: 'Please choose a word list with words in it!'
-    },
-    loadCurrentWord() {
-      if (!state.currentWord) {
-        game.finishGame();
-        return;
-      }
+  const game = {};
 
-      els.emojiHint.textContent = state.currentWord.emoji;
-      els.roboStatus.textContent = `Listen closely, then spell ${state.currentWord.answer.length} letters for a cookie!`;
-      ui.showMessage('Listen carefully!');
-      ui.setHint('');
-      ui.clearBoard();
-      ui.updateHeaderStats();
-      setTimeout(() => utils.speakWord(state.currentWord.answer), 180);
+  game.parseWordsFromTextarea = function parseWordsFromTextarea() {
+    return utils.loadSavedWords()
+      .split(/\r?\n/)
+      .map(utils.normalizeWord)
+      .filter(Boolean)
+      .filter(word => /[A-Z]/.test(word));
+  };
+
+  game.buildGameWords = function buildGameWords(words) {
+    return utils.fisherYatesShuffle(words).map(word => ({
+      answer: word,
+      letters: utils.shuffleWordLetters(word),
+      emoji: utils.getEmojiForWord(word)
+    }));
+  };
+
+  game.startGame = function startGame() {
+    const words = game.parseWordsFromTextarea();
+    if (!words.length) {
+      ui.showMessage('Please choose a word list with words in it!', 'bad');
+      utils.setScreen('setup');
+      return;
     }
-  });
+
+    state.allWords = words;
+    state.gameWords = game.buildGameWords(words);
+    state.currentIndex = 0;
+    state.cookies = 0;
+    state.solved = 0;
+    state.currentWord = state.gameWords[0];
+    utils.setScreen('game');
+    ui.showMessage('Listen first, then choose a letter to start!');
+    ui.setHint('');
+    game.loadCurrentWord();
+    utils.playTone(523, 0.08, 'triangle', 0.03);
+  };
+
+  game.loadCurrentWord = function loadCurrentWord() {
+    if (!state.currentWord) {
+      game.finishGame();
+      return;
+    }
+
+    els.emojiHint.textContent = state.currentWord.emoji;
+    els.roboStatus.textContent = `Listen closely, then spell ${state.currentWord.answer.length} letters for a cookie!`;
+    ui.showMessage('Listen carefully!');
+    ui.setHint('');
+    ui.clearBoard();
+    ui.updateHeaderStats();
+    setTimeout(() => utils.speakWord(state.currentWord.answer), 180);
+  };
 
   game.placeLetterInNextOpenSlot = function placeLetterInNextOpenSlot(letterIndex) {
     const openIndex = state.selected.findIndex(item => item === null);
@@ -144,6 +172,37 @@
     utils.playTone(523, 0.06, 'sine', 0.03);
   };
 
+  game.finishGame = function finishGame() {
+    utils.setScreen('end');
+    els.finalCookies.textContent = state.cookies;
+    els.endStats.innerHTML = `Words completed: ${state.solved}<br />Cookies earned: ${state.cookies}`;
+    els.roboStatus.textContent = 'All done!';
+    ui.showMessage('Great job!');
+    if (state.soundOn) {
+      utils.playTone(523, 0.08, 'triangle', 0.04);
+      setTimeout(() => utils.playTone(659, 0.08, 'triangle', 0.04), 120);
+      setTimeout(() => utils.playTone(784, 0.12, 'triangle', 0.04), 240);
+    }
+  };
+
+  game.restartWithSameWords = function restartWithSameWords() {
+    if (!state.allWords.length) {
+      utils.setScreen('setup');
+      return;
+    }
+    state.gameWords = game.buildGameWords(state.allWords);
+    state.currentIndex = 0;
+    state.cookies = 0;
+    state.solved = 0;
+    state.currentWord = state.gameWords[0];
+    utils.setScreen('game');
+    game.loadCurrentWord();
+  };
+
+  game.enterNewWords = function enterNewWords() {
+    utils.setScreen('setup');
+    document.getElementById('dictionarySelect')?.focus();
+  };
 
   RoboGame.game = game;
 })();
