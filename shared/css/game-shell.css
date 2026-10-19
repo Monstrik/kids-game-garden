@@ -274,7 +274,7 @@ body.page-robo {
     body.page-robo {
       display: flex;
       justify-content: center;
-      padding: 16px;
+        padding: 10px 0 10px 0;
     }
 
     body.page-robo .app {
@@ -646,7 +646,7 @@ body.page-robo {
 
     .keyboardWrap {
       margin-top: 14px;
-      padding: 14px 12px 12px;
+      padding: 14px 0 12px 0;
       border-radius: 24px;
       border: 2px solid rgba(124, 58, 237, 0.18);
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(238, 242, 255, 0.92));
@@ -669,13 +669,13 @@ body.page-robo {
     .keyboardRows {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 5px;
     }
 
     .keyboardRow {
       display: flex;
       justify-content: center;
-      gap: 8px;
+      gap: 5px;
       flex-wrap: wrap;
     }
 
@@ -733,7 +733,8 @@ body.page-robo {
 
     @media (max-width: 560px) {
       .keyboardWrap {
-        padding: 10px 8px 8px;
+        padding: 10px 0 8px 0;
+        min-width: 386px;
         border-radius: 18px;
       }
 
@@ -754,7 +755,7 @@ body.page-robo {
       }
 
       .keyboardKey {
-        min-width: 32px;
+        min-width: 30px;
         min-height: 40px;
         padding: 0 6px;
         border-radius: 10px;
@@ -882,7 +883,7 @@ body.page-robo {
 
     body.page-robo .gameLayout {
       display: grid;
-      gap: 16px;
+      gap: 0;
     }
 
     body.page-robo .topBar {
