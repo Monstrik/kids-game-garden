@@ -151,7 +151,7 @@
 
       body.page-hub .hero, body.page-hub .content, body.page-hub .footer { padding-left: 16px; padding-right: 16px; }
       body.page-hub .appChrome { padding-left: 16px; padding-right: 16px; }
-    
+
 }
 
 body.page-robo {
@@ -814,7 +814,7 @@ body.page-robo {
     }
 
     body.page-robo .btn.warn {
-      background: linear-gradient(135deg, var(--accent-warning-start), var(--accent-warning-end));
+        background: linear-gradient(135deg, yellow, green);
     }
 
     body.page-robo .btn.ghost {
@@ -1030,8 +1030,18 @@ body.page-robo {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      justify-content: center;
+      justify-content: flex-start;
       margin-top: 14px;
+    }
+
+    body.page-robo .footerActions #checkBtn {
+      order: 98;
+      margin-left: auto;
+    }
+
+    body.page-robo .footerActions #nextBtn {
+      order: 99;
+      margin-left: auto;
     }
 
     body.page-robo .endStats {
