@@ -37,7 +37,9 @@ select {
   font-size: 1rem;
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(36, 50, 74, 0.08);
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
 }
 
 .themeBtn:hover,
@@ -57,4 +59,3 @@ select {
   gap: 8px;
   text-decoration: none;
 }
-

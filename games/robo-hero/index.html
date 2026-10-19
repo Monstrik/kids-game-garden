@@ -1,203 +1,367 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Robo Spelling Hero</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c3aed'/%3E%3Ctext x='32' y='37' text-anchor='middle' font-size='30'%3E%F0%9F%A4%96%3C/text%3E%3Ccircle cx='47' cy='16' r='7' fill='%23f97316'/%3E%3Cpath d='M42 16h10' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='47' cy='16' r='2.5' fill='white'/%3E%3C/svg%3E" />
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c3aed'/%3E%3Ctext x='32' y='37' text-anchor='middle' font-size='30'%3E%F0%9F%A4%96%3C/text%3E%3Ccircle cx='47' cy='16' r='7' fill='%23f97316'/%3E%3Cpath d='M42 16h10' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='47' cy='16' r='2.5' fill='white'/%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="../../shared/css/shared.css" />
-  <link rel="stylesheet" href="../../shared/css/game-shell.css" />
-</head>
-<body class="page-robo">
-  <div class="app">
-    <div class="appChrome">
-      <a class="hubLink" href="../../" aria-label="Back to game hub">🏠 Hub</a>
-      <button id="themeBtn" class="themeBtn" type="button" aria-pressed="false">🌙</button>
-    </div>
-    <!-- Setup Screen -->
-    <section id="setupScreen" class="screen active" aria-labelledby="setupTitle">
-      <div class="header">
-        <div class="titleRow">
-          <div>
-            <h1 id="setupTitle">🤖 Robo Spelling Hero</h1>
-            <div class="subtitle">Listen to Robo, then type the word for a cookie!</div>
-          </div>
-        </div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Robo Spelling Hero</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c3aed'/%3E%3Ctext x='32' y='37' text-anchor='middle' font-size='30'%3E%F0%9F%A4%96%3C/text%3E%3Ccircle cx='47' cy='16' r='7' fill='%23f97316'/%3E%3Cpath d='M42 16h10' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='47' cy='16' r='2.5' fill='white'/%3E%3C/svg%3E"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c3aed'/%3E%3Ctext x='32' y='37' text-anchor='middle' font-size='30'%3E%F0%9F%A4%96%3C/text%3E%3Ccircle cx='47' cy='16' r='7' fill='%23f97316'/%3E%3Cpath d='M42 16h10' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='47' cy='16' r='2.5' fill='white'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="../../shared/css/shared.css" />
+    <link rel="stylesheet" href="../../shared/css/game-shell.css" />
+  </head>
+  <body class="page-robo">
+    <div class="app">
+      <div class="appChrome">
+        <a class="hubLink" href="../../" aria-label="Back to game hub"
+          >🏠 Hub</a
+        >
+        <button
+          id="themeBtn"
+          class="themeBtn"
+          type="button"
+          aria-pressed="false"
+        >
+          🌙
+        </button>
       </div>
-
-      <div class="content">
-        <div class="setupGrid">
-          <div class="card dictionaryManager">
-            <div class="dictionaryToolbar">
-              <select id="dictionarySelect" aria-label="Choose a word list"></select>
-              <button id="dictionaryManagerBtn" class="btn ghost" type="button" aria-label="Open Dictionary Manager" title="Open Dictionary Manager">📚</button>
-            </div>
-            <div id="dictionaryPreview" class="dictionaryPreview">Select a list to see a preview.</div>
-            <div class="btnRow">
-              <button id="startBtn" class="btn">Start Game</button>
-            </div>
-          </div>
-
-          <div class="exampleBox">
-            <h2>How it works</h2>
-            <div class="exampleWords">Example words:
-apple
-banana
-robot
-school
-friend</div>
-            <p style="margin: 14px 0 0; font-weight: 700; line-height: 1.6;">
-              Robo says each word out loud and your child types it in the box below.
-            </p>
-            <p style="margin: 10px 0 0; line-height: 1.6;">
-              ✅ Choose a saved list by name, or make a new one<br />
-              ✅ Tap letters or drag them<br />
-              ✅ Get a cookie for each correct word<br />
-              ✅ Every 5 cookies gives Robo a new accessory
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Game Screen -->
-    <section id="gameScreen" class="screen" aria-labelledby="gameTitle">
-      <div class="header">
-        <div class="topBar">
-          <div class="roboBox">
-            <div class="roboWrap">
-              <div id="accessory" class="accessory" aria-hidden="true"></div>
-              <div id="roboEmoji" class="roboEmoji" aria-label="Robot">🤖</div>
-            </div>
+      <!-- Setup Screen -->
+      <section
+        id="setupScreen"
+        class="screen active"
+        aria-labelledby="setupTitle"
+      >
+        <div class="header">
+          <div class="titleRow">
             <div>
-              <div class="roboName" id="gameTitle">Robo Spelling Hero</div>
-              <div id="roboStatus" class="statusLine">Listen closely, then type the word!</div>
-            </div>
-          </div>
-
-          <div class="pillRow">
-            <div id="cookieCounter" class="pill cookieCounter">🍪 Cookies: <span id="cookieCount">0</span></div>
-            <div class="pill">🔊 <button id="soundBtn" type="button">Sound On</button></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="content gameLayout">
-        <div class="card">
-          <div class="progressWrap" aria-label="Progress bar">
-            <div id="progressFill" class="progressFill"></div>
-          </div>
-          <div style="display:flex; justify-content:space-between; gap:10px; margin-top:8px; font-weight:800; color:var(--ink-soft);">
-            <span id="progressText">0 of 0 words</span>
-            <span id="wordPosition">Word 0 / 0</span>
-          </div>
-        </div>
-
-        <div class="wordCard">
-          <div id="emojiHint" class="emojiHint" aria-hidden="true"></div>
-          <div class="bigWordLabel">Type the word you hear</div>
-
-          <div class="card" style="margin-top:14px; padding:16px;">
-            <label for="answerInput">Your answer</label>
-            <input id="answerInput" type="text" spellcheck="false" autocomplete="off" autocapitalize="none" placeholder="Type the word here" />
-            <div style="margin-top:10px; font-size:0.96rem; line-height:1.55; color:var(--ink-soft); font-weight:700;">
-              Listen to Robo, type the word, and then press Check Word.
-            </div>
-          </div>
-
-          <div id="keyboard" class="keyboardWrap" aria-label="On-screen keyboard">
-            <div class="keyboardHint">Tap the keys or just type on a keyboard.</div>
-            <div class="keyboardRows">
-              <div class="keyboardRow">
-                <button class="keyboardKey" type="button" data-key="Q">Q</button>
-                <button class="keyboardKey" type="button" data-key="W">W</button>
-                <button class="keyboardKey" type="button" data-key="E">E</button>
-                <button class="keyboardKey" type="button" data-key="R">R</button>
-                <button class="keyboardKey" type="button" data-key="T">T</button>
-                <button class="keyboardKey" type="button" data-key="Y">Y</button>
-                <button class="keyboardKey" type="button" data-key="U">U</button>
-                <button class="keyboardKey" type="button" data-key="I">I</button>
-                <button class="keyboardKey" type="button" data-key="O">O</button>
-                <button class="keyboardKey" type="button" data-key="P">P</button>
-              </div>
-              <div class="keyboardRow keyboardRowIndented">
-                <button class="keyboardKey" type="button" data-key="A">A</button>
-                <button class="keyboardKey" type="button" data-key="S">S</button>
-                <button class="keyboardKey" type="button" data-key="D">D</button>
-                <button class="keyboardKey" type="button" data-key="F">F</button>
-                <button class="keyboardKey" type="button" data-key="G">G</button>
-                <button class="keyboardKey" type="button" data-key="H">H</button>
-                <button class="keyboardKey" type="button" data-key="J">J</button>
-                <button class="keyboardKey" type="button" data-key="K">K</button>
-                <button class="keyboardKey" type="button" data-key="L">L</button>
-              </div>
-              <div class="keyboardRow keyboardRowIndentedMore">
-                <button class="keyboardKey" type="button" data-key="Z">Z</button>
-                <button class="keyboardKey" type="button" data-key="X">X</button>
-                <button class="keyboardKey" type="button" data-key="C">C</button>
-                <button class="keyboardKey" type="button" data-key="V">V</button>
-                <button class="keyboardKey" type="button" data-key="B">B</button>
-                <button class="keyboardKey" type="button" data-key="N">N</button>
-                <button class="keyboardKey" type="button" data-key="M">M</button>
-              </div>
-              <div class="keyboardRow keyboardRowBottom">
-                <button class="keyboardKey keyboardKeyAccent" type="button" data-action="clear">Clear</button>
-                <button class="keyboardKey keyboardKeyWide" type="button" data-action="space"> Space </button>
-                <button class="keyboardKey keyboardKeyWide" type="button" data-action="backspace">⌫</button>
+              <h1 id="setupTitle">🤖 Robo Spelling Hero</h1>
+              <div class="subtitle">
+                Listen to Robo, then type the word for a cookie!
               </div>
             </div>
           </div>
+        </div>
 
-          <div id="messageBox" class="messageBox" aria-live="polite">Listen carefully!</div>
+        <div class="content">
+          <div class="setupGrid">
+            <div class="card dictionaryManager">
+              <div class="dictionaryToolbar">
+                <select
+                  id="dictionarySelect"
+                  aria-label="Choose a word list"
+                ></select>
+                <button
+                  id="dictionaryManagerBtn"
+                  class="btn ghost"
+                  type="button"
+                  aria-label="Open Dictionary Manager"
+                  title="Open Dictionary Manager"
+                >
+                  📚
+                </button>
+              </div>
+              <div id="dictionaryPreview" class="dictionaryPreview">
+                Select a list to see a preview.
+              </div>
+              <div class="btnRow">
+                <button id="startBtn" class="btn">Start Game</button>
+              </div>
+            </div>
 
-          <div class="footerActions">
-            <button id="replayBtn" class="btn secondary" type="button">🔊 Replay</button>
-            <button id="resetBtn" class="btn ghost" type="button">Reset</button>
-            <button id="checkBtn" class="btn ghost" type="button">Check</button>
-            <button id="nextBtn" class="btn warn" type="button" style="display:none;">Next</button>
+            <div class="exampleBox">
+              <h2>How it works</h2>
+              <div class="exampleWords">
+                Example words: apple banana robot school friend
+              </div>
+              <p style="margin: 14px 0 0; font-weight: 700; line-height: 1.6">
+                Robo says each word out loud and your child types it in the box
+                below.
+              </p>
+              <p style="margin: 10px 0 0; line-height: 1.6">
+                ✅ Choose a saved list by name, or make a new one<br />
+                ✅ Tap letters or drag them<br />
+                ✅ Get a cookie for each correct word<br />
+                ✅ Every 5 cookies gives Robo a new accessory
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- End Screen -->
-    <section id="endScreen" class="screen" aria-labelledby="endTitle">
-      <div class="header">
-        <div class="titleRow">
-          <div>
-            <h1 id="endTitle">🎉 Great Job!</h1>
-            <div class="subtitle">You helped Robo save all the cookies!</div>
-          </div>
-          <div class="pillRow">
-            <div class="pill">🍪 Final cookie count: <span id="finalCookies">0</span></div>
+      <!-- Game Screen -->
+      <section id="gameScreen" class="screen" aria-labelledby="gameTitle">
+        <div class="header">
+          <div class="topBar">
+            <div class="roboBox">
+              <div class="roboWrap">
+                <div id="accessory" class="accessory" aria-hidden="true"></div>
+                <div id="roboEmoji" class="roboEmoji" aria-label="Robot">
+                  🤖
+                </div>
+              </div>
+              <div>
+                <div class="roboName" id="gameTitle">Robo Spelling Hero</div>
+                <div id="roboStatus" class="statusLine">
+                  Listen closely, then type the word!
+                </div>
+              </div>
+            </div>
+
+            <div class="pillRow">
+              <div id="cookieCounter" class="pill cookieCounter">
+                🍪 Cookies: <span id="cookieCount">0</span>
+              </div>
+              <div class="pill">
+                🔊 <button id="soundBtn" type="button">Sound On</button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="content">
-        <div class="card">
-          <div class="celebration">🤖🍪✨</div>
-          <div class="endStats" id="endStats">
-            Words completed: 0<br />
-            Cookies earned: 0
+        <div class="content gameLayout">
+          <div class="card">
+            <div class="progressWrap" aria-label="Progress bar">
+              <div id="progressFill" class="progressFill"></div>
+            </div>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                gap: 10px;
+                margin-top: 8px;
+                font-weight: 800;
+                color: var(--ink-soft);
+              "
+            >
+              <span id="progressText">0 of 0 words</span>
+              <span id="wordPosition">Word 0 / 0</span>
+            </div>
           </div>
-          <div class="btnRow" style="justify-content:center; margin-top:16px;">
-            <button id="playAgainBtn" class="btn" type="button">Play Again</button>
-            <button id="newWordsBtn" class="btn secondary" type="button">Enter New Words</button>
+
+          <div class="wordCard">
+            <div id="emojiHint" class="emojiHint" aria-hidden="true"></div>
+            <div class="bigWordLabel">Type the word you hear</div>
+
+            <div class="card" style="margin-top: 14px; padding: 16px">
+              <label for="answerInput">Your answer</label>
+              <input
+                id="answerInput"
+                type="text"
+                spellcheck="false"
+                autocomplete="off"
+                autocapitalize="none"
+                placeholder="Type the word here"
+              />
+              <div
+                style="
+                  margin-top: 10px;
+                  font-size: 0.96rem;
+                  line-height: 1.55;
+                  color: var(--ink-soft);
+                  font-weight: 700;
+                "
+              >
+                Listen to Robo, type the word, and then press Check Word.
+              </div>
+            </div>
+
+            <div
+              id="keyboard"
+              class="keyboardWrap"
+              aria-label="On-screen keyboard"
+            >
+              <div class="keyboardHint">
+                Tap the keys or just type on a keyboard.
+              </div>
+              <div class="keyboardRows">
+                <div class="keyboardRow">
+                  <button class="keyboardKey" type="button" data-key="Q">
+                    Q
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="W">
+                    W
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="E">
+                    E
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="R">
+                    R
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="T">
+                    T
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="Y">
+                    Y
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="U">
+                    U
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="I">
+                    I
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="O">
+                    O
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="P">
+                    P
+                  </button>
+                </div>
+                <div class="keyboardRow keyboardRowIndented">
+                  <button class="keyboardKey" type="button" data-key="A">
+                    A
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="S">
+                    S
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="D">
+                    D
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="F">
+                    F
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="G">
+                    G
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="H">
+                    H
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="J">
+                    J
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="K">
+                    K
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="L">
+                    L
+                  </button>
+                </div>
+                <div class="keyboardRow keyboardRowIndentedMore">
+                  <button class="keyboardKey" type="button" data-key="Z">
+                    Z
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="X">
+                    X
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="C">
+                    C
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="V">
+                    V
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="B">
+                    B
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="N">
+                    N
+                  </button>
+                  <button class="keyboardKey" type="button" data-key="M">
+                    M
+                  </button>
+                </div>
+                <div class="keyboardRow keyboardRowBottom">
+                  <button
+                    class="keyboardKey keyboardKeyAccent"
+                    type="button"
+                    data-action="clear"
+                  >
+                    Clear
+                  </button>
+                  <button
+                    class="keyboardKey keyboardKeyWide"
+                    type="button"
+                    data-action="space"
+                  >
+                    Space
+                  </button>
+                  <button
+                    class="keyboardKey keyboardKeyWide"
+                    type="button"
+                    data-action="backspace"
+                  >
+                    ⌫
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div id="messageBox" class="messageBox" aria-live="polite">
+              Listen carefully!
+            </div>
+
+            <div class="footerActions">
+              <button id="replayBtn" class="btn secondary" type="button">
+                🔊 Replay
+              </button>
+              <button id="resetBtn" class="btn ghost" type="button">
+                Reset
+              </button>
+              <button id="checkBtn" class="btn ghost" type="button">
+                Check
+              </button>
+              <button
+                id="nextBtn"
+                class="btn warn"
+                type="button"
+                style="display: none"
+              >
+                Next
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  </div>
-  <script src="../../shared/js/theme.js" defer></script>
-  <script src="../../shared/js/dictionaries.js" defer></script>
-  <script src="../../shared/js/game-common.js" defer></script>
-  <script src="js/constants.js" defer></script>
-  <script src="js/state.js" defer></script>
-  <script src="js/utils.js" defer></script>
-  <script src="js/ui.js" defer></script>
-  <script src="js/game.js" defer></script>
-  <script src="js/main.js" defer></script>
-</body>
+      </section>
+
+      <!-- End Screen -->
+      <section id="endScreen" class="screen" aria-labelledby="endTitle">
+        <div class="header">
+          <div class="titleRow">
+            <div>
+              <h1 id="endTitle">🎉 Great Job!</h1>
+              <div class="subtitle">You helped Robo save all the cookies!</div>
+            </div>
+            <div class="pillRow">
+              <div class="pill">
+                🍪 Final cookie count: <span id="finalCookies">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="card">
+            <div class="celebration">🤖🍪✨</div>
+            <div class="endStats" id="endStats">
+              Words completed: 0<br />
+              Cookies earned: 0
+            </div>
+            <div
+              class="btnRow"
+              style="justify-content: center; margin-top: 16px"
+            >
+              <button id="playAgainBtn" class="btn" type="button">
+                Play Again
+              </button>
+              <button id="newWordsBtn" class="btn secondary" type="button">
+                Enter New Words
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script src="../../shared/js/theme.js" defer></script>
+    <script src="../../shared/js/dictionaries.js" defer></script>
+    <script src="../../shared/js/game-common.js" defer></script>
+    <script src="js/constants.js" defer></script>
+    <script src="js/state.js" defer></script>
+    <script src="js/utils.js" defer></script>
+    <script src="js/ui.js" defer></script>
+    <script src="js/game.js" defer></script>
+    <script src="js/main.js" defer></script>
+  </body>
 </html>

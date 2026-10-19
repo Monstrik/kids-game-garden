@@ -45,4 +45,3 @@ When updating the project, follow this order:
 - Keep UI updates separate from game logic when practical.
 - Make sure new features work well on mobile.
 - Test the hub and the game page after layout or route changes.
-

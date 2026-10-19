@@ -1,4 +1,3 @@
 (function () {
-  GameTheme.initTheme(document.getElementById('themeBtn'));
+  GameTheme.initTheme(document.getElementById("themeBtn"));
 })();
-

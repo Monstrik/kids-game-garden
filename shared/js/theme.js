@@ -1,17 +1,24 @@
 (function () {
-  const STORAGE_KEYS = ['kids-game-garden.theme', 'mini-game-hub.theme', 'robo-saves-cookies.theme'];
+  const STORAGE_KEYS = [
+    "kids-game-garden.theme",
+    "mini-game-hub.theme",
+    "robo-saves-cookies.theme",
+  ];
 
   function getPreferredTheme() {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      return "dark";
     }
-    return 'light';
+    return "light";
   }
 
   function loadTheme() {
     for (const key of STORAGE_KEYS) {
       const saved = localStorage.getItem(key);
-      if (saved === 'dark' || saved === 'light') return saved;
+      if (saved === "dark" || saved === "light") return saved;
     }
     return getPreferredTheme();
   }
@@ -28,14 +35,14 @@
 
   function updateThemeButton(button, theme) {
     if (!button) return;
-    const isDark = theme === 'dark';
-    button.textContent = isDark ? '☀️' : '🌙';
-    button.setAttribute('aria-pressed', String(isDark));
+    const isDark = theme === "dark";
+    button.textContent = isDark ? "☀️" : "🌙";
+    button.setAttribute("aria-pressed", String(isDark));
   }
 
   function toggleTheme() {
     const current = document.documentElement.dataset.theme || loadTheme();
-    const next = current === 'dark' ? 'light' : 'dark';
+    const next = current === "dark" ? "light" : "dark";
     applyTheme(next);
     saveTheme(next);
     return next;
@@ -46,7 +53,7 @@
     applyTheme(theme);
     updateThemeButton(button, theme);
     if (button) {
-      button.addEventListener('click', () => {
+      button.addEventListener("click", () => {
         const next = toggleTheme();
         updateThemeButton(button, next);
       });
@@ -66,4 +73,3 @@
 
   window.RoboTheme = api;
 })();
-

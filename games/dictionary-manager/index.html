@@ -1,406 +1,457 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dictionary Manager</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c3aed'/%3E%3Ctext x='32' y='38' text-anchor='middle' font-size='28'%3E%F0%9F%93%9A%3C/text%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="../../shared/css/shared.css" />
-  <style>
-    body.page-dictionaries {
-      margin: 0;
-      min-height: 100%;
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.68), transparent 28%),
-        linear-gradient(135deg, var(--bg1), var(--bg2));
-      --bg1: #6ee7ff;
-      --bg2: #f9a8d4;
-      --panel: rgba(255, 255, 255, 0.9);
-      --surface: rgba(255, 255, 255, 0.82);
-      --ink: #24324a;
-      --muted: #475569;
-      --title: #5b21b6;
-      --accent: #7c3aed;
-      --accent-strong: #4f46e5;
-      --shadow: 0 20px 50px rgba(36, 50, 74, 0.18);
-      --border: rgba(124, 58, 237, 0.14);
-      --panel-hero: linear-gradient(135deg, #fff, #eef2ff);
-      --panel-card: linear-gradient(180deg, #fff, #f8fafc);
-      --badge-bg: #eef2ff;
-      --play-btn: linear-gradient(135deg, var(--accent), var(--accent-strong));
-      --btn-bg: #ffffff;
-      --btn-border: rgba(124, 58, 237, 0.14);
-      --input-bg: #ffffff;
-      --input-border: #c7d2fe;
-      --good: #166534;
-      --bad: #991b1b;
-      display: grid;
-      place-items: center;
-      padding: 18px;
-    }
-
-    html[data-theme="dark"] body.page-dictionaries {
-      color-scheme: dark;
-      --bg1: #0f172a;
-      --bg2: #1e1b4b;
-      --panel: rgba(15, 23, 42, 0.9);
-      --surface: rgba(15, 23, 42, 0.82);
-      --ink: #e2e8f0;
-      --muted: #cbd5e1;
-      --title: #ddd6fe;
-      --accent: #a78bfa;
-      --accent-strong: #818cf8;
-      --shadow: 0 20px 50px rgba(2, 6, 23, 0.5);
-      --border: rgba(148, 163, 184, 0.18);
-      --panel-hero: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.98));
-      --panel-card: linear-gradient(180deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.98));
-      --badge-bg: rgba(30, 41, 59, 0.95);
-      --btn-bg: rgba(30, 41, 59, 0.95);
-      --btn-border: rgba(148, 163, 184, 0.22);
-      --input-bg: rgba(15, 23, 42, 0.96);
-      --input-border: rgba(148, 163, 184, 0.35);
-      --good: #bbf7d0;
-      --bad: #fecaca;
-    }
-
-    body.page-dictionaries .shell {
-      width: 100%;
-      max-width: 1100px;
-      background: var(--panel);
-      border: 4px solid rgba(255,255,255,0.8);
-      border-radius: 32px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    body.page-dictionaries .appChrome {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-      padding: 18px 18px 0;
-      flex-wrap: wrap;
-    }
-
-    body.page-dictionaries .hero {
-      padding: 28px 24px 18px;
-      background: var(--panel-hero);
-      border-bottom: 3px dashed rgba(124, 58, 237, 0.24);
-      text-align: center;
-    }
-
-    body.page-dictionaries .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: var(--btn-bg);
-      border: 2px solid var(--border);
-      font-weight: 800;
-      color: var(--accent);
-      margin-bottom: 14px;
-    }
-
-    body.page-dictionaries h1 {
-      margin: 0;
-      font-size: clamp(2.1rem, 5vw, 3.8rem);
-      color: var(--title);
-      line-height: 1;
-    }
-
-    body.page-dictionaries .subtitle {
-      margin: 12px auto 0;
-      max-width: 760px;
-      font-size: 1.05rem;
-      line-height: 1.6;
-      color: var(--muted);
-    }
-
-    body.page-dictionaries .content {
-      padding: 24px;
-      display: grid;
-      gap: 18px;
-    }
-
-    body.page-dictionaries .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 18px;
-    }
-
-    body.page-dictionaries .card {
-      background: var(--surface);
-      border: 2px solid var(--border);
-      border-radius: 24px;
-      padding: 18px;
-      box-shadow: 0 10px 24px rgba(36, 50, 74, 0.08);
-    }
-
-    body.page-dictionaries .card h2 {
-      margin: 0 0 10px;
-      color: var(--accent);
-      font-size: 1.2rem;
-    }
-
-    body.page-dictionaries .howItWorksPanel {
-      background: rgba(255, 255, 255, 0.55);
-      border: 2px dashed rgba(124, 58, 237, 0.22);
-      color: var(--muted);
-    }
-
-    html[data-theme="dark"] body.page-dictionaries .howItWorksPanel {
-      background: rgba(15, 23, 42, 0.9);
-      border-color: rgba(167, 139, 250, 0.24);
-      color: var(--muted);
-    }
-
-    body.page-dictionaries label {
-      display: block;
-      font-weight: 800;
-      margin-bottom: 10px;
-      font-size: 1.03rem;
-    }
-
-    body.page-dictionaries select,
-    body.page-dictionaries input,
-    body.page-dictionaries textarea {
-      width: 100%;
-      border-radius: 18px;
-      border: 3px solid var(--input-border);
-      padding: 14px 16px;
-      background: var(--input-bg);
-      color: var(--ink);
-      font: inherit;
-      outline: none;
-      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.6);
-    }
-
-    body.page-dictionaries textarea {
-      min-height: 280px;
-      resize: vertical;
-      line-height: 1.55;
-      white-space: pre-wrap;
-    }
-
-    body.page-dictionaries select:focus,
-    body.page-dictionaries input:focus,
-    body.page-dictionaries textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12);
-    }
-
-    body.page-dictionaries .toolbar,
-    body.page-dictionaries .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    body.page-dictionaries .toolbar {
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 14px;
-    }
-
-    body.page-dictionaries .dictionaryPreview {
-      margin: 0 0 14px;
-      padding: 12px 14px;
-      border-radius: 16px;
-      border: 2px dashed rgba(124, 58, 237, 0.22);
-      background: rgba(255, 255, 255, 0.55);
-      color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.45;
-      font-weight: 700;
-    }
-
-    html[data-theme="dark"] body.page-dictionaries .dictionaryPreview {
-      border-color: rgba(167, 139, 250, 0.24);
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--muted);
-    }
-
-    body.page-dictionaries .field {
-      flex: 1 1 240px;
-      min-width: 220px;
-    }
-
-    body.page-dictionaries .btn {
-      border: none;
-      border-radius: 999px;
-      padding: 14px 18px;
-      font-weight: 800;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
-      color: white;
-      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    body.page-dictionaries .btn.secondary,
-    body.page-dictionaries .btn.ghost {
-      background: var(--btn-bg);
-      color: var(--accent);
-      border: 2px solid var(--btn-border);
-      box-shadow: none;
-    }
-
-    body.page-dictionaries .btn:hover {
-      box-shadow: 0 12px 22px rgba(0, 0, 0, 0.16);
-    }
-
-    body.page-dictionaries .btn:active {
-      transform: translateY(2px) scale(0.99);
-    }
-
-    body.page-dictionaries .info {
-      font-size: 0.96rem;
-      line-height: 1.55;
-      color: var(--muted);
-      font-weight: 700;
-      padding-top: 4px;
-    }
-
-    body.page-dictionaries .summary {
-      display: grid;
-      gap: 10px;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      margin-top: 12px;
-    }
-
-    body.page-dictionaries .summary .badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      border-radius: 999px;
-      padding: 10px 12px;
-      background: var(--badge-bg);
-      border: 2px solid var(--border);
-      color: var(--accent);
-      font-weight: 800;
-      text-align: center;
-    }
-
-    body.page-dictionaries .gameLinks {
-      display: grid;
-      gap: 10px;
-      margin-top: 8px;
-    }
-
-    body.page-dictionaries .gameLinks a {
-      text-decoration: none;
-    }
-
-    body.page-dictionaries .footer {
-      padding: 0 24px 24px;
-      color: var(--muted);
-      font-size: 0.95rem;
-      text-align: center;
-    }
-
-    @media (max-width: 760px) {
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dictionary Manager</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c3aed'/%3E%3Ctext x='32' y='38' text-anchor='middle' font-size='28'%3E%F0%9F%93%9A%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="../../shared/css/shared.css" />
+    <style>
       body.page-dictionaries {
-        padding: 18px 16px;
+        margin: 0;
+        min-height: 100%;
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(255, 255, 255, 0.68),
+            transparent 28%
+          ),
+          linear-gradient(135deg, var(--bg1), var(--bg2));
+        --bg1: #6ee7ff;
+        --bg2: #f9a8d4;
+        --panel: rgba(255, 255, 255, 0.9);
+        --surface: rgba(255, 255, 255, 0.82);
+        --ink: #24324a;
+        --muted: #475569;
+        --title: #5b21b6;
+        --accent: #7c3aed;
+        --accent-strong: #4f46e5;
+        --shadow: 0 20px 50px rgba(36, 50, 74, 0.18);
+        --border: rgba(124, 58, 237, 0.14);
+        --panel-hero: linear-gradient(135deg, #fff, #eef2ff);
+        --panel-card: linear-gradient(180deg, #fff, #f8fafc);
+        --badge-bg: #eef2ff;
+        --play-btn: linear-gradient(
+          135deg,
+          var(--accent),
+          var(--accent-strong)
+        );
+        --btn-bg: #ffffff;
+        --btn-border: rgba(124, 58, 237, 0.14);
+        --input-bg: #ffffff;
+        --input-border: #c7d2fe;
+        --good: #166534;
+        --bad: #991b1b;
+        display: grid;
+        place-items: center;
+        padding: 18px;
       }
 
-      body.page-dictionaries .content,
-      body.page-dictionaries .hero,
-      body.page-dictionaries .footer,
-      body.page-dictionaries .appChrome {
-        padding-left: 16px;
-        padding-right: 16px;
+      html[data-theme="dark"] body.page-dictionaries {
+        color-scheme: dark;
+        --bg1: #0f172a;
+        --bg2: #1e1b4b;
+        --panel: rgba(15, 23, 42, 0.9);
+        --surface: rgba(15, 23, 42, 0.82);
+        --ink: #e2e8f0;
+        --muted: #cbd5e1;
+        --title: #ddd6fe;
+        --accent: #a78bfa;
+        --accent-strong: #818cf8;
+        --shadow: 0 20px 50px rgba(2, 6, 23, 0.5);
+        --border: rgba(148, 163, 184, 0.18);
+        --panel-hero: linear-gradient(
+          135deg,
+          rgba(15, 23, 42, 0.98),
+          rgba(30, 41, 59, 0.98)
+        );
+        --panel-card: linear-gradient(
+          180deg,
+          rgba(15, 23, 42, 0.98),
+          rgba(30, 41, 59, 0.98)
+        );
+        --badge-bg: rgba(30, 41, 59, 0.95);
+        --btn-bg: rgba(30, 41, 59, 0.95);
+        --btn-border: rgba(148, 163, 184, 0.22);
+        --input-bg: rgba(15, 23, 42, 0.96);
+        --input-border: rgba(148, 163, 184, 0.35);
+        --good: #bbf7d0;
+        --bad: #fecaca;
+      }
+
+      body.page-dictionaries .shell {
+        width: 100%;
+        max-width: 1100px;
+        background: var(--panel);
+        border: 4px solid rgba(255, 255, 255, 0.8);
+        border-radius: 32px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
       }
 
       body.page-dictionaries .appChrome {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+        padding: 18px 18px 0;
+        flex-wrap: wrap;
+      }
+
+      body.page-dictionaries .hero {
+        padding: 28px 24px 18px;
+        background: var(--panel-hero);
+        border-bottom: 3px dashed rgba(124, 58, 237, 0.24);
+        text-align: center;
+      }
+
+      body.page-dictionaries .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: var(--btn-bg);
+        border: 2px solid var(--border);
+        font-weight: 800;
+        color: var(--accent);
+        margin-bottom: 14px;
+      }
+
+      body.page-dictionaries h1 {
+        margin: 0;
+        font-size: clamp(2.1rem, 5vw, 3.8rem);
+        color: var(--title);
+        line-height: 1;
+      }
+
+      body.page-dictionaries .subtitle {
+        margin: 12px auto 0;
+        max-width: 760px;
+        font-size: 1.05rem;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+
+      body.page-dictionaries .content {
+        padding: 24px;
+        display: grid;
+        gap: 18px;
+      }
+
+      body.page-dictionaries .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 18px;
+      }
+
+      body.page-dictionaries .card {
+        background: var(--surface);
+        border: 2px solid var(--border);
+        border-radius: 24px;
+        padding: 18px;
+        box-shadow: 0 10px 24px rgba(36, 50, 74, 0.08);
+      }
+
+      body.page-dictionaries .card h2 {
+        margin: 0 0 10px;
+        color: var(--accent);
+        font-size: 1.2rem;
+      }
+
+      body.page-dictionaries .howItWorksPanel {
+        background: rgba(255, 255, 255, 0.55);
+        border: 2px dashed rgba(124, 58, 237, 0.22);
+        color: var(--muted);
+      }
+
+      html[data-theme="dark"] body.page-dictionaries .howItWorksPanel {
+        background: rgba(15, 23, 42, 0.9);
+        border-color: rgba(167, 139, 250, 0.24);
+        color: var(--muted);
+      }
+
+      body.page-dictionaries label {
+        display: block;
+        font-weight: 800;
+        margin-bottom: 10px;
+        font-size: 1.03rem;
+      }
+
+      body.page-dictionaries select,
+      body.page-dictionaries input,
+      body.page-dictionaries textarea {
+        width: 100%;
+        border-radius: 18px;
+        border: 3px solid var(--input-border);
+        padding: 14px 16px;
+        background: var(--input-bg);
+        color: var(--ink);
+        font: inherit;
+        outline: none;
+        box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.6);
+      }
+
+      body.page-dictionaries textarea {
+        min-height: 280px;
+        resize: vertical;
+        line-height: 1.55;
+        white-space: pre-wrap;
+      }
+
+      body.page-dictionaries select:focus,
+      body.page-dictionaries input:focus,
+      body.page-dictionaries textarea:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12);
+      }
+
+      body.page-dictionaries .toolbar,
+      body.page-dictionaries .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      body.page-dictionaries .toolbar {
+        align-items: flex-end;
+        justify-content: space-between;
+        margin-bottom: 14px;
+      }
+
+      body.page-dictionaries .dictionaryPreview {
+        margin: 0 0 14px;
+        padding: 12px 14px;
+        border-radius: 16px;
+        border: 2px dashed rgba(124, 58, 237, 0.22);
+        background: rgba(255, 255, 255, 0.55);
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.45;
+        font-weight: 700;
+      }
+
+      html[data-theme="dark"] body.page-dictionaries .dictionaryPreview {
+        border-color: rgba(167, 139, 250, 0.24);
+        background: rgba(15, 23, 42, 0.9);
+        color: var(--muted);
+      }
+
+      body.page-dictionaries .field {
+        flex: 1 1 240px;
+        min-width: 220px;
+      }
+
+      body.page-dictionaries .btn {
+        border: none;
+        border-radius: 999px;
+        padding: 14px 18px;
+        font-weight: 800;
+        font-size: 1rem;
+        cursor: pointer;
+        transition:
+          transform 0.12s ease,
+          box-shadow 0.12s ease,
+          opacity 0.12s ease;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        color: white;
+        background: linear-gradient(
+          135deg,
+          var(--accent),
+          var(--accent-strong)
+        );
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
         justify-content: center;
+        gap: 8px;
       }
-    }
-  </style>
-</head>
-<body class="page-dictionaries">
-  <main class="shell">
-    <div class="appChrome">
-      <a class="hubLink" href="../../" aria-label="Back to game hub">🏠 Hub</a>
-      <button id="themeBtn" class="themeBtn" type="button" aria-pressed="false">🌙</button>
-    </div>
 
-    <section class="hero" aria-labelledby="managerTitle">
-      <div class="eyebrow">📚 Dictionary Manager</div>
-      <h1 id="managerTitle">Manage your saved word lists</h1>
-      <p class="subtitle">
-        Create named lists, edit the words, switch between them, and use the same selected list in every Robo spelling game.
-      </p>
-    </section>
+      body.page-dictionaries .btn.secondary,
+      body.page-dictionaries .btn.ghost {
+        background: var(--btn-bg);
+        color: var(--accent);
+        border: 2px solid var(--btn-border);
+        box-shadow: none;
+      }
 
-    <section class="content">
-      <div class="grid">
-        <div class="card">
-          <h2>Edit the active list</h2>
-          <div class="toolbar">
-            <div class="field">
-              <label for="dictionarySelect">Word list</label>
-              <select id="dictionarySelect"></select>
-            </div>
-            <div class="actions">
-              <button id="newListBtn" class="btn secondary" type="button">New List</button>
-              <button id="deleteListBtn" class="btn ghost" type="button">Delete List</button>
-            </div>
-          </div>
+      body.page-dictionaries .btn:hover {
+        box-shadow: 0 12px 22px rgba(0, 0, 0, 0.16);
+      }
 
-          <div id="dictionaryPreview" class="dictionaryPreview">Select a list to see a preview.</div>
+      body.page-dictionaries .btn:active {
+        transform: translateY(2px) scale(0.99);
+      }
 
-          <div class="field">
-            <label for="dictionaryNameInput">List name</label>
-            <input id="dictionaryNameInput" type="text" autocomplete="off" spellcheck="false" />
-          </div>
+      body.page-dictionaries .info {
+        font-size: 0.96rem;
+        line-height: 1.55;
+        color: var(--muted);
+        font-weight: 700;
+        padding-top: 4px;
+      }
 
-          <div class="field" style="margin-top: 14px;">
-            <label for="wordInput">Words, one per line</label>
-            <textarea id="wordInput" spellcheck="false" placeholder="apple\nbanana\nrobot\nschool\nfriend"></textarea>
-          </div>
+      body.page-dictionaries .summary {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        margin-top: 12px;
+      }
 
+      body.page-dictionaries .summary .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border-radius: 999px;
+        padding: 10px 12px;
+        background: var(--badge-bg);
+        border: 2px solid var(--border);
+        color: var(--accent);
+        font-weight: 800;
+        text-align: center;
+      }
 
-          <div id="dictionaryInfo" class="info">Loading word lists...</div>
-        </div>
+      body.page-dictionaries .gameLinks {
+        display: grid;
+        gap: 10px;
+        margin-top: 8px;
+      }
 
-        <div class="card howItWorksPanel">
-          <h2>How it works</h2>
-          <div class="summary">
-            <div class="badge">✅ Named lists saved in local storage</div>
-            <div class="badge">✅ Edit the active list live</div>
-            <div class="badge">✅ Remove lists you don’t need</div>
-            <div class="badge">✅ All games use the selected list</div>
-          </div>
-          <div class="gameLinks">
-            <a class="btn" href="../robo/">Open Robo’s Spelling Adventure</a>
-            <a class="btn" href="../robo-hero/">Open Robo Spelling Hero</a>
-            <a class="btn" href="../spell-match/">Open Robo Spell Match</a>
-          </div>
-          <p class="info" style="margin-top: 16px;">
-            Tip: choose a list here first, then open a game. The games use the same saved dictionary data.
-          </p>
-        </div>
+      body.page-dictionaries .gameLinks a {
+        text-decoration: none;
+      }
+
+      body.page-dictionaries .footer {
+        padding: 0 24px 24px;
+        color: var(--muted);
+        font-size: 0.95rem;
+        text-align: center;
+      }
+
+      @media (max-width: 760px) {
+        body.page-dictionaries {
+          padding: 18px 16px;
+        }
+
+        body.page-dictionaries .content,
+        body.page-dictionaries .hero,
+        body.page-dictionaries .footer,
+        body.page-dictionaries .appChrome {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+
+        body.page-dictionaries .appChrome {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body class="page-dictionaries">
+    <main class="shell">
+      <div class="appChrome">
+        <a class="hubLink" href="../../" aria-label="Back to game hub"
+          >🏠 Hub</a
+        >
+        <button
+          id="themeBtn"
+          class="themeBtn"
+          type="button"
+          aria-pressed="false"
+        >
+          🌙
+        </button>
       </div>
-    </section>
 
-    <div class="footer">
-      Your lists stay in this browser. If you want a fresh start, delete the old list and create a new one.
-    </div>
-  </main>
+      <section class="hero" aria-labelledby="managerTitle">
+        <div class="eyebrow">📚 Dictionary Manager</div>
+        <h1 id="managerTitle">Manage your saved word lists</h1>
+        <p class="subtitle">
+          Create named lists, edit the words, switch between them, and use the
+          same selected list in every Robo spelling game.
+        </p>
+      </section>
 
-  <script src="../../shared/js/theme.js" defer></script>
-  <script src="../../shared/js/dictionaries.js" defer></script>
-  <script src="./main.js" defer></script>
-</body>
+      <section class="content">
+        <div class="grid">
+          <div class="card">
+            <h2>Edit the active list</h2>
+            <div class="toolbar">
+              <div class="field">
+                <label for="dictionarySelect">Word list</label>
+                <select id="dictionarySelect"></select>
+              </div>
+              <div class="actions">
+                <button id="newListBtn" class="btn secondary" type="button">
+                  New List
+                </button>
+                <button id="deleteListBtn" class="btn ghost" type="button">
+                  Delete List
+                </button>
+              </div>
+            </div>
+
+            <div id="dictionaryPreview" class="dictionaryPreview">
+              Select a list to see a preview.
+            </div>
+
+            <div class="field">
+              <label for="dictionaryNameInput">List name</label>
+              <input
+                id="dictionaryNameInput"
+                type="text"
+                autocomplete="off"
+                spellcheck="false"
+              />
+            </div>
+
+            <div class="field" style="margin-top: 14px">
+              <label for="wordInput">Words, one per line</label>
+              <textarea
+                id="wordInput"
+                spellcheck="false"
+                placeholder="apple\nbanana\nrobot\nschool\nfriend"
+              ></textarea>
+            </div>
+
+            <div id="dictionaryInfo" class="info">Loading word lists...</div>
+          </div>
+
+          <div class="card howItWorksPanel">
+            <h2>How it works</h2>
+            <div class="summary">
+              <div class="badge">✅ Named lists saved in local storage</div>
+              <div class="badge">✅ Edit the active list live</div>
+              <div class="badge">✅ Remove lists you don’t need</div>
+              <div class="badge">✅ All games use the selected list</div>
+            </div>
+            <div class="gameLinks">
+              <a class="btn" href="../robo/">Open Robo’s Spelling Adventure</a>
+              <a class="btn" href="../robo-hero/">Open Robo Spelling Hero</a>
+              <a class="btn" href="../spell-match/">Open Robo Spell Match</a>
+            </div>
+            <p class="info" style="margin-top: 16px">
+              Tip: choose a list here first, then open a game. The games use the
+              same saved dictionary data.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="footer">
+        Your lists stay in this browser. If you want a fresh start, delete the
+        old list and create a new one.
+      </div>
+    </main>
+
+    <script src="../../shared/js/theme.js" defer></script>
+    <script src="../../shared/js/dictionaries.js" defer></script>
+    <script src="./main.js" defer></script>
+  </body>
 </html>
-

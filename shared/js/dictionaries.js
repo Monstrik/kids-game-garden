@@ -1,13 +1,15 @@
 (function () {
-  const STORAGE_KEY = 'kids-game-garden.dictionaries';
+  const STORAGE_KEY = "kids-game-garden.dictionaries";
   const LEGACY_WORD_KEYS = [
-    'kids-game-garden.words',
-    'robo-saves-cookies.words',
-    'robo-spelling-hero.words',
-    'spell-match.words'
+    "kids-game-garden.words",
+    "robo-saves-cookies.words",
+    "robo-spelling-hero.words",
+    "spell-match.words",
   ];
-  const DEFAULT_WORDS = ['apple', 'banana', 'robot', 'school', 'friend'].join('\n');
-  const DEFAULT_LIST_NAME = 'Starter list';
+  const DEFAULT_WORDS = ["apple", "banana", "robot", "school", "friend"].join(
+    "\n",
+  );
+  const DEFAULT_LIST_NAME = "Starter list";
 
   const api = (window.GameDictionaries = window.GameDictionaries || {});
 
@@ -19,11 +21,15 @@
   }
 
   function normalizeName(name) {
-    return String(name || '').trim().replace(/\s+/g, ' ') || DEFAULT_LIST_NAME;
+    return (
+      String(name || "")
+        .trim()
+        .replace(/\s+/g, " ") || DEFAULT_LIST_NAME
+    );
   }
 
   function normalizeWords(text) {
-    return String(text ?? '').replace(/\r\n/g, '\n');
+    return String(text ?? "").replace(/\r\n/g, "\n");
   }
 
   function createDictionary(name = DEFAULT_LIST_NAME, words = DEFAULT_WORDS) {
@@ -33,7 +39,7 @@
       name: normalizeName(name),
       words: normalizeWords(words),
       createdAt: now,
-      updatedAt: now
+      updatedAt: now,
     };
   }
 
@@ -47,37 +53,48 @@
 
   function buildDefaultState() {
     const legacyWords = readLegacyWords();
-    const dictionary = createDictionary(DEFAULT_LIST_NAME, legacyWords !== null ? legacyWords : DEFAULT_WORDS);
+    const dictionary = createDictionary(
+      DEFAULT_LIST_NAME,
+      legacyWords !== null ? legacyWords : DEFAULT_WORDS,
+    );
     return {
       activeId: dictionary.id,
-      dictionaries: [dictionary]
+      dictionaries: [dictionary],
     };
   }
 
   function sanitizeDictionary(raw, index = 0) {
-    const dictionary = raw && typeof raw === 'object' ? raw : {};
+    const dictionary = raw && typeof raw === "object" ? raw : {};
     const now = Date.now();
 
     return {
       id: String(dictionary.id || `dict-${index + 1}-${now}`),
       name: normalizeName(dictionary.name),
       words: normalizeWords(dictionary.words),
-      createdAt: Number.isFinite(dictionary.createdAt) ? dictionary.createdAt : now,
-      updatedAt: Number.isFinite(dictionary.updatedAt) ? dictionary.updatedAt : now
+      createdAt: Number.isFinite(dictionary.createdAt)
+        ? dictionary.createdAt
+        : now,
+      updatedAt: Number.isFinite(dictionary.updatedAt)
+        ? dictionary.updatedAt
+        : now,
     };
   }
 
   function sanitizeState(rawState) {
-    const state = rawState && typeof rawState === 'object' ? rawState : {};
+    const state = rawState && typeof rawState === "object" ? rawState : {};
     const dictionaries = Array.isArray(state.dictionaries)
-      ? state.dictionaries.map((dictionary, index) => sanitizeDictionary(dictionary, index))
+      ? state.dictionaries.map((dictionary, index) =>
+          sanitizeDictionary(dictionary, index),
+        )
       : [];
 
     if (!dictionaries.length) {
       return buildDefaultState();
     }
 
-    const activeId = dictionaries.some(dictionary => dictionary.id === state.activeId)
+    const activeId = dictionaries.some(
+      (dictionary) => dictionary.id === state.activeId,
+    )
       ? state.activeId
       : dictionaries[0].id;
 
@@ -88,7 +105,10 @@
     if (!cachedState) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(cachedState));
-      localStorage.setItem(LEGACY_WORD_KEYS[0], getActiveDictionary(cachedState)?.words || '');
+      localStorage.setItem(
+        LEGACY_WORD_KEYS[0],
+        getActiveDictionary(cachedState)?.words || "",
+      );
     } catch {
       // If storage is unavailable, keep the in-memory state available for the session.
     }
@@ -122,26 +142,34 @@
   }
 
   function getActiveDictionary(currentState = getState()) {
-    return currentState.dictionaries.find(dictionary => dictionary.id === currentState.activeId) || currentState.dictionaries[0] || null;
+    return (
+      currentState.dictionaries.find(
+        (dictionary) => dictionary.id === currentState.activeId,
+      ) ||
+      currentState.dictionaries[0] ||
+      null
+    );
   }
 
   function getActiveDictionaryIndex(currentState = getState()) {
-    return currentState.dictionaries.findIndex(dictionary => dictionary.id === currentState.activeId);
+    return currentState.dictionaries.findIndex(
+      (dictionary) => dictionary.id === currentState.activeId,
+    );
   }
 
   function getActiveWords() {
-    return getActiveDictionary()?.words || '';
+    return getActiveDictionary()?.words || "";
   }
 
   function getWordPreviewText(words) {
-    const list = String(words || '')
+    const list = String(words || "")
       .split(/\r?\n/)
-      .map(word => word.trim())
+      .map((word) => word.trim())
       .filter(Boolean);
 
-    if (!list.length) return 'No words in this list yet.';
+    if (!list.length) return "No words in this list yet.";
 
-    const preview = list.slice(0, 4).join(' · ');
+    const preview = list.slice(0, 4).join(" · ");
     return list.length > 4 ? `${preview} · +${list.length - 4} more` : preview;
   }
 
@@ -152,14 +180,14 @@
     const state = getState();
     const activeDictionary = getActiveDictionary(state);
     select.replaceChildren(
-      ...state.dictionaries.map(dictionary => {
-        const option = document.createElement('option');
+      ...state.dictionaries.map((dictionary) => {
+        const option = document.createElement("option");
         option.value = dictionary.id;
         option.textContent = dictionary.name;
         return option;
-      })
+      }),
     );
-    select.value = activeDictionary ? activeDictionary.id : '';
+    select.value = activeDictionary ? activeDictionary.id : "";
   }
 
   function syncInputsFromActive() {
@@ -167,15 +195,24 @@
     const activeDictionary = getActiveDictionary(state);
     if (!activeDictionary) return;
 
-    if (boundElements.nameInput && boundElements.nameInput.value !== activeDictionary.name) {
+    if (
+      boundElements.nameInput &&
+      boundElements.nameInput.value !== activeDictionary.name
+    ) {
       boundElements.nameInput.value = activeDictionary.name;
     }
 
-    if (boundElements.wordsInput && boundElements.wordsInput.value !== activeDictionary.words) {
+    if (
+      boundElements.wordsInput &&
+      boundElements.wordsInput.value !== activeDictionary.words
+    ) {
       boundElements.wordsInput.value = activeDictionary.words;
     }
 
-    if (boundElements.select && boundElements.select.value !== activeDictionary.id) {
+    if (
+      boundElements.select &&
+      boundElements.select.value !== activeDictionary.id
+    ) {
       boundElements.select.value = activeDictionary.id;
     }
   }
@@ -188,15 +225,14 @@
     const activeDictionary = getActiveDictionary(state);
     const activeIndex = getActiveDictionaryIndex(state);
     const total = state.dictionaries.length;
-    const wordCount = (activeDictionary?.words || '')
+    const wordCount = (activeDictionary?.words || "")
       .split(/\r?\n/)
-      .map(line => line.trim())
-      .filter(Boolean)
-      .length;
+      .map((line) => line.trim())
+      .filter(Boolean).length;
 
     info.textContent = activeDictionary
-      ? `${total} list${total === 1 ? '' : 's'} saved. Editing “${activeDictionary.name}” (${wordCount} word${wordCount === 1 ? '' : 's'}). Changes save automatically.`
-      : 'No word lists yet. Create one to get started.';
+      ? `${total} list${total === 1 ? "" : "s"} saved. Editing “${activeDictionary.name}” (${wordCount} word${wordCount === 1 ? "" : "s"}). Changes save automatically.`
+      : "No word lists yet. Create one to get started.";
 
     if (boundElements.deleteBtn) {
       boundElements.deleteBtn.disabled = total <= 1 && !activeDictionary;
@@ -214,16 +250,16 @@
     const state = getState();
     const activeDictionary = getActiveDictionary(state);
     if (!activeDictionary) {
-      preview.textContent = 'No list selected.';
+      preview.textContent = "No list selected.";
       return;
     }
 
     const wordCount = activeDictionary.words
       .split(/\r?\n/)
-      .map(word => word.trim())
+      .map((word) => word.trim())
       .filter(Boolean).length;
 
-    preview.textContent = `${wordCount} word${wordCount === 1 ? '' : 's'}: ${getWordPreviewText(activeDictionary.words)}`;
+    preview.textContent = `${wordCount} word${wordCount === 1 ? "" : "s"}: ${getWordPreviewText(activeDictionary.words)}`;
   }
 
   function applyView() {
@@ -235,7 +271,8 @@
 
   function setActiveDictionary(id) {
     const state = getState();
-    if (!state.dictionaries.some(dictionary => dictionary.id === id)) return null;
+    if (!state.dictionaries.some((dictionary) => dictionary.id === id))
+      return null;
     state.activeId = id;
     persistState();
     applyView();
@@ -247,11 +284,11 @@
     const activeDictionary = getActiveDictionary(state);
     if (!activeDictionary) return null;
 
-    if (Object.prototype.hasOwnProperty.call(patch, 'name')) {
+    if (Object.prototype.hasOwnProperty.call(patch, "name")) {
       activeDictionary.name = normalizeName(patch.name);
     }
 
-    if (Object.prototype.hasOwnProperty.call(patch, 'words')) {
+    if (Object.prototype.hasOwnProperty.call(patch, "words")) {
       activeDictionary.words = normalizeWords(patch.words);
     }
 
@@ -262,7 +299,7 @@
     return activeDictionary;
   }
 
-  function createNewDictionary(name = DEFAULT_LIST_NAME, words = '') {
+  function createNewDictionary(name = DEFAULT_LIST_NAME, words = "") {
     const state = getState();
     const dictionary = createDictionary(name, words);
     state.dictionaries.push(dictionary);
@@ -275,7 +312,7 @@
   function deleteDictionary(id = getState().activeId) {
     const state = getState();
     if (state.dictionaries.length <= 1) {
-      const replacement = createDictionary(DEFAULT_LIST_NAME, '');
+      const replacement = createDictionary(DEFAULT_LIST_NAME, "");
       state.dictionaries = [replacement];
       state.activeId = replacement.id;
       persistState();
@@ -283,8 +320,12 @@
       return replacement;
     }
 
-    state.dictionaries = state.dictionaries.filter(dictionary => dictionary.id !== id);
-    if (!state.dictionaries.some(dictionary => dictionary.id === state.activeId)) {
+    state.dictionaries = state.dictionaries.filter(
+      (dictionary) => dictionary.id !== id,
+    );
+    if (
+      !state.dictionaries.some((dictionary) => dictionary.id === state.activeId)
+    ) {
       state.activeId = state.dictionaries[0].id;
     }
 
@@ -303,35 +344,66 @@
 
   function initDictionaryManager(elements = {}) {
     boundElements = {
-      select: elements.dictionarySelect || elements.select || document.getElementById('dictionarySelect'),
-      nameInput: elements.dictionaryNameInput || elements.nameInput || document.getElementById('dictionaryNameInput'),
-      wordsInput: elements.wordInput || elements.wordsInput || document.getElementById('wordInput'),
-      newBtn: elements.newListBtn || elements.newBtn || document.getElementById('newListBtn'),
-      deleteBtn: elements.deleteListBtn || elements.deleteBtn || document.getElementById('deleteListBtn'),
-      info: elements.dictionaryInfo || elements.info || document.getElementById('dictionaryInfo'),
-      preview: elements.dictionaryPreview || elements.preview || document.getElementById('dictionaryPreview')
+      select:
+        elements.dictionarySelect ||
+        elements.select ||
+        document.getElementById("dictionarySelect"),
+      nameInput:
+        elements.dictionaryNameInput ||
+        elements.nameInput ||
+        document.getElementById("dictionaryNameInput"),
+      wordsInput:
+        elements.wordInput ||
+        elements.wordsInput ||
+        document.getElementById("wordInput"),
+      newBtn:
+        elements.newListBtn ||
+        elements.newBtn ||
+        document.getElementById("newListBtn"),
+      deleteBtn:
+        elements.deleteListBtn ||
+        elements.deleteBtn ||
+        document.getElementById("deleteListBtn"),
+      info:
+        elements.dictionaryInfo ||
+        elements.info ||
+        document.getElementById("dictionaryInfo"),
+      preview:
+        elements.dictionaryPreview ||
+        elements.preview ||
+        document.getElementById("dictionaryPreview"),
     };
 
     applyView();
 
     if (boundElements.select) {
-      boundElements.select.addEventListener('change', () => setActiveDictionary(boundElements.select.value));
+      boundElements.select.addEventListener("change", () =>
+        setActiveDictionary(boundElements.select.value),
+      );
     }
 
     if (boundElements.nameInput) {
-      boundElements.nameInput.addEventListener('input', () => setActiveName(boundElements.nameInput.value));
+      boundElements.nameInput.addEventListener("input", () =>
+        setActiveName(boundElements.nameInput.value),
+      );
     }
 
     if (boundElements.wordsInput) {
-      boundElements.wordsInput.addEventListener('input', () => setActiveWords(boundElements.wordsInput.value));
+      boundElements.wordsInput.addEventListener("input", () =>
+        setActiveWords(boundElements.wordsInput.value),
+      );
     }
 
     if (boundElements.newBtn) {
-      boundElements.newBtn.addEventListener('click', () => createNewDictionary());
+      boundElements.newBtn.addEventListener("click", () =>
+        createNewDictionary(),
+      );
     }
 
     if (boundElements.deleteBtn) {
-      boundElements.deleteBtn.addEventListener('click', () => deleteDictionary());
+      boundElements.deleteBtn.addEventListener("click", () =>
+        deleteDictionary(),
+      );
     }
 
     return api;
@@ -349,4 +421,3 @@
   api.deleteDictionary = deleteDictionary;
   api.initDictionaryManager = initDictionaryManager;
 })();
-

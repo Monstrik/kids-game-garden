@@ -6,28 +6,31 @@
   const ui = {};
 
   ui.updateSoundButton = function updateSoundButton() {
-    els.soundBtn.textContent = state.soundOn ? 'Sound On' : 'Sound Off';
-    localStorage.setItem(RoboGame.constants.STORAGE_KEYS.sound, String(state.soundOn));
+    els.soundBtn.textContent = state.soundOn ? "Sound On" : "Sound Off";
+    localStorage.setItem(
+      RoboGame.constants.STORAGE_KEYS.sound,
+      String(state.soundOn),
+    );
   };
 
   ui.updateThemeButton = function updateThemeButton(theme) {
-    const isDark = theme === 'dark';
-    els.themeBtn.textContent = isDark ? '☀️' : '🌙';
-    els.themeBtn.setAttribute('aria-pressed', String(isDark));
+    const isDark = theme === "dark";
+    els.themeBtn.textContent = isDark ? "☀️" : "🌙";
+    els.themeBtn.setAttribute("aria-pressed", String(isDark));
   };
 
   ui.updateRoboAccessory = function updateRoboAccessory() {
     els.accessory.textContent = getAccessoryForCookies(state.cookies);
-    els.roboEmoji.classList.remove('wiggle');
+    els.roboEmoji.classList.remove("wiggle");
     void els.roboEmoji.offsetWidth;
-    els.roboEmoji.classList.add('wiggle');
+    els.roboEmoji.classList.add("wiggle");
   };
 
   ui.updateHeaderStats = function updateHeaderStats() {
     els.cookieCount.textContent = state.cookies;
     els.progressFill.style.width = state.gameWords.length
       ? `${(state.solved / state.gameWords.length) * 100}%`
-      : '0';
+      : "0";
     els.progressText.textContent = `${state.solved} of ${state.gameWords.length} words`;
     els.wordPosition.textContent = state.currentWord
       ? `Word ${state.currentIndex + 1} / ${state.gameWords.length}`
@@ -35,29 +38,29 @@
     ui.updateRoboAccessory();
   };
 
-  ui.showMessage = function showMessage(text, tone = 'neutral') {
+  ui.showMessage = function showMessage(text, tone = "neutral") {
     els.messageBox.textContent = text;
-    els.messageBox.classList.remove('good', 'bad', 'slideIn');
-    if (tone === 'good') els.messageBox.classList.add('good');
-    if (tone === 'bad') els.messageBox.classList.add('bad');
-    els.messageBox.classList.add('slideIn');
+    els.messageBox.classList.remove("good", "bad", "slideIn");
+    if (tone === "good") els.messageBox.classList.add("good");
+    if (tone === "bad") els.messageBox.classList.add("bad");
+    els.messageBox.classList.add("slideIn");
   };
 
   ui.clearBoard = function clearBoard() {
     state.locked = false;
-    els.nextBtn.style.display = 'none';
-    els.choiceGrid.innerHTML = '';
+    els.nextBtn.style.display = "none";
+    els.choiceGrid.innerHTML = "";
   };
 
   ui.renderSlots = function renderSlots() {};
   ui.renderLetterBank = function renderLetterBank() {};
 
   ui.renderChoices = function renderChoices() {
-    els.choiceGrid.innerHTML = '';
-    state.currentChoices.forEach(choice => {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'choiceButton';
+    els.choiceGrid.innerHTML = "";
+    state.currentChoices.forEach((choice) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "choiceButton";
       button.dataset.choice = choice;
       button.textContent = choice;
       button.disabled = state.locked;
@@ -67,5 +70,3 @@
 
   RoboGame.ui = ui;
 })();
-
-

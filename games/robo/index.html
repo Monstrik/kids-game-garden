@@ -1,159 +1,252 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Robo's Spelling Adventure</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c3aed'/%3E%3Ctext x='32' y='37' text-anchor='middle' font-size='30'%3E%F0%9F%A4%96%3C/text%3E%3Ccircle cx='47' cy='16' r='7' fill='%23f97316'/%3E%3Cpath d='M42 16h10' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='47' cy='16' r='2.5' fill='white'/%3E%3C/svg%3E" />
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c3aed'/%3E%3Ctext x='32' y='37' text-anchor='middle' font-size='30'%3E%F0%9F%A4%96%3C/text%3E%3Ccircle cx='47' cy='16' r='7' fill='%23f97316'/%3E%3Cpath d='M42 16h10' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='47' cy='16' r='2.5' fill='white'/%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="../../shared/css/shared.css" />
-  <link rel="stylesheet" href="../../shared/css/game-shell.css" />
-</head>
-<body class="page-robo">
-  <div class="app">
-    <div class="appChrome">
-      <a class="hubLink" href="../../" aria-label="Back to game hub">🏠 Hub</a>
-      <button id="themeBtn" class="themeBtn" type="button" aria-pressed="false">🌙</button>
-    </div>
-    <!-- Setup Screen -->
-    <section id="setupScreen" class="screen active" aria-labelledby="setupTitle">
-      <div class="header">
-        <div class="titleRow">
-          <div>
-            <h1 id="setupTitle">🤖 Robo's Spelling Adventure</h1>
-            <div class="subtitle">Listen to Robo, then spell each word for a cookie!</div>
-          </div>
-        </div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Robo's Spelling Adventure</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c3aed'/%3E%3Ctext x='32' y='37' text-anchor='middle' font-size='30'%3E%F0%9F%A4%96%3C/text%3E%3Ccircle cx='47' cy='16' r='7' fill='%23f97316'/%3E%3Cpath d='M42 16h10' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='47' cy='16' r='2.5' fill='white'/%3E%3C/svg%3E"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c3aed'/%3E%3Ctext x='32' y='37' text-anchor='middle' font-size='30'%3E%F0%9F%A4%96%3C/text%3E%3Ccircle cx='47' cy='16' r='7' fill='%23f97316'/%3E%3Cpath d='M42 16h10' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='47' cy='16' r='2.5' fill='white'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="../../shared/css/shared.css" />
+    <link rel="stylesheet" href="../../shared/css/game-shell.css" />
+  </head>
+  <body class="page-robo">
+    <div class="app">
+      <div class="appChrome">
+        <a class="hubLink" href="../../" aria-label="Back to game hub"
+          >🏠 Hub</a
+        >
+        <button
+          id="themeBtn"
+          class="themeBtn"
+          type="button"
+          aria-pressed="false"
+        >
+          🌙
+        </button>
       </div>
-
-      <div class="content">
-        <div class="setupGrid">
-          <div class="card dictionaryManager">
-            <div class="dictionaryToolbar">
-              <select id="dictionarySelect" aria-label="Choose a word list"></select>
-              <button id="dictionaryManagerBtn" class="btn ghost" type="button" aria-label="Open Dictionary Manager" title="Open Dictionary Manager">📚</button>
-            </div>
-            <div id="dictionaryPreview" class="dictionaryPreview">Select a list to see a preview.</div>
-            <div class="btnRow">
-              <button id="startBtn" class="btn">Start Game</button>
-            </div>
-          </div>
-
-          <div class="exampleBox">
-            <h2>How it works</h2>
-            <div class="exampleWords">Example words:
-apple
-banana
-robot
-school
-friend</div>
-              <p style="margin: 14px 0 0; font-weight: 700; line-height: 1.6;">
-              Robo says each word out loud and your child puts the letters back in the correct order.
-            </p>
-            <p style="margin: 10px 0 0; line-height: 1.6;">
-              ✅ Choose a saved list by name, or make a new one<br />
-              ✅ Tap letters or drag them<br />
-              ✅ Get a cookie for each correct word<br />
-              ✅ Every 5 cookies gives Robo a new accessory
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Game Screen -->
-    <section id="gameScreen" class="screen" aria-labelledby="gameTitle">
-      <div class="header">
-        <div class="topBar">
-          <div class="roboBox">
-            <div class="roboWrap">
-              <div id="accessory" class="accessory" aria-hidden="true"></div>
-              <div id="roboEmoji" class="roboEmoji" aria-label="Robot">🤖</div>
-            </div>
+      <!-- Setup Screen -->
+      <section
+        id="setupScreen"
+        class="screen active"
+        aria-labelledby="setupTitle"
+      >
+        <div class="header">
+          <div class="titleRow">
             <div>
-              <div class="roboName" id="gameTitle">Robo's Spelling Adventure</div>
-              <div id="roboStatus" class="statusLine">Listen closely, then spell some words!</div>
+              <h1 id="setupTitle">🤖 Robo's Spelling Adventure</h1>
+              <div class="subtitle">
+                Listen to Robo, then spell each word for a cookie!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="setupGrid">
+            <div class="card dictionaryManager">
+              <div class="dictionaryToolbar">
+                <select
+                  id="dictionarySelect"
+                  aria-label="Choose a word list"
+                ></select>
+                <button
+                  id="dictionaryManagerBtn"
+                  class="btn ghost"
+                  type="button"
+                  aria-label="Open Dictionary Manager"
+                  title="Open Dictionary Manager"
+                >
+                  📚
+                </button>
+              </div>
+              <div id="dictionaryPreview" class="dictionaryPreview">
+                Select a list to see a preview.
+              </div>
+              <div class="btnRow">
+                <button id="startBtn" class="btn">Start Game</button>
+              </div>
+            </div>
+
+            <div class="exampleBox">
+              <h2>How it works</h2>
+              <div class="exampleWords">
+                Example words: apple banana robot school friend
+              </div>
+              <p style="margin: 14px 0 0; font-weight: 700; line-height: 1.6">
+                Robo says each word out loud and your child puts the letters
+                back in the correct order.
+              </p>
+              <p style="margin: 10px 0 0; line-height: 1.6">
+                ✅ Choose a saved list by name, or make a new one<br />
+                ✅ Tap letters or drag them<br />
+                ✅ Get a cookie for each correct word<br />
+                ✅ Every 5 cookies gives Robo a new accessory
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Game Screen -->
+      <section id="gameScreen" class="screen" aria-labelledby="gameTitle">
+        <div class="header">
+          <div class="topBar">
+            <div class="roboBox">
+              <div class="roboWrap">
+                <div id="accessory" class="accessory" aria-hidden="true"></div>
+                <div id="roboEmoji" class="roboEmoji" aria-label="Robot">
+                  🤖
+                </div>
+              </div>
+              <div>
+                <div class="roboName" id="gameTitle">
+                  Robo's Spelling Adventure
+                </div>
+                <div id="roboStatus" class="statusLine">
+                  Listen closely, then spell some words!
+                </div>
+              </div>
+            </div>
+
+            <div class="pillRow">
+              <div id="cookieCounter" class="pill cookieCounter">
+                🍪 Cookies: <span id="cookieCount">0</span>
+              </div>
+              <div class="pill">
+                🔊 <button id="soundBtn" type="button">Sound On</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content gameLayout">
+          <div class="card">
+            <div class="progressWrap" aria-label="Progress bar">
+              <div id="progressFill" class="progressFill"></div>
+            </div>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                gap: 10px;
+                margin-top: 8px;
+                font-weight: 800;
+                color: var(--ink-soft);
+              "
+            >
+              <span id="progressText">0 of 0 words</span>
+              <span id="wordPosition">Word 0 / 0</span>
             </div>
           </div>
 
-          <div class="pillRow">
-            <div id="cookieCounter" class="pill cookieCounter">🍪 Cookies: <span id="cookieCount">0</span></div>
-            <div class="pill">🔊 <button id="soundBtn" type="button">Sound On</button></div>
+          <div class="wordCard">
+            <div class="bigWordLabel">Build the word</div>
+            <div
+              id="emojiHint"
+              class="emojiHint"
+              style="display: none"
+              aria-hidden="true"
+            ></div>
+            <div id="slots" class="slots" aria-label="Answer slots"></div>
+
+            <div class="bankWrap">
+              <div
+                class="bigWordLabel"
+                style="
+                  margin-bottom: 12px;
+                  text-align: center;
+                  color: var(--accent-warning-start);
+                "
+              >
+                Scrambled letters
+              </div>
+              <div
+                id="letterBank"
+                class="letterBank"
+                aria-label="Scrambled letters"
+              ></div>
+            </div>
+
+            <div id="messageBox" class="messageBox" aria-live="polite">
+              Listen carefully!
+            </div>
+            <div id="hintText" class="hintText"></div>
+
+            <div class="footerActions">
+              <button id="hintBtn" class="btn secondary" type="button">
+                Hint
+              </button>
+              <button id="resetBtn" class="btn ghost" type="button">
+                Reset
+              </button>
+              <button id="checkBtn" class="btn ghost" type="button">
+                Check
+              </button>
+              <button
+                id="nextBtn"
+                class="btn warn"
+                type="button"
+                style="display: none"
+              >
+                Next
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="content gameLayout">
-        <div class="card">
-          <div class="progressWrap" aria-label="Progress bar">
-            <div id="progressFill" class="progressFill"></div>
-          </div>
-          <div style="display:flex; justify-content:space-between; gap:10px; margin-top:8px; font-weight:800; color:var(--ink-soft);">
-            <span id="progressText">0 of 0 words</span>
-            <span id="wordPosition">Word 0 / 0</span>
+      <!-- End Screen -->
+      <section id="endScreen" class="screen" aria-labelledby="endTitle">
+        <div class="header">
+          <div class="titleRow">
+            <div>
+              <h1 id="endTitle">🎉 Great Job!</h1>
+              <div class="subtitle">You helped Robo save all the cookies!</div>
+            </div>
+            <div class="pillRow">
+              <div class="pill">
+                🍪 Final cookie count: <span id="finalCookies">0</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="wordCard">
-          <div class="bigWordLabel">Build the word</div>
-          <div id="emojiHint" class="emojiHint" style="display:none" aria-hidden="true"></div>
-          <div id="slots" class="slots" aria-label="Answer slots"></div>
-
-          <div class="bankWrap">
-            <div class="bigWordLabel" style="margin-bottom:12px; text-align:center; color:var(--accent-warning-start);">Scrambled letters</div>
-            <div id="letterBank" class="letterBank" aria-label="Scrambled letters"></div>
-          </div>
-
-          <div id="messageBox" class="messageBox" aria-live="polite">Listen carefully!</div>
-          <div id="hintText" class="hintText"></div>
-
-          <div class="footerActions">
-            <button id="hintBtn" class="btn secondary" type="button">Hint</button>
-            <button id="resetBtn" class="btn ghost" type="button">Reset</button>
-            <button id="checkBtn" class="btn ghost" type="button">Check</button>
-            <button id="nextBtn" class="btn warn" type="button" style="display:none;">Next</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- End Screen -->
-    <section id="endScreen" class="screen" aria-labelledby="endTitle">
-      <div class="header">
-        <div class="titleRow">
-          <div>
-            <h1 id="endTitle">🎉 Great Job!</h1>
-            <div class="subtitle">You helped Robo save all the cookies!</div>
-          </div>
-          <div class="pillRow">
-            <div class="pill">🍪 Final cookie count: <span id="finalCookies">0</span></div>
+        <div class="content">
+          <div class="card">
+            <div class="celebration">🤖🍪✨</div>
+            <div class="endStats" id="endStats">
+              Words completed: 0<br />
+              Cookies earned: 0
+            </div>
+            <div
+              class="btnRow"
+              style="justify-content: center; margin-top: 16px"
+            >
+              <button id="playAgainBtn" class="btn" type="button">
+                Play Again
+              </button>
+              <button id="newWordsBtn" class="btn secondary" type="button">
+                Enter New Words
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="content">
-        <div class="card">
-          <div class="celebration">🤖🍪✨</div>
-          <div class="endStats" id="endStats">
-            Words completed: 0<br />
-            Cookies earned: 0
-          </div>
-          <div class="btnRow" style="justify-content:center; margin-top:16px;">
-            <button id="playAgainBtn" class="btn" type="button">Play Again</button>
-            <button id="newWordsBtn" class="btn secondary" type="button">Enter New Words</button>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-  <script src="../../shared/js/theme.js" defer></script>
-  <script src="../../shared/js/dictionaries.js" defer></script>
-  <script src="../../shared/js/game-common.js" defer></script>
-  <script src="js/constants.js" defer></script>
-  <script src="js/state.js" defer></script>
-  <script src="js/utils.js" defer></script>
-  <script src="js/ui.js" defer></script>
-  <script src="js/game.js" defer></script>
-  <script src="js/main.js" defer></script>
-</body>
+      </section>
+    </div>
+    <script src="../../shared/js/theme.js" defer></script>
+    <script src="../../shared/js/dictionaries.js" defer></script>
+    <script src="../../shared/js/game-common.js" defer></script>
+    <script src="js/constants.js" defer></script>
+    <script src="js/state.js" defer></script>
+    <script src="js/utils.js" defer></script>
+    <script src="js/ui.js" defer></script>
+    <script src="js/game.js" defer></script>
+    <script src="js/main.js" defer></script>
+  </body>
 </html>

@@ -6,25 +6,26 @@
   const game = {};
 
   game.parseWordsFromTextarea = function parseWordsFromTextarea() {
-    return utils.loadSavedWords()
+    return utils
+      .loadSavedWords()
       .split(/\r?\n/)
       .map(utils.normalizeWord)
       .filter(Boolean)
-      .filter(word => /[A-Z]/.test(word));
+      .filter((word) => /[A-Z]/.test(word));
   };
 
   game.buildGameWords = function buildGameWords(words) {
-    return utils.fisherYatesShuffle(words).map(word => ({
+    return utils.fisherYatesShuffle(words).map((word) => ({
       answer: word,
-      letters: utils.shuffleWordLetters(word)
+      letters: utils.shuffleWordLetters(word),
     }));
   };
 
   game.startGame = function startGame() {
     const words = game.parseWordsFromTextarea();
     if (!words.length) {
-      ui.showMessage('Please choose a word list with words in it!', 'bad');
-      utils.setScreen('setup');
+      ui.showMessage("Please choose a word list with words in it!", "bad");
+      utils.setScreen("setup");
       return;
     }
 
@@ -34,10 +35,10 @@
     state.cookies = 0;
     state.solved = 0;
     state.currentWord = state.gameWords[0];
-    utils.setScreen('game');
-    ui.showMessage('Listen first, then type the word!');
+    utils.setScreen("game");
+    ui.showMessage("Listen first, then type the word!");
     game.loadCurrentWord();
-    utils.playTone(523, 0.08, 'triangle', 0.03);
+    utils.playTone(523, 0.08, "triangle", 0.03);
   };
 
   game.loadCurrentWord = function loadCurrentWord() {
@@ -48,7 +49,7 @@
 
     els.emojiHint.textContent = state.currentWord.answer;
     els.roboStatus.textContent = `Listen closely, then type ${state.currentWord.answer.length} letters for a cookie!`;
-    ui.showMessage('Listen carefully!');
+    ui.showMessage("Listen carefully!");
     ui.clearBoard();
     ui.updateHeaderStats();
     setTimeout(() => game.replayWord(), 180);
@@ -77,8 +78,8 @@
 
   game.clearTypedAnswer = function clearTypedAnswer() {
     if (!state.currentWord || state.locked) return;
-    els.answerInput.value = '';
-    state.typedAnswer = '';
+    els.answerInput.value = "";
+    state.typedAnswer = "";
     els.answerInput.focus();
   };
 
@@ -96,7 +97,7 @@
     if (!state.currentWord || state.locked) return;
     const guess = game.currentGuess();
     if (!guess) {
-      ui.showMessage('Type the word first!', 'bad');
+      ui.showMessage("Type the word first!", "bad");
       els.answerInput.focus();
       return;
     }
@@ -112,21 +113,21 @@
     state.cookies += 1;
     state.solved += 1;
     ui.updateHeaderStats();
-    ui.showMessage(`Great Job! ${utils.pickFunMessage()}`, 'good');
-    els.roboStatus.textContent = 'Yay! Robo got a cookie!';
+    ui.showMessage(`Great Job! ${utils.pickFunMessage()}`, "good");
+    els.roboStatus.textContent = "Yay! Robo got a cookie!";
     if (els.answerInput) els.answerInput.disabled = true;
-    utils.playTone(659, 0.09, 'triangle', 0.05);
-    setTimeout(() => utils.playTone(784, 0.12, 'triangle', 0.05), 110);
+    utils.playTone(659, 0.09, "triangle", 0.05);
+    setTimeout(() => utils.playTone(784, 0.12, "triangle", 0.05), 110);
     utils.speakWord(state.currentWord.answer);
 
-    els.nextBtn.style.display = 'inline-flex';
-    els.checkBtn.style.display = 'none';
+    els.nextBtn.style.display = "inline-flex";
+    els.checkBtn.style.display = "none";
   };
 
   game.handleWrongAnswer = function handleWrongAnswer() {
-    ui.showMessage('Try Again!', 'bad');
-    els.roboStatus.textContent = 'Almost there — listen again and keep trying!';
-    utils.playTone(196, 0.12, 'sawtooth', 0.04);
+    ui.showMessage("Try Again!", "bad");
+    els.roboStatus.textContent = "Almost there — listen again and keep trying!";
+    utils.playTone(196, 0.12, "sawtooth", 0.04);
     if (els.answerInput) {
       els.answerInput.focus();
       els.answerInput.select();
@@ -146,29 +147,28 @@
   game.resetCurrentWord = function resetCurrentWord() {
     if (!state.currentWord) return;
     ui.clearBoard();
-    els.roboStatus.textContent = 'Try the word again — listen closely!';
-    ui.showMessage('Listen carefully!');
+    els.roboStatus.textContent = "Try the word again — listen closely!";
+    ui.showMessage("Listen carefully!");
     game.replayWord();
   };
 
-
   game.finishGame = function finishGame() {
-    utils.setScreen('end');
+    utils.setScreen("end");
     utils.playFireworks(8);
     els.finalCookies.textContent = state.cookies;
     els.endStats.innerHTML = `Words completed: ${state.solved}<br />Cookies earned: ${state.cookies}`;
-    els.roboStatus.textContent = 'All done!';
-    ui.showMessage('Great job!');
+    els.roboStatus.textContent = "All done!";
+    ui.showMessage("Great job!");
     if (state.soundOn) {
-      utils.playTone(523, 0.08, 'triangle', 0.04);
-      setTimeout(() => utils.playTone(659, 0.08, 'triangle', 0.04), 120);
-      setTimeout(() => utils.playTone(784, 0.12, 'triangle', 0.04), 240);
+      utils.playTone(523, 0.08, "triangle", 0.04);
+      setTimeout(() => utils.playTone(659, 0.08, "triangle", 0.04), 120);
+      setTimeout(() => utils.playTone(784, 0.12, "triangle", 0.04), 240);
     }
   };
 
   game.restartWithSameWords = function restartWithSameWords() {
     if (!state.allWords.length) {
-      utils.setScreen('setup');
+      utils.setScreen("setup");
       return;
     }
     state.gameWords = game.buildGameWords(state.allWords);
@@ -176,16 +176,14 @@
     state.cookies = 0;
     state.solved = 0;
     state.currentWord = state.gameWords[0];
-    utils.setScreen('game');
+    utils.setScreen("game");
     game.loadCurrentWord();
   };
 
   game.enterNewWords = function enterNewWords() {
-    utils.setScreen('setup');
-    document.getElementById('dictionarySelect')?.focus();
+    utils.setScreen("setup");
+    document.getElementById("dictionarySelect")?.focus();
   };
 
   RoboGame.game = game;
 })();
-
-
