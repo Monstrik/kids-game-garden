@@ -154,6 +154,7 @@
 
   game.finishGame = function finishGame() {
     utils.setScreen('end');
+    utils.playFireworks(8);
     els.finalCookies.textContent = state.cookies;
     els.endStats.innerHTML = `Words completed: ${state.solved}<br />Cookies earned: ${state.cookies}`;
     els.roboStatus.textContent = 'All done!';

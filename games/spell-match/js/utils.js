@@ -18,6 +18,7 @@
     GameCommon.playTone(state.soundOn, frequency, duration, type, volume);
   };
   const speakWord = word => GameCommon.speakWord(state.soundOn, word);
+  const playFireworks = (bursts = 7) => GameCommon.playFireworks(bursts);
 
   function saveWordsToLocalStorage(text) {
     if (dictionaryManager?.setActiveWords) {
@@ -42,6 +43,7 @@
     setScreen,
     playTone,
     speakWord,
+    playFireworks,
     getPreferredTheme,
     saveTheme,
     applyTheme

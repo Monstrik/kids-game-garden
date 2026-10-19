@@ -116,6 +116,41 @@
     window.speechSynthesis.speak(utterance);
   };
 
+  api.playFireworks = function playFireworks(bursts = 7) {
+    if (!document?.body) return;
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'fireworksOverlay';
+
+    const safeBursts = Math.max(1, Math.min(Number(bursts) || 7, 12));
+    for (let i = 0; i < safeBursts; i += 1) {
+      const centerX = 10 + Math.random() * 80;
+      const centerY = 10 + Math.random() * 55;
+      const hue = Math.floor(Math.random() * 360);
+      const delay = (Math.random() * 0.35).toFixed(2);
+
+      for (let p = 0; p < 14; p += 1) {
+        const particle = document.createElement('span');
+        const angle = (Math.PI * 2 * p) / 14;
+        const distance = 28 + Math.random() * 42;
+        const dx = Math.cos(angle) * distance;
+        const dy = Math.sin(angle) * distance;
+        particle.className = 'fireworkParticle';
+        particle.style.left = `${centerX}%`;
+        particle.style.top = `${centerY}%`;
+        particle.style.setProperty('--dx', `${dx.toFixed(1)}px`);
+        particle.style.setProperty('--dy', `${dy.toFixed(1)}px`);
+        particle.style.setProperty('--hue', String((hue + p * 7) % 360));
+        particle.style.animationDelay = `${delay}s`;
+        overlay.appendChild(particle);
+      }
+    }
+
+    document.body.appendChild(overlay);
+    setTimeout(() => overlay.remove(), 1700);
+  };
+
   api.loadSavedWords = function loadSavedWords(storageKeys, defaultWords = api.DEFAULT_WORDS, legacyKeys = []) {
     if (window.GameDictionaries?.getActiveWords) return window.GameDictionaries.getActiveWords();
     const keys = [storageKeys?.words, ...legacyKeys].filter(Boolean);

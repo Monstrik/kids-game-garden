@@ -1071,6 +1071,26 @@ body.page-robo {
       animation: slideIn 0.35s ease;
     }
 
+    .fireworksOverlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 9999;
+    }
+
+    .fireworkParticle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: hsl(var(--hue), 95%, 62%);
+      box-shadow: 0 0 12px hsl(var(--hue), 100%, 70%);
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      animation: fireworkBurst 1s ease-out forwards;
+    }
+
     @keyframes wiggle {
       0%, 100% { transform: rotate(0deg); }
       25% { transform: rotate(-10deg); }
@@ -1101,3 +1121,18 @@ body.page-robo {
       from { transform: translateY(10px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
     }
+
+    @keyframes fireworkBurst {
+      0% {
+        transform: translate(-50%, -50%) scale(0.2);
+        opacity: 0;
+      }
+      18% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.85);
+        opacity: 0;
+      }
+    }
+
