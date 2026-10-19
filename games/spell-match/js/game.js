@@ -104,7 +104,7 @@
       return;
     }
 
-    els.emojiHint.textContent = state.currentWord.answer;
+    // els.emojiHint.textContent = '';
     els.roboStatus.textContent = 'Listen closely, then tap the correct spelling!';
     ui.showMessage('Listen carefully!');
     state.currentChoices = game.generateChoices(state.currentWord.answer);
