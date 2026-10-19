@@ -16,8 +16,7 @@
   game.buildGameWords = function buildGameWords(words) {
     return utils.fisherYatesShuffle(words).map(word => ({
       answer: word,
-      letters: utils.shuffleWordLetters(word),
-      emoji: utils.getEmojiForWord(word)
+      letters: utils.shuffleWordLetters(word)
     }));
   };
 
@@ -48,7 +47,7 @@
       return;
     }
 
-    els.emojiHint.textContent = state.currentWord.emoji;
+    els.emojiHint.textContent = state.currentWord.answer;
     els.roboStatus.textContent = `Listen closely, then spell ${state.currentWord.answer.length} letters for a cookie!`;
     ui.showMessage('Listen carefully!');
     ui.setHint('');

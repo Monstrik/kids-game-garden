@@ -1,7 +1,8 @@
 (function () {
   const api = (window.GameCommon = window.GameCommon || {});
 
-  api.DEFAULT_WORDS = ['apple', 'banana', 'robot', 'school', 'friend'].join('\n');
+  api.WORDS = ['apple', 'banana', 'robot', 'school', 'friend'];
+  api.DEFAULT_WORDS = api.WORDS.join('\n');
   api.ACCESSORY_REWARDS = [
     { cookies: 5, emoji: '🎩', label: 'hat' },
     { cookies: 10, emoji: '😎', label: 'sunglasses' },
@@ -9,26 +10,6 @@
     { cookies: 20, emoji: '🧢', label: 'cap' },
     { cookies: 25, emoji: '👑', label: 'crown' }
   ];
-  api.WORD_EMOJIS = {
-    apple: '🍎',
-    banana: '🍌',
-    robot: '🤖',
-    school: '🏫',
-    friend: '🤝',
-    cookie: '🍪',
-    cookies: '🍪🍪',
-    cat: '🐱',
-    dog: '🐶',
-    sun: '☀️',
-    moon: '🌙',
-    book: '📚',
-    car: '🚗',
-    star: '⭐',
-    tree: '🌳',
-    ball: '⚽',
-    fish: '🐟',
-    pizza: '🍕'
-  };
 
   api.normalizeWord = function normalizeWord(raw) {
     return String(raw || '')
@@ -59,9 +40,6 @@
     return shuffled;
   };
 
-  api.getEmojiForWord = function getEmojiForWord(word, wordEmojis = api.WORD_EMOJIS) {
-    return wordEmojis[String(word || '').toLowerCase()] || '✨';
-  };
 
   api.getAccessoryForCookies = function getAccessoryForCookies(cookieCount, rewards = api.ACCESSORY_REWARDS) {
     let current = '';

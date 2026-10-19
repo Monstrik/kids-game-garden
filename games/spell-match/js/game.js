@@ -21,8 +21,7 @@
 
   game.buildGameWords = function buildGameWords(words) {
     return utils.fisherYatesShuffle(words).map(word => ({
-      answer: word,
-      emoji: utils.getEmojiForWord(word)
+      answer: word
     }));
   };
 
@@ -105,7 +104,7 @@
       return;
     }
 
-    els.emojiHint.textContent = state.currentWord.emoji;
+    els.emojiHint.textContent = state.currentWord.answer;
     els.roboStatus.textContent = 'Listen closely, then tap the correct spelling!';
     ui.showMessage('Listen carefully!');
     state.currentChoices = game.generateChoices(state.currentWord.answer);

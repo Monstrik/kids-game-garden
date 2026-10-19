@@ -1,7 +1,7 @@
 (function () {
   const RoboGame = (window.RoboGame = window.RoboGame || {});
   const shared = window.GameCommon || {};
-  const { ACCESSORY_REWARDS, WORD_EMOJIS, DEFAULT_WORDS } = shared;
+  const { ACCESSORY_REWARDS, WORDS, DEFAULT_WORDS } = shared;
 
   RoboGame.constants = {
     STORAGE_KEYS: {
@@ -17,7 +17,7 @@
       'Robo is proud of you!'
     ],
     ACCESSORY_REWARDS,
-    WORD_EMOJIS,
+    WORDS,
     DEFAULT_WORDS
   };
 })();

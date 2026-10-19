@@ -1,14 +1,13 @@
 (function () {
   const RoboGame = (window.RoboGame = window.RoboGame || {});
   const { state, els } = RoboGame;
-  const { STORAGE_KEYS, FUN_MESSAGES, DEFAULT_WORDS, ACCESSORY_REWARDS, WORD_EMOJIS } = RoboGame.constants;
+  const { STORAGE_KEYS, FUN_MESSAGES, DEFAULT_WORDS, ACCESSORY_REWARDS } = RoboGame.constants;
   const { GameCommon } = window;
   const dictionaryManager = window.GameDictionaries;
 
   const normalizeWord = GameCommon.normalizeWord;
   const fisherYatesShuffle = GameCommon.fisherYatesShuffle;
   const shuffleWordLetters = GameCommon.shuffleWordLetters;
-  const getEmojiForWord = word => GameCommon.getEmojiForWord(word, WORD_EMOJIS);
   const getAccessoryForCookies = cookieCount => GameCommon.getAccessoryForCookies(cookieCount, ACCESSORY_REWARDS);
   const pickFunMessage = () => GameCommon.pickFunMessage(FUN_MESSAGES);
   const getPreferredTheme = GameCommon.getPreferredTheme;
@@ -37,7 +36,6 @@
     normalizeWord,
     fisherYatesShuffle,
     shuffleWordLetters,
-    getEmojiForWord,
     getAccessoryForCookies,
     pickFunMessage,
     saveWordsToLocalStorage,
