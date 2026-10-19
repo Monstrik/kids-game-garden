@@ -889,6 +889,8 @@ html[data-theme="dark"] .keyboardKey:hover {
   }
 
   .keyboardWrap {
+    --mobile-key-gap: 6px;
+    --mobile-letter-key-size: calc((100% - (var(--mobile-key-gap) * 9)) / 10);
     padding: 10px 0 8px 0;
     min-width: 0;
     width: calc(100% + (var(--mobile-keyboard-bleed) * 2));
@@ -907,12 +909,11 @@ html[data-theme="dark"] .keyboardKey:hover {
   }
 
   .keyboardRow {
-    gap: 6px;
+    gap: var(--mobile-key-gap);
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(10, minmax(0, 1fr));
-    justify-content: initial;
-    flex-wrap: initial;
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
   }
 
   .keyboardRowIndented {
@@ -929,24 +930,13 @@ html[data-theme="dark"] .keyboardKey:hover {
     padding: 0 6px;
     border-radius: 10px;
     font-size: 1.25rem;
-    width: 100%;
-    flex: none;
+    width: var(--mobile-letter-key-size);
+    flex: 0 0 var(--mobile-letter-key-size);
   }
 
   .keyboardKeyWide {
-    flex: none;
-  }
-
-  .keyboardRowBottom .keyboardKey[data-action="clear"] {
-    grid-column: span 3;
-  }
-
-  .keyboardRowBottom .keyboardKey[data-action="space"] {
-    grid-column: span 4;
-  }
-
-  .keyboardRowBottom .keyboardKey[data-action="backspace"] {
-    grid-column: span 3;
+    width: calc((var(--mobile-letter-key-size) * 3) + (var(--mobile-key-gap) * 2));
+    flex: 0 0 calc((var(--mobile-letter-key-size) * 3) + (var(--mobile-key-gap) * 2));
   }
 }
 
