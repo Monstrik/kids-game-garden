@@ -1,12 +1,15 @@
 {
   "name": "spell",
-  "version": "1.0.0",
+  "version": "0.0.5",
   "description": "",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "serve": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "version:bump": "node scripts/bump-version.js",
+    "version:bump:minor": "node scripts/bump-version.js minor",
+    "version:bump:major": "node scripts/bump-version.js major"
   },
   "private": true,
   "devDependencies": {
