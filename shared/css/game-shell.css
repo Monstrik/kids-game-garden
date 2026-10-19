@@ -547,23 +547,20 @@ body.page-robo {
 
     @media (max-width: 560px) {
       body.page-robo .card,
+      body.page-robo .exampleBox,
       body.page-robo .wordCard {
         width: 100%;
         max-width: 370px;
       }
 
       body.page-robo .dictionaryToolbar,
-      body.page-robo .dictionaryPreview,
       body.page-robo .dictionaryManager .btnRow {
         max-width: 260px;
         margin-left: auto;
         margin-right: auto;
       }
 
-      body.page-robo .exampleBox {
-        width: 100%;
-        max-width: 370px;
-      }
+
 
       body.page-robo .dictionaryToolbar {
         gap: 6px;
