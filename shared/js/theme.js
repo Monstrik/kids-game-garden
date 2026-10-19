@@ -29,7 +29,7 @@
   function updateThemeButton(button, theme) {
     if (!button) return;
     const isDark = theme === 'dark';
-    button.textContent = isDark ? '☀️ Light mode' : '🌙 Dark mode';
+    button.textContent = isDark ? '☀️' : '🌙';
     button.setAttribute('aria-pressed', String(isDark));
   }
 

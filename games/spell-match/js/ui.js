@@ -12,7 +12,7 @@
 
   ui.updateThemeButton = function updateThemeButton(theme) {
     const isDark = theme === 'dark';
-    els.themeBtn.textContent = isDark ? '☀️ Light mode' : '🌙 Dark mode';
+    els.themeBtn.textContent = isDark ? '☀️' : '🌙';
     els.themeBtn.setAttribute('aria-pressed', String(isDark));
   };
 
