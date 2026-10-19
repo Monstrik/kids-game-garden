@@ -909,29 +909,44 @@ html[data-theme="dark"] .keyboardKey:hover {
   .keyboardRow {
     gap: 6px;
     width: 100%;
-    justify-content: space-between;
-    flex-wrap: nowrap;
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    justify-content: initial;
+    flex-wrap: initial;
   }
 
   .keyboardRowIndented {
-    padding: 0 8px;
+    padding: 0;
   }
 
   .keyboardRowIndentedMore {
-    padding: 0 14px;
+    padding: 0;
   }
 
   .keyboardKey {
-    min-width: 30px;
+    min-width: 0;
     min-height: 40px;
     padding: 0 6px;
     border-radius: 10px;
     font-size: 1.25rem;
-    flex: 1 1 0;
+    width: 100%;
+    flex: none;
   }
 
   .keyboardKeyWide {
-    flex: 2 1 0;
+    flex: none;
+  }
+
+  .keyboardRowBottom .keyboardKey[data-action="clear"] {
+    grid-column: span 3;
+  }
+
+  .keyboardRowBottom .keyboardKey[data-action="space"] {
+    grid-column: span 4;
+  }
+
+  .keyboardRowBottom .keyboardKey[data-action="backspace"] {
+    grid-column: span 3;
   }
 }
 
