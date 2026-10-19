@@ -545,6 +545,58 @@ body.page-robo {
 
 }
 
+    @media (max-width: 560px) {
+      body.page-robo .card,
+      body.page-robo .wordCard {
+        width: 100%;
+        max-width: 370px;
+      }
+
+      body.page-robo .dictionaryToolbar,
+      body.page-robo .dictionaryPreview,
+      body.page-robo .dictionaryManager .btnRow {
+        max-width: 260px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      body.page-robo .exampleBox {
+        width: 100%;
+        max-width: 370px;
+      }
+
+      body.page-robo .dictionaryToolbar {
+        gap: 6px;
+        flex-wrap: nowrap;
+        align-items: center;
+        justify-content: center;
+      }
+
+      body.page-robo .dictionaryToolbar select {
+        flex: 1 1 auto;
+        min-width: 0;
+        min-height: 48px;
+        padding: 10px 12px;
+        padding-right: 38px;
+        font-size: 0.95rem;
+        max-width: 200px;
+      }
+
+      body.page-robo .dictionaryToolbar .btn.ghost {
+        flex: 0 0 44px;
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0 10px;
+        border-radius: 12px;
+        font-size: 1rem;
+      }
+
+      body.page-robo .dictionaryManager .btnRow .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
     body.page-robo label {
       display: block;
       font-weight: 800;
@@ -592,13 +644,24 @@ body.page-robo {
     }
 
     body.page-robo .exampleWords {
-      background: var(--example-words-bg, rgba(255,255,255,0.75));
+      padding: 12px 14px;
       border-radius: 16px;
-      padding: 14px;
+      border: 2px dashed rgba(124, 58, 237, 0.22);
+      background: rgba(255, 255, 255, 0.55);
+      color: var(--ink-soft);
       font-family: "Trebuchet MS", Arial, sans-serif;
-      font-size: 1.15rem;
-      line-height: 1.7;
+      font-size: 0.95rem;
+      line-height: 1.45;
+      font-weight: 700;
       white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    html[data-theme="dark"] body.page-robo .exampleWords {
+      border-color: rgba(167, 139, 250, 0.24);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--ink-soft);
     }
 
     #answerInput {
