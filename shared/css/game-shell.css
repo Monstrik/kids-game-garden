@@ -771,6 +771,11 @@ html[data-theme="dark"] #answerInput {
   cursor: default;
 }
 
+.keyboardModeToggle {
+  margin-top: 12px;
+  font-weight: 800;
+}
+
 .keyboardWrap {
   margin-top: 14px;
   padding: 14px 0 12px 0;
@@ -874,18 +879,28 @@ html[data-theme="dark"] .keyboardKey:hover {
 }
 
 @media (max-width: 560px) {
+  .keyboardModeToggle {
+    width: 100%;
+    justify-content: center;
+  }
+
   .keyboardWrap {
     padding: 10px 0 8px 0;
-    min-width: 386px;
+    min-width: 0;
     border-radius: 18px;
+    overflow-x: auto;
   }
 
   .keyboardRows {
     gap: 8px;
+    min-width: 386px;
+    padding: 0 8px;
   }
 
   .keyboardRow {
     gap: 6px;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
   }
 
   .keyboardRowIndented {

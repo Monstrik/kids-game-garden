@@ -12,6 +12,7 @@
     dictionaryInfo: document.getElementById("dictionaryInfo"),
     wordInput: document.getElementById("wordInput"),
     answerInput: document.getElementById("answerInput"),
+    keyboardModeToggle: document.getElementById("keyboardModeToggle"),
     startBtn: document.getElementById("startBtn"),
     clearBtn: document.getElementById("clearBtn"),
     themeBtn: document.getElementById("themeBtn"),

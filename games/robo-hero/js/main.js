@@ -2,12 +2,50 @@
   const RoboGame = window.RoboGame;
   const { state, els } = RoboGame;
   const { utils, ui, game } = RoboGame;
-  const touchKeyboardMode =
-    window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+  const mobileKeyboardQuery =
+    window.matchMedia && window.matchMedia("(max-width: 560px)");
+  let useCustomKeyboardOnSmallScreen = false;
   const dictionaryManagerUrl = new URL(
     "../../../games/dictionary-manager/",
     window.location.href,
   ).toString();
+
+  function isSmallScreen() {
+    return Boolean(mobileKeyboardQuery && mobileKeyboardQuery.matches);
+  }
+
+  function applyKeyboardMode(options = {}) {
+    const { shouldFocusNative = false } = options;
+    const smallScreen = isSmallScreen();
+    const customKeyboardVisible = !smallScreen || useCustomKeyboardOnSmallScreen;
+    const nativeKeyboardEnabled = !smallScreen || !useCustomKeyboardOnSmallScreen;
+
+    if (els.keyboard) {
+      els.keyboard.hidden = !customKeyboardVisible;
+    }
+
+    if (els.keyboardModeToggle) {
+      els.keyboardModeToggle.hidden = !smallScreen;
+      els.keyboardModeToggle.setAttribute(
+        "aria-pressed",
+        String(useCustomKeyboardOnSmallScreen),
+      );
+      els.keyboardModeToggle.textContent = useCustomKeyboardOnSmallScreen
+        ? "Use phone keyboard"
+        : "Use game keyboard";
+    }
+
+    if (!els.answerInput) {
+      return;
+    }
+
+    els.answerInput.readOnly = !nativeKeyboardEnabled;
+    els.answerInput.setAttribute("inputmode", nativeKeyboardEnabled ? "text" : "none");
+
+    if (nativeKeyboardEnabled && shouldFocusNative && !state.locked) {
+      els.answerInput.focus();
+    }
+  }
 
   function attachEvents() {
     els.startBtn.addEventListener("click", game.startGame);
@@ -50,6 +88,14 @@
       if (action === "clear") game.clearTypedAnswer();
     });
 
+    els.keyboardModeToggle?.addEventListener("click", () => {
+      if (!isSmallScreen()) {
+        return;
+      }
+      useCustomKeyboardOnSmallScreen = !useCustomKeyboardOnSmallScreen;
+      applyKeyboardMode({ shouldFocusNative: !useCustomKeyboardOnSmallScreen });
+    });
+
     els.answerInput.addEventListener("input", () => {
       if (!state.locked) {
         state.typedAnswer = els.answerInput.value;
@@ -71,11 +117,22 @@
     }
     state.soundOn =
       localStorage.getItem(RoboGame.constants.STORAGE_KEYS.sound) !== "false";
-    els.answerInput.readOnly = touchKeyboardMode;
-    els.answerInput.setAttribute(
-      "inputmode",
-      touchKeyboardMode ? "none" : "text",
-    );
+    if (mobileKeyboardQuery) {
+      const handleKeyboardQueryChange = () => {
+        if (!isSmallScreen()) {
+          useCustomKeyboardOnSmallScreen = false;
+        }
+        applyKeyboardMode();
+      };
+
+      if (typeof mobileKeyboardQuery.addEventListener === "function") {
+        mobileKeyboardQuery.addEventListener("change", handleKeyboardQueryChange);
+      } else if (typeof mobileKeyboardQuery.addListener === "function") {
+        mobileKeyboardQuery.addListener(handleKeyboardQueryChange);
+      }
+    }
+
+    applyKeyboardMode();
     GameTheme.initTheme(els.themeBtn);
     ui.updateSoundButton();
     utils.setScreen("setup");
