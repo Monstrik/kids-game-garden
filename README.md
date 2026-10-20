@@ -15,12 +15,12 @@ A tiny game hub for kids built with plain HTML, CSS, and JavaScript.
 - `shared/js/theme.js` — shared theme toggle and persistence
 - `shared/js/game-common.js` — shared helpers used by every game
 - `shared/js/dictionaries.js` — shared dictionary manager used by the games and manager page
-- `games/robo/index.html` — Robo's Spelling Adventure game
+- `games/robo/index.html` — Robo's Adventure game
 - `games/robo/js/` — Robo-specific logic split into small files
-- `games/robo-hero/index.html` — Robo Spelling Hero typing game
-- `games/robo-hero/js/` — Robo Spelling Hero-specific logic split into small files
-- `games/spell-match/index.html` — Robo Spell Match multiple-choice spelling game
-- `games/spell-match/js/` — Robo Spell Match-specific logic split into small files
+- `games/robo-hero/index.html` — Robo Hero typing game
+- `games/robo-hero/js/` — Robo Hero-specific logic split into small files
+- `games/spell-match/index.html` — Robo Match multiple-choice spelling game
+- `games/spell-match/js/` — Robo Match-specific logic split into small files
 - `css/style.css` — hub-specific CSS variables that import the shared game shell
 - `js/hub.js` — hub bootstrap that initializes theme toggling
 - `games/dictionary-manager/index.html` — standalone dictionary manager page
@@ -33,7 +33,7 @@ cd /Users/ayakovis/dev/playground/kids-game-garden
 npm start
 ```
 
-Open `http://127.0.0.1:3000/` in your browser for the hub, `http://127.0.0.1:3000/games/robo/` for Robo's Spelling Adventure, `http://127.0.0.1:3000/games/robo-hero/` for Robo Spelling Hero, or `http://127.0.0.1:3000/games/spell-match/` for Robo Spell Match.
+Open `http://127.0.0.1:3000/` in your browser for the hub, `http://127.0.0.1:3000/games/robo/` for Robo's Adventure, `http://127.0.0.1:3000/games/robo-hero/` for Robo Hero, or `http://127.0.0.1:3000/games/spell-match/` for Robo Match.
 
 For GitHub Pages, publish the repository root and use the same `games/.../` routes from the hub.
 
