@@ -67,7 +67,7 @@ function serveCandidate(res, candidatePath, onMissing) {
 
 const server = http.createServer((req, res) => {
   const urlPath = decodeURIComponent((req.url || "/").split("?")[0]);
-  const safePath = path.normalize(urlPath).replace(/^([.]{2}[\/\\])+/, "");
+  const safePath = path.normalize(urlPath).replace(/^([.]{2}[/\\])+/, "");
   const rootPath = path.join(rootDir, safePath);
   const clientPath = path.join(rootDir, "client", safePath);
 

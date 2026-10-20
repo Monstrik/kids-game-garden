@@ -7,13 +7,17 @@
     "start": "node server.js",
     "serve": "node server.js",
     "format": "npx prettier . --write",
+    "check-format": "npx prettier . --check",
+    "lint": "npx eslint .",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "check": "npm run check-format && npm run lint && npm run test",
     "version:bump": "node scripts/bump-version.js",
     "version:bump:minor": "node scripts/bump-version.js minor",
     "version:bump:major": "node scripts/bump-version.js major"
   },
   "private": true,
   "devDependencies": {
+    "eslint": "^8.57.1",
     "prettier": "^3.9.10"
   }
 }
