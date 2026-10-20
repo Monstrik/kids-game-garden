@@ -1,15 +1,9 @@
 (function () {
   const RoboGame = (window.RoboGame = window.RoboGame || {});
-  const shared = window.GameCommon || {};
-  const { ACCESSORY_REWARDS, WORDS, DEFAULT_WORDS } = shared;
 
-  RoboGame.constants = {
-    STORAGE_KEYS: {
-      words: "kids-game-garden.words",
-      sound: "robo-spelling-hero.sound",
-      theme: "mini-game-hub.theme",
-    },
-    FUN_MESSAGES: [
+  RoboGame.constants = window.GameEngine.createConstants({
+    soundKey: "robo-spelling-hero.sound",
+    funMessages: [
       "Hero power!",
       "Typing champion!",
       "Yay for spelling!",
@@ -26,8 +20,5 @@
       "Impressive thinking!",
       "You did it!",
     ],
-    ACCESSORY_REWARDS,
-    WORDS,
-    DEFAULT_WORDS,
-  };
+  });
 })();
