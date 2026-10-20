@@ -115,8 +115,9 @@
     state.locked = true;
     state.cookies += 1;
     state.solved += 1;
+    const praise = utils.pickFunMessage();
     ui.updateHeaderStats();
-    ui.showMessage(`Great Job! ${utils.pickFunMessage()}`, "good");
+    ui.showMessage(`Great Job! ${praise}`, "good");
     els.roboStatus.textContent = "Yay! Robo got a cookie!";
     els.slots.querySelectorAll(".slot").forEach((slot) => {
       slot.classList.remove("wrongPulse");
@@ -124,7 +125,7 @@
     });
     utils.playTone(659, 0.09, "triangle", 0.05);
     setTimeout(() => utils.playTone(784, 0.12, "triangle", 0.05), 110);
-    utils.speakWord(state.currentWord.answer);
+    utils.speakWord(praise);
 
     els.nextBtn.style.display = "inline-flex";
     els.checkBtn.style.display = "none";
