@@ -7,10 +7,7 @@
 
   ui.updateSoundButton = function updateSoundButton() {
     els.soundBtn.textContent = state.soundOn ? "Sound On" : "Sound Off";
-    localStorage.setItem(
-      RoboGame.constants.STORAGE_KEYS.sound,
-      String(state.soundOn),
-    );
+    localStorage.setItem(RoboGame.constants.STORAGE_KEYS.sound, String(state.soundOn));
   };
 
   ui.updateThemeButton = function updateThemeButton(theme) {
@@ -28,9 +25,7 @@
 
   ui.updateHeaderStats = function updateHeaderStats() {
     els.cookieCount.textContent = state.cookies;
-    els.progressFill.style.width = state.gameWords.length
-      ? `${(state.solved / state.gameWords.length) * 100}%`
-      : "0";
+    els.progressFill.style.width = state.gameWords.length ? `${(state.solved / state.gameWords.length) * 100}%` : "0";
     els.progressText.textContent = `${state.solved} of ${state.gameWords.length} words`;
     els.wordPosition.textContent = state.currentWord
       ? `Word ${state.currentIndex + 1} / ${state.gameWords.length}`
@@ -68,14 +63,9 @@
       slot.className = "slot";
       slot.dataset.index = String(index);
       const selectedLetterIndex = state.selected[index];
-      slot.textContent =
-        selectedLetterIndex === null
-          ? ""
-          : state.currentWord.letters[selectedLetterIndex];
+      slot.textContent = selectedLetterIndex === null ? "" : state.currentWord.letters[selectedLetterIndex];
       if (selectedLetterIndex !== null) slot.classList.add("filled");
-      slot.addEventListener("click", () =>
-        RoboGame.game.handleSlotClick(index),
-      );
+      slot.addEventListener("click", () => RoboGame.game.handleSlotClick(index));
       slot.addEventListener("dragover", (event) => event.preventDefault());
       slot.addEventListener("drop", (event) => {
         event.preventDefault();

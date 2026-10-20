@@ -40,10 +40,7 @@
     return shuffled;
   };
 
-  api.getAccessoryForCookies = function getAccessoryForCookies(
-    cookieCount,
-    rewards = api.ACCESSORY_REWARDS,
-  ) {
+  api.getAccessoryForCookies = function getAccessoryForCookies(cookieCount, rewards = api.ACCESSORY_REWARDS) {
     let current = "";
     for (const reward of rewards) {
       if (cookieCount >= reward.cookies) current = reward.emoji;
@@ -57,12 +54,8 @@
   };
 
   api.getPreferredTheme = function getPreferredTheme() {
-    if (window.GameTheme?.getPreferredTheme)
-      return window.GameTheme.getPreferredTheme();
-    if (
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
+    if (window.GameTheme?.getPreferredTheme) return window.GameTheme.getPreferredTheme();
+    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
       return "dark";
     }
     return "light";
@@ -91,17 +84,10 @@
     els.endScreen?.classList.toggle("active", name === "end");
   };
 
-  api.playTone = function playTone(
-    soundOn,
-    frequency = 440,
-    duration = 0.12,
-    type = "sine",
-    volume = 0.05,
-  ) {
+  api.playTone = function playTone(soundOn, frequency = 440, duration = 0.12, type = "sine", volume = 0.05) {
     if (!soundOn) return;
     try {
-      const AudioContextClass =
-        window.AudioContext || window.webkitAudioContext;
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
       if (!AudioContextClass) return;
       const audio = new AudioContextClass();
       const osc = audio.createOscillator();
@@ -122,9 +108,7 @@
   api.speakWord = function speakWord(soundOn, word) {
     if (!soundOn || !("speechSynthesis" in window)) return;
     window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(
-      String(word || "").toLowerCase(),
-    );
+    const utterance = new SpeechSynthesisUtterance(String(word || "").toLowerCase());
     utterance.rate = 0.85;
     utterance.pitch = 1.1;
     utterance.lang = "en-US";
@@ -166,13 +150,8 @@
     setTimeout(() => overlay.remove(), 1700);
   };
 
-  api.loadSavedWords = function loadSavedWords(
-    storageKeys,
-    defaultWords = api.DEFAULT_WORDS,
-    legacyKeys = [],
-  ) {
-    if (window.GameDictionaries?.getActiveWords)
-      return window.GameDictionaries.getActiveWords();
+  api.loadSavedWords = function loadSavedWords(storageKeys, defaultWords = api.DEFAULT_WORDS, legacyKeys = []) {
+    if (window.GameDictionaries?.getActiveWords) return window.GameDictionaries.getActiveWords();
     const keys = [storageKeys?.words, ...legacyKeys].filter(Boolean);
     for (const key of keys) {
       const saved = localStorage.getItem(key);
@@ -181,11 +160,7 @@
     return defaultWords;
   };
 
-  api.saveWordsToLocalStorage = function saveWordsToLocalStorage(
-    storageKeys,
-    text,
-    legacyKeys = [],
-  ) {
+  api.saveWordsToLocalStorage = function saveWordsToLocalStorage(storageKeys, text, legacyKeys = []) {
     if (window.GameDictionaries?.setActiveWords) {
       window.GameDictionaries.setActiveWords(text);
       return;

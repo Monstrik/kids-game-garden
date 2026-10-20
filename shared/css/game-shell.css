@@ -10,11 +10,7 @@ body.page-hub {
   font-family: Arial, Helvetica, sans-serif;
   color: var(--ink);
   background:
-    radial-gradient(
-      circle at top left,
-      rgba(255, 255, 255, 0.7),
-      transparent 30%
-    ),
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.7), transparent 30%),
     linear-gradient(135deg, var(--bg1), var(--bg2));
   display: grid;
   place-items: center;
@@ -249,11 +245,7 @@ html[data-theme="dark"] body.page-robo {
   --accent-warning-start: #fb923c;
   --accent-warning-end: #f472b6;
   --shadow: 0 18px 40px rgba(2, 6, 23, 0.45);
-  --header-bg: linear-gradient(
-    135deg,
-    rgba(15, 23, 42, 0.98),
-    rgba(30, 41, 59, 0.98)
-  );
+  --header-bg: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.98));
   --header-border: rgba(167, 139, 250, 0.22);
   --pill-bg: rgba(30, 41, 59, 0.95);
   --pill-border: rgba(148, 163, 184, 0.18);
@@ -261,11 +253,7 @@ html[data-theme="dark"] body.page-robo {
   --card-border: rgba(148, 163, 184, 0.16);
   --input-bg: rgba(15, 23, 42, 0.96);
   --input-border: rgba(148, 163, 184, 0.35);
-  --example-bg: linear-gradient(
-    180deg,
-    rgba(30, 41, 59, 0.98),
-    rgba(51, 65, 85, 0.98)
-  );
+  --example-bg: linear-gradient(180deg, rgba(30, 41, 59, 0.98), rgba(51, 65, 85, 0.98));
   --example-border: rgba(251, 146, 60, 0.22);
   --slot-bg: rgba(30, 41, 59, 0.95);
   --slot-border: rgba(148, 163, 184, 0.35);
@@ -278,11 +266,7 @@ html[data-theme="dark"] body.page-robo {
   --cookie-counter-end: rgba(59, 130, 246, 0.25);
   --word-card-end: rgba(30, 41, 59, 0.98);
   --end-stats-start: rgba(30, 41, 59, 0.98);
-  --letter-bg: linear-gradient(
-    180deg,
-    rgba(15, 23, 42, 0.96),
-    rgba(30, 41, 59, 0.96)
-  );
+  --letter-bg: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.96));
   --letter-border: rgba(251, 191, 36, 0.5);
   --letter-text: #fde68a;
   --progress-bg: rgba(30, 41, 59, 0.95);
@@ -307,13 +291,7 @@ body.page-robo {
   min-height: 100%;
   font-family: Arial, Helvetica, sans-serif;
   color: var(--ink);
-  background:
-    radial-gradient(
-      circle at top left,
-      rgba(255, 255, 255, 0.6),
-      transparent 25%
-    ),
-    var(--page-bg);
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.6), transparent 25%), var(--page-bg);
 }
 
 body.page-robo {
@@ -503,8 +481,7 @@ body.page-robo .dictionaryToolbar select {
   -moz-appearance: none;
   background-image:
     linear-gradient(45deg, transparent 50%, var(--accent) 50%),
-    linear-gradient(135deg, var(--accent) 50%, transparent 50%),
-    linear-gradient(to right, transparent, transparent);
+    linear-gradient(135deg, var(--accent) 50%, transparent 50%), linear-gradient(to right, transparent, transparent);
   background-position:
     calc(100% - 22px) calc(50% - 2px),
     calc(100% - 16px) calc(50% - 2px),
@@ -723,11 +700,7 @@ html[data-theme="dark"] body.page-robo .exampleWords {
   padding: 18px 20px;
   border-radius: 22px;
   border: 3px solid var(--input-border);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.94),
-    rgba(245, 243, 255, 0.96)
-  );
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(245, 243, 255, 0.96));
   color: var(--ink);
   font-size: clamp(1.2rem, 2.8vw, 1.5rem);
   font-weight: 800;
@@ -752,11 +725,7 @@ html[data-theme="dark"] body.page-robo .exampleWords {
 }
 
 html[data-theme="dark"] #answerInput {
-  background: linear-gradient(
-    180deg,
-    rgba(15, 23, 42, 0.98),
-    rgba(30, 41, 59, 0.98)
-  );
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.98));
 }
 
 #answerInput:focus {
@@ -781,21 +750,13 @@ html[data-theme="dark"] #answerInput {
   padding: 14px 0 12px 0;
   border-radius: 24px;
   border: 2px solid rgba(124, 58, 237, 0.18);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.72),
-    rgba(238, 242, 255, 0.92)
-  );
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(238, 242, 255, 0.92));
   box-shadow: 0 12px 24px rgba(36, 50, 74, 0.08);
 }
 
 html[data-theme="dark"] .keyboardWrap {
   border-color: rgba(167, 139, 250, 0.22);
-  background: linear-gradient(
-    180deg,
-    rgba(15, 23, 42, 0.82),
-    rgba(30, 41, 59, 0.94)
-  );
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.82), rgba(30, 41, 59, 0.94));
 }
 
 .keyboardHint {
@@ -862,11 +823,7 @@ html[data-theme="dark"] .keyboardWrap {
 
 .keyboardKeyAccent {
   border-color: var(--accent);
-  background: linear-gradient(
-    180deg,
-    rgba(124, 58, 237, 0.12),
-    rgba(99, 102, 241, 0.08)
-  );
+  background: linear-gradient(180deg, rgba(124, 58, 237, 0.12), rgba(99, 102, 241, 0.08));
   color: var(--accent);
 }
 
@@ -1048,11 +1005,7 @@ body.page-robo .btn {
 }
 
 body.page-robo .btn.secondary {
-  background: linear-gradient(
-    135deg,
-    var(--accent-secondary-start),
-    var(--accent-secondary)
-  );
+  background: linear-gradient(135deg, var(--accent-secondary-start), var(--accent-secondary));
 }
 
 body.page-robo .btn.warn {
@@ -1134,11 +1087,7 @@ body.page-robo .statusLine {
 
 body.page-robo .cookieCounter {
   font-size: 1.1rem;
-  background: linear-gradient(
-    135deg,
-    var(--cookie-counter-start),
-    var(--cookie-counter-end)
-  );
+  background: linear-gradient(135deg, var(--cookie-counter-start), var(--cookie-counter-end));
 }
 
 body.page-robo .progressWrap {
@@ -1432,11 +1381,7 @@ body.page-robo .slideIn {
     opacity: 1;
   }
   100% {
-    transform: translate(
-        calc(-50% + var(--dx, 0px)),
-        calc(-50% + var(--dy, 0px))
-      )
-      scale(0.85);
+    transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px))) scale(0.85);
     opacity: 0;
   }
 }

@@ -16,11 +16,7 @@
         font-family: Arial, Helvetica, sans-serif;
         color: var(--ink);
         background:
-          radial-gradient(
-            circle at top left,
-            rgba(255, 255, 255, 0.68),
-            transparent 28%
-          ),
+          radial-gradient(circle at top left, rgba(255, 255, 255, 0.68), transparent 28%),
           linear-gradient(135deg, var(--bg1), var(--bg2));
         --bg1: #6ee7ff;
         --bg2: #f9a8d4;
@@ -36,11 +32,7 @@
         --panel-hero: linear-gradient(135deg, #fff, #eef2ff);
         --panel-card: linear-gradient(180deg, #fff, #f8fafc);
         --badge-bg: #eef2ff;
-        --play-btn: linear-gradient(
-          135deg,
-          var(--accent),
-          var(--accent-strong)
-        );
+        --play-btn: linear-gradient(135deg, var(--accent), var(--accent-strong));
         --btn-bg: #ffffff;
         --btn-border: rgba(124, 58, 237, 0.14);
         --input-bg: #ffffff;
@@ -65,16 +57,8 @@
         --accent-strong: #818cf8;
         --shadow: 0 20px 50px rgba(2, 6, 23, 0.5);
         --border: rgba(148, 163, 184, 0.18);
-        --panel-hero: linear-gradient(
-          135deg,
-          rgba(15, 23, 42, 0.98),
-          rgba(30, 41, 59, 0.98)
-        );
-        --panel-card: linear-gradient(
-          180deg,
-          rgba(15, 23, 42, 0.98),
-          rgba(30, 41, 59, 0.98)
-        );
+        --panel-hero: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.98));
+        --panel-card: linear-gradient(180deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.98));
         --badge-bg: rgba(30, 41, 59, 0.95);
         --btn-bg: rgba(30, 41, 59, 0.95);
         --btn-border: rgba(148, 163, 184, 0.22);
@@ -260,11 +244,7 @@
           opacity 0.12s ease;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
         color: white;
-        background: linear-gradient(
-          135deg,
-          var(--accent),
-          var(--accent-strong)
-        );
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
         text-decoration: none;
         display: inline-flex;
         align-items: center;
@@ -356,25 +336,16 @@
   <body class="page-dictionaries">
     <main class="shell">
       <div class="appChrome">
-        <a class="hubLink" href="../../" aria-label="Back to game hub"
-          >🏠 Hub</a
-        >
-        <button
-          id="themeBtn"
-          class="themeBtn"
-          type="button"
-          aria-pressed="false"
-        >
-          🌙
-        </button>
+        <a class="hubLink" href="../../" aria-label="Back to game hub">🏠 Hub</a>
+        <button id="themeBtn" class="themeBtn" type="button" aria-pressed="false">🌙</button>
       </div>
 
       <section class="hero" aria-labelledby="managerTitle">
         <div class="eyebrow">📚 Dictionary Manager</div>
         <h1 id="managerTitle">Manage your saved word lists</h1>
         <p class="subtitle">
-          Create named lists, edit the words, switch between them, and use the
-          same selected list in every Robo spelling game.
+          Create named lists, edit the words, switch between them, and use the same selected list in every Robo spelling
+          game.
         </p>
       </section>
 
@@ -388,36 +359,21 @@
                 <select id="dictionarySelect"></select>
               </div>
               <div class="actions">
-                <button id="newListBtn" class="btn secondary" type="button">
-                  New List
-                </button>
-                <button id="deleteListBtn" class="btn ghost" type="button">
-                  Delete List
-                </button>
+                <button id="newListBtn" class="btn secondary" type="button">New List</button>
+                <button id="deleteListBtn" class="btn ghost" type="button">Delete List</button>
               </div>
             </div>
 
-            <div id="dictionaryPreview" class="dictionaryPreview">
-              Select a list to see a preview.
-            </div>
+            <div id="dictionaryPreview" class="dictionaryPreview">Select a list to see a preview.</div>
 
             <div class="field">
               <label for="dictionaryNameInput">List name</label>
-              <input
-                id="dictionaryNameInput"
-                type="text"
-                autocomplete="off"
-                spellcheck="false"
-              />
+              <input id="dictionaryNameInput" type="text" autocomplete="off" spellcheck="false" />
             </div>
 
             <div class="field" style="margin-top: 14px">
               <label for="wordInput">Words, one per line</label>
-              <textarea
-                id="wordInput"
-                spellcheck="false"
-                placeholder="apple\nbanana\nrobot\nschool\nfriend"
-              ></textarea>
+              <textarea id="wordInput" spellcheck="false" placeholder="apple\nbanana\nrobot\nschool\nfriend"></textarea>
             </div>
 
             <div id="dictionaryInfo" class="info">Loading word lists...</div>
@@ -437,16 +393,14 @@
               <a class="btn" href="../spell-match/">Open Robo Spell Match</a>
             </div>
             <p class="info" style="margin-top: 16px">
-              Tip: choose a list here first, then open a game. The games use the
-              same saved dictionary data.
+              Tip: choose a list here first, then open a game. The games use the same saved dictionary data.
             </p>
           </div>
         </div>
       </section>
 
       <div class="footer">
-        Your lists stay in this browser. If you want a fresh start, delete the
-        old list and create a new one.
+        Your lists stay in this browser. If you want a fresh start, delete the old list and create a new one.
       </div>
     </main>
 

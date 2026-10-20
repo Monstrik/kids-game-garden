@@ -18,31 +18,16 @@
   <body class="page-robo">
     <div class="app">
       <div class="appChrome">
-        <a class="hubLink" href="../../" aria-label="Back to game hub"
-          >🏠 Hub</a
-        >
-        <button
-          id="themeBtn"
-          class="themeBtn"
-          type="button"
-          aria-pressed="false"
-        >
-          🌙
-        </button>
+        <a class="hubLink" href="../../" aria-label="Back to game hub">🏠 Hub</a>
+        <button id="themeBtn" class="themeBtn" type="button" aria-pressed="false">🌙</button>
       </div>
       <!-- Setup Screen -->
-      <section
-        id="setupScreen"
-        class="screen active"
-        aria-labelledby="setupTitle"
-      >
+      <section id="setupScreen" class="screen active" aria-labelledby="setupTitle">
         <div class="header">
           <div class="titleRow">
             <div>
               <h1 id="setupTitle">🤖 Robo's Spelling Adventure</h1>
-              <div class="subtitle">
-                Listen to Robo, then spell each word for a cookie!
-              </div>
+              <div class="subtitle">Listen to Robo, then spell each word for a cookie!</div>
             </div>
           </div>
         </div>
@@ -51,10 +36,7 @@
           <div class="setupGrid">
             <div class="card dictionaryManager">
               <div class="dictionaryToolbar">
-                <select
-                  id="dictionarySelect"
-                  aria-label="Choose a word list"
-                ></select>
+                <select id="dictionarySelect" aria-label="Choose a word list"></select>
                 <button
                   id="dictionaryManagerBtn"
                   class="btn ghost"
@@ -65,9 +47,7 @@
                   📚
                 </button>
               </div>
-              <div id="dictionaryPreview" class="dictionaryPreview">
-                Select a list to see a preview.
-              </div>
+              <div id="dictionaryPreview" class="dictionaryPreview">Select a list to see a preview.</div>
               <div class="btnRow">
                 <button id="startBtn" class="btn">Start Game</button>
               </div>
@@ -75,12 +55,9 @@
 
             <div class="exampleBox">
               <h2>How it works</h2>
-              <div class="exampleWords">
-                Example words: apple banana robot school friend
-              </div>
+              <div class="exampleWords">Example words: apple banana robot school friend</div>
               <p style="margin: 14px 0 0; font-weight: 700; line-height: 1.6">
-                Robo says each word out loud and your child puts the letters
-                back in the correct order.
+                Robo says each word out loud and your child puts the letters back in the correct order.
               </p>
               <p style="margin: 10px 0 0; line-height: 1.6">
                 ✅ Choose a saved list by name, or make a new one<br />
@@ -100,27 +77,17 @@
             <div class="roboBox">
               <div class="roboWrap">
                 <div id="accessory" class="accessory" aria-hidden="true"></div>
-                <div id="roboEmoji" class="roboEmoji" aria-label="Robot">
-                  🤖
-                </div>
+                <div id="roboEmoji" class="roboEmoji" aria-label="Robot">🤖</div>
               </div>
               <div>
-                <div class="roboName" id="gameTitle">
-                  Robo's Spelling Adventure
-                </div>
-                <div id="roboStatus" class="statusLine">
-                  Listen closely, then spell some words!
-                </div>
+                <div class="roboName" id="gameTitle">Robo's Spelling Adventure</div>
+                <div id="roboStatus" class="statusLine">Listen closely, then spell some words!</div>
               </div>
             </div>
 
             <div class="pillRow">
-              <div id="cookieCounter" class="pill cookieCounter">
-                🍪 Cookies: <span id="cookieCount">0</span>
-              </div>
-              <div class="pill">
-                🔊 <button id="soundBtn" type="button">Sound On</button>
-              </div>
+              <div id="cookieCounter" class="pill cookieCounter">🍪 Cookies: <span id="cookieCount">0</span></div>
+              <div class="pill">🔊 <button id="soundBtn" type="button">Sound On</button></div>
             </div>
           </div>
         </div>
@@ -147,51 +114,27 @@
 
           <div class="wordCard">
             <div class="bigWordLabel">Build the word</div>
-            <div
-              id="emojiHint"
-              class="emojiHint"
-              style="display: none"
-              aria-hidden="true"
-            ></div>
+            <div id="emojiHint" class="emojiHint" style="display: none" aria-hidden="true"></div>
             <div id="slots" class="slots" aria-label="Answer slots"></div>
 
             <div class="bankWrap">
               <div
                 class="bigWordLabel"
-                style="
-                  margin-bottom: 12px;
-                  text-align: center;
-                  color: var(--accent-warning-start);
-                "
+                style="margin-bottom: 12px; text-align: center; color: var(--accent-warning-start)"
               >
                 Scrambled letters
               </div>
               <div id="letterBank" class="letterBank" aria-label="Scrambled letters"></div>
             </div>
 
-            <div id="messageBox" class="messageBox" aria-live="polite">
-              Listen carefully!
-            </div>
+            <div id="messageBox" class="messageBox" aria-live="polite">Listen carefully!</div>
             <div id="hintText" class="hintText"></div>
 
             <div class="footerActions">
-              <button id="hintBtn" class="btn secondary" type="button">
-                Hint
-              </button>
-              <button id="resetBtn" class="btn ghost" type="button">
-                Reset
-              </button>
-              <button id="checkBtn" class="btn ghost" type="button">
-                Check
-              </button>
-              <button
-                id="nextBtn"
-                class="btn warn"
-                type="button"
-                style="display: none"
-              >
-                Next
-              </button>
+              <button id="hintBtn" class="btn secondary" type="button">Hint</button>
+              <button id="resetBtn" class="btn ghost" type="button">Reset</button>
+              <button id="checkBtn" class="btn ghost" type="button">Check</button>
+              <button id="nextBtn" class="btn warn" type="button" style="display: none">Next</button>
             </div>
           </div>
         </div>
@@ -206,9 +149,7 @@
               <div class="subtitle">You helped Robo save all the cookies!</div>
             </div>
             <div class="pillRow">
-              <div class="pill">
-                🍪 Final cookie count: <span id="finalCookies">0</span>
-              </div>
+              <div class="pill">🍪 Final cookie count: <span id="finalCookies">0</span></div>
             </div>
           </div>
         </div>
@@ -220,16 +161,9 @@
               Words completed: 0<br />
               Cookies earned: 0
             </div>
-            <div
-              class="btnRow"
-              style="justify-content: center; margin-top: 16px"
-            >
-              <button id="playAgainBtn" class="btn" type="button">
-                Play Again
-              </button>
-              <button id="newWordsBtn" class="btn secondary" type="button">
-                Enter New Words
-              </button>
+            <div class="btnRow" style="justify-content: center; margin-top: 16px">
+              <button id="playAgainBtn" class="btn" type="button">Play Again</button>
+              <button id="newWordsBtn" class="btn secondary" type="button">Enter New Words</button>
             </div>
           </div>
         </div>

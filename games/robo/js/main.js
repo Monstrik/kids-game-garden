@@ -2,25 +2,17 @@
   const RoboGame = window.RoboGame;
   const { state, els } = RoboGame;
   const { utils, ui, game } = RoboGame;
-  const dictionaryManagerUrl = new URL(
-    "../dictionary-manager/",
-    window.location.href,
-  ).toString();
+  const dictionaryManagerUrl = new URL("../dictionary-manager/", window.location.href).toString();
 
   function attachEvents() {
     els.startBtn.addEventListener("click", game.startGame);
-    document
-      .getElementById("dictionaryManagerBtn")
-      ?.addEventListener("click", () => {
-        window.location.href = dictionaryManagerUrl;
-      });
+    document.getElementById("dictionaryManagerBtn")?.addEventListener("click", () => {
+      window.location.href = dictionaryManagerUrl;
+    });
     els.soundBtn.addEventListener("click", () => {
       state.soundOn = !state.soundOn;
       ui.updateSoundButton();
-      ui.showMessage(
-        state.soundOn ? "Sound turned on!" : "Sound turned off!",
-        "good",
-      );
+      ui.showMessage(state.soundOn ? "Sound turned on!" : "Sound turned off!", "good");
       if (state.soundOn) utils.playTone(523, 0.08, "triangle", 0.03);
     });
     els.hintBtn.addEventListener("click", game.giveHint);
@@ -35,8 +27,7 @@
     if (window.GameDictionaries?.initDictionaryManager) {
       window.GameDictionaries.initDictionaryManager(els);
     }
-    state.soundOn =
-      localStorage.getItem(RoboGame.constants.STORAGE_KEYS.sound) !== "false";
+    state.soundOn = localStorage.getItem(RoboGame.constants.STORAGE_KEYS.sound) !== "false";
     GameTheme.initTheme(els.themeBtn);
     ui.updateSoundButton();
     utils.setScreen("setup");

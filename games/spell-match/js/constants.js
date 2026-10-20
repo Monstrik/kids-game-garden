@@ -24,7 +24,7 @@
       "Brilliant!",
       "Super work!",
       "You nailed it!",
-      "Way to go!"
+      "Way to go!",
     ],
     ACCESSORY_REWARDS,
     WORDS,

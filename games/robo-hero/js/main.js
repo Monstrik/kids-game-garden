@@ -2,13 +2,9 @@
   const RoboGame = window.RoboGame;
   const { state, els } = RoboGame;
   const { utils, ui, game } = RoboGame;
-  const mobileKeyboardQuery =
-    window.matchMedia && window.matchMedia("(max-width: 560px)");
+  const mobileKeyboardQuery = window.matchMedia && window.matchMedia("(max-width: 560px)");
   let useCustomKeyboardOnSmallScreen = false;
-  const dictionaryManagerUrl = new URL(
-    "../dictionary-manager/",
-    window.location.href,
-  ).toString();
+  const dictionaryManagerUrl = new URL("../dictionary-manager/", window.location.href).toString();
 
   function isSmallScreen() {
     return Boolean(mobileKeyboardQuery && mobileKeyboardQuery.matches);
@@ -26,13 +22,8 @@
 
     if (els.keyboardModeToggle) {
       els.keyboardModeToggle.hidden = !smallScreen;
-      els.keyboardModeToggle.setAttribute(
-        "aria-pressed",
-        String(useCustomKeyboardOnSmallScreen),
-      );
-      els.keyboardModeToggle.textContent = useCustomKeyboardOnSmallScreen
-        ? "Use phone keyboard"
-        : "Use game keyboard";
+      els.keyboardModeToggle.setAttribute("aria-pressed", String(useCustomKeyboardOnSmallScreen));
+      els.keyboardModeToggle.textContent = useCustomKeyboardOnSmallScreen ? "Use phone keyboard" : "Use game keyboard";
     }
 
     if (!els.answerInput) {
@@ -49,18 +40,13 @@
 
   function attachEvents() {
     els.startBtn.addEventListener("click", game.startGame);
-    document
-      .getElementById("dictionaryManagerBtn")
-      ?.addEventListener("click", () => {
-        window.location.href = dictionaryManagerUrl;
-      });
+    document.getElementById("dictionaryManagerBtn")?.addEventListener("click", () => {
+      window.location.href = dictionaryManagerUrl;
+    });
     els.soundBtn.addEventListener("click", () => {
       state.soundOn = !state.soundOn;
       ui.updateSoundButton();
-      ui.showMessage(
-        state.soundOn ? "Sound turned on!" : "Sound turned off!",
-        "good",
-      );
+      ui.showMessage(state.soundOn ? "Sound turned on!" : "Sound turned off!", "good");
       if (state.soundOn) utils.playTone(523, 0.08, "triangle", 0.03);
     });
     els.replayBtn.addEventListener("click", game.replayWord);
@@ -71,9 +57,7 @@
     els.newWordsBtn.addEventListener("click", game.enterNewWords);
 
     els.keyboard.addEventListener("click", (event) => {
-      const button = event.target.closest(
-        "button[data-key], button[data-action]",
-      );
+      const button = event.target.closest("button[data-key], button[data-action]");
       if (!button || !state.currentWord || state.locked) return;
 
       event.preventDefault();
@@ -115,8 +99,7 @@
     if (window.GameDictionaries?.initDictionaryManager) {
       window.GameDictionaries.initDictionaryManager(els);
     }
-    state.soundOn =
-      localStorage.getItem(RoboGame.constants.STORAGE_KEYS.sound) !== "false";
+    state.soundOn = localStorage.getItem(RoboGame.constants.STORAGE_KEYS.sound) !== "false";
     if (mobileKeyboardQuery) {
       const handleKeyboardQueryChange = () => {
         if (!isSmallScreen()) {

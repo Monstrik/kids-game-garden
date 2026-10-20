@@ -7,9 +7,7 @@
   const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   function randomLetter(exclude = "") {
-    const letters = ALPHABET.split("").filter(
-      (letter) => letter !== exclude.toUpperCase(),
-    );
+    const letters = ALPHABET.split("").filter((letter) => letter !== exclude.toUpperCase());
     return letters[Math.floor(Math.random() * letters.length)] || "A";
   }
 
@@ -34,9 +32,7 @@
 
     for (let attempt = 0; attempt < attempts; attempt += 1) {
       const candidate = [...base];
-      const editableIndexes = candidate
-        .map((char, index) => (char === " " ? -1 : index))
-        .filter((index) => index >= 0);
+      const editableIndexes = candidate.map((char, index) => (char === " " ? -1 : index)).filter((index) => index >= 0);
 
       if (!editableIndexes.length) {
         const seed = `${answer} ${randomLetter()}`.trim();
@@ -45,22 +41,16 @@
       }
 
       if (candidate.length > 3 && Math.random() < 0.4) {
-        const first =
-          editableIndexes[Math.floor(Math.random() * editableIndexes.length)];
+        const first = editableIndexes[Math.floor(Math.random() * editableIndexes.length)];
         let second = first;
         while (second === first && editableIndexes.length > 1) {
-          second =
-            editableIndexes[Math.floor(Math.random() * editableIndexes.length)];
+          second = editableIndexes[Math.floor(Math.random() * editableIndexes.length)];
         }
         if (first !== second) {
-          [candidate[first], candidate[second]] = [
-            candidate[second],
-            candidate[first],
-          ];
+          [candidate[first], candidate[second]] = [candidate[second], candidate[first]];
         }
       } else {
-        const index =
-          editableIndexes[Math.floor(Math.random() * editableIndexes.length)];
+        const index = editableIndexes[Math.floor(Math.random() * editableIndexes.length)];
         candidate[index] = randomLetter(candidate[index]);
       }
 
@@ -73,9 +63,7 @@
 
   game.generateChoices = function generateChoices(answer) {
     const choices = new Set([answer]);
-    const otherWords = utils.fisherYatesShuffle(
-      state.allWords.filter((word) => word !== answer),
-    );
+    const otherWords = utils.fisherYatesShuffle(state.allWords.filter((word) => word !== answer));
 
     for (const word of otherWords) {
       choices.add(word);
@@ -116,8 +104,7 @@
     }
 
     // els.emojiHint.textContent = '';
-    els.roboStatus.textContent =
-      "Listen closely, then tap the correct spelling!";
+    els.roboStatus.textContent = "Listen closely, then tap the correct spelling!";
     ui.showMessage("Listen carefully!");
     state.currentChoices = game.generateChoices(state.currentWord.answer);
     ui.clearBoard();

@@ -6,9 +6,7 @@
     "robo-spelling-hero.words",
     "spell-match.words",
   ];
-  const DEFAULT_WORDS = ["apple", "banana", "robot", "school", "friend"].join(
-    "\n",
-  );
+  const DEFAULT_WORDS = ["apple", "banana", "robot", "school", "friend"].join("\n");
   const DEFAULT_LIST_NAME = "Starter list";
 
   const api = (window.GameDictionaries = window.GameDictionaries || {});
@@ -53,10 +51,7 @@
 
   function buildDefaultState() {
     const legacyWords = readLegacyWords();
-    const dictionary = createDictionary(
-      DEFAULT_LIST_NAME,
-      legacyWords !== null ? legacyWords : DEFAULT_WORDS,
-    );
+    const dictionary = createDictionary(DEFAULT_LIST_NAME, legacyWords !== null ? legacyWords : DEFAULT_WORDS);
     return {
       activeId: dictionary.id,
       dictionaries: [dictionary],
@@ -71,30 +66,22 @@
       id: String(dictionary.id || `dict-${index + 1}-${now}`),
       name: normalizeName(dictionary.name),
       words: normalizeWords(dictionary.words),
-      createdAt: Number.isFinite(dictionary.createdAt)
-        ? dictionary.createdAt
-        : now,
-      updatedAt: Number.isFinite(dictionary.updatedAt)
-        ? dictionary.updatedAt
-        : now,
+      createdAt: Number.isFinite(dictionary.createdAt) ? dictionary.createdAt : now,
+      updatedAt: Number.isFinite(dictionary.updatedAt) ? dictionary.updatedAt : now,
     };
   }
 
   function sanitizeState(rawState) {
     const state = rawState && typeof rawState === "object" ? rawState : {};
     const dictionaries = Array.isArray(state.dictionaries)
-      ? state.dictionaries.map((dictionary, index) =>
-          sanitizeDictionary(dictionary, index),
-        )
+      ? state.dictionaries.map((dictionary, index) => sanitizeDictionary(dictionary, index))
       : [];
 
     if (!dictionaries.length) {
       return buildDefaultState();
     }
 
-    const activeId = dictionaries.some(
-      (dictionary) => dictionary.id === state.activeId,
-    )
+    const activeId = dictionaries.some((dictionary) => dictionary.id === state.activeId)
       ? state.activeId
       : dictionaries[0].id;
 
@@ -105,10 +92,7 @@
     if (!cachedState) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(cachedState));
-      localStorage.setItem(
-        LEGACY_WORD_KEYS[0],
-        getActiveDictionary(cachedState)?.words || "",
-      );
+      localStorage.setItem(LEGACY_WORD_KEYS[0], getActiveDictionary(cachedState)?.words || "");
     } catch {
       // If storage is unavailable, keep the in-memory state available for the session.
     }
@@ -143,18 +127,14 @@
 
   function getActiveDictionary(currentState = getState()) {
     return (
-      currentState.dictionaries.find(
-        (dictionary) => dictionary.id === currentState.activeId,
-      ) ||
+      currentState.dictionaries.find((dictionary) => dictionary.id === currentState.activeId) ||
       currentState.dictionaries[0] ||
       null
     );
   }
 
   function getActiveDictionaryIndex(currentState = getState()) {
-    return currentState.dictionaries.findIndex(
-      (dictionary) => dictionary.id === currentState.activeId,
-    );
+    return currentState.dictionaries.findIndex((dictionary) => dictionary.id === currentState.activeId);
   }
 
   function getActiveWords() {
@@ -195,24 +175,15 @@
     const activeDictionary = getActiveDictionary(state);
     if (!activeDictionary) return;
 
-    if (
-      boundElements.nameInput &&
-      boundElements.nameInput.value !== activeDictionary.name
-    ) {
+    if (boundElements.nameInput && boundElements.nameInput.value !== activeDictionary.name) {
       boundElements.nameInput.value = activeDictionary.name;
     }
 
-    if (
-      boundElements.wordsInput &&
-      boundElements.wordsInput.value !== activeDictionary.words
-    ) {
+    if (boundElements.wordsInput && boundElements.wordsInput.value !== activeDictionary.words) {
       boundElements.wordsInput.value = activeDictionary.words;
     }
 
-    if (
-      boundElements.select &&
-      boundElements.select.value !== activeDictionary.id
-    ) {
+    if (boundElements.select && boundElements.select.value !== activeDictionary.id) {
       boundElements.select.value = activeDictionary.id;
     }
   }
@@ -271,8 +242,7 @@
 
   function setActiveDictionary(id) {
     const state = getState();
-    if (!state.dictionaries.some((dictionary) => dictionary.id === id))
-      return null;
+    if (!state.dictionaries.some((dictionary) => dictionary.id === id)) return null;
     state.activeId = id;
     persistState();
     applyView();
@@ -320,12 +290,8 @@
       return replacement;
     }
 
-    state.dictionaries = state.dictionaries.filter(
-      (dictionary) => dictionary.id !== id,
-    );
-    if (
-      !state.dictionaries.some((dictionary) => dictionary.id === state.activeId)
-    ) {
+    state.dictionaries = state.dictionaries.filter((dictionary) => dictionary.id !== id);
+    if (!state.dictionaries.some((dictionary) => dictionary.id === state.activeId)) {
       state.activeId = state.dictionaries[0].id;
     }
 
@@ -344,66 +310,35 @@
 
   function initDictionaryManager(elements = {}) {
     boundElements = {
-      select:
-        elements.dictionarySelect ||
-        elements.select ||
-        document.getElementById("dictionarySelect"),
-      nameInput:
-        elements.dictionaryNameInput ||
-        elements.nameInput ||
-        document.getElementById("dictionaryNameInput"),
-      wordsInput:
-        elements.wordInput ||
-        elements.wordsInput ||
-        document.getElementById("wordInput"),
-      newBtn:
-        elements.newListBtn ||
-        elements.newBtn ||
-        document.getElementById("newListBtn"),
-      deleteBtn:
-        elements.deleteListBtn ||
-        elements.deleteBtn ||
-        document.getElementById("deleteListBtn"),
-      info:
-        elements.dictionaryInfo ||
-        elements.info ||
-        document.getElementById("dictionaryInfo"),
-      preview:
-        elements.dictionaryPreview ||
-        elements.preview ||
-        document.getElementById("dictionaryPreview"),
+      select: elements.dictionarySelect || elements.select || document.getElementById("dictionarySelect"),
+      nameInput: elements.dictionaryNameInput || elements.nameInput || document.getElementById("dictionaryNameInput"),
+      wordsInput: elements.wordInput || elements.wordsInput || document.getElementById("wordInput"),
+      newBtn: elements.newListBtn || elements.newBtn || document.getElementById("newListBtn"),
+      deleteBtn: elements.deleteListBtn || elements.deleteBtn || document.getElementById("deleteListBtn"),
+      info: elements.dictionaryInfo || elements.info || document.getElementById("dictionaryInfo"),
+      preview: elements.dictionaryPreview || elements.preview || document.getElementById("dictionaryPreview"),
     };
 
     applyView();
 
     if (boundElements.select) {
-      boundElements.select.addEventListener("change", () =>
-        setActiveDictionary(boundElements.select.value),
-      );
+      boundElements.select.addEventListener("change", () => setActiveDictionary(boundElements.select.value));
     }
 
     if (boundElements.nameInput) {
-      boundElements.nameInput.addEventListener("input", () =>
-        setActiveName(boundElements.nameInput.value),
-      );
+      boundElements.nameInput.addEventListener("input", () => setActiveName(boundElements.nameInput.value));
     }
 
     if (boundElements.wordsInput) {
-      boundElements.wordsInput.addEventListener("input", () =>
-        setActiveWords(boundElements.wordsInput.value),
-      );
+      boundElements.wordsInput.addEventListener("input", () => setActiveWords(boundElements.wordsInput.value));
     }
 
     if (boundElements.newBtn) {
-      boundElements.newBtn.addEventListener("click", () =>
-        createNewDictionary(),
-      );
+      boundElements.newBtn.addEventListener("click", () => createNewDictionary());
     }
 
     if (boundElements.deleteBtn) {
-      boundElements.deleteBtn.addEventListener("click", () =>
-        deleteDictionary(),
-      );
+      boundElements.deleteBtn.addEventListener("click", () => deleteDictionary());
     }
 
     return api;

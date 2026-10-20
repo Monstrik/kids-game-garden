@@ -57,9 +57,7 @@
     setTimeout(() => utils.speakWord(state.currentWord.answer), 180);
   };
 
-  game.placeLetterInNextOpenSlot = function placeLetterInNextOpenSlot(
-    letterIndex,
-  ) {
+  game.placeLetterInNextOpenSlot = function placeLetterInNextOpenSlot(letterIndex) {
     const openIndex = state.selected.findIndex((item) => item === null);
     if (openIndex === -1 || state.locked) return;
     state.selected[openIndex] = letterIndex;
@@ -96,9 +94,7 @@
 
   game.currentGuess = function currentGuess() {
     if (state.selected.some((item) => item === null)) return "";
-    return state.selected
-      .map((letterIndex) => state.currentWord.letters[letterIndex])
-      .join("");
+    return state.selected.map((letterIndex) => state.currentWord.letters[letterIndex]).join("");
   };
 
   game.autoCheckWord = function autoCheckWord() {
@@ -143,9 +139,7 @@
     });
     utils.playTone(196, 0.12, "sawtooth", 0.04);
     setTimeout(() => {
-      els.slots
-        .querySelectorAll(".slot")
-        .forEach((slot) => slot.classList.remove("wrongPulse"));
+      els.slots.querySelectorAll(".slot").forEach((slot) => slot.classList.remove("wrongPulse"));
     }, 500);
   };
 
