@@ -31,6 +31,36 @@
     "newWordsBtn",
   ];
 
+  function fail(message) {
+    throw new Error(`[GameEngine] ${message}`);
+  }
+
+  function assertObject(value, name) {
+    if (!value || typeof value !== "object" || Array.isArray(value)) {
+      fail(`${name} must be an object.`);
+    }
+  }
+
+  function assertFunction(value, name) {
+    if (typeof value !== "function") {
+      fail(`${name} must be a function.`);
+    }
+  }
+
+  function assertElement(els, key) {
+    if (!els[key]) {
+      fail(`Missing required element: #${key}`);
+    }
+  }
+
+  function assertCallbacks(options, keys) {
+    for (const key of keys) {
+      if (options[key] != null && typeof options[key] !== "function") {
+        fail(`${key} must be a function when provided.`);
+      }
+    }
+  }
+
   shared.createConstants = function createConstants(options = {}) {
     const gameCommon = window.GameCommon || {};
     const { ACCESSORY_REWARDS = [], WORDS = [], DEFAULT_WORDS = "" } = gameCommon;
@@ -50,6 +80,15 @@
   };
 
   shared.collectEls = function collectEls(extraElementIds = []) {
+    if (!Array.isArray(extraElementIds)) {
+      fail("collectEls(extraElementIds) expects an array of element ids.");
+    }
+    for (const id of extraElementIds) {
+      if (typeof id !== "string" || !id.trim()) {
+        fail("collectEls(extraElementIds) expects each extra id to be a non-empty string.");
+      }
+    }
+
     const allElementIds = [...new Set([...COMMON_ELEMENT_IDS, ...extraElementIds])];
     return allElementIds.reduce((elements, id) => {
       elements[id] = document.getElementById(id);
@@ -58,6 +97,8 @@
   };
 
   shared.createBaseState = function createBaseState(extraState = {}) {
+    assertObject(extraState, "extraState");
+
     return {
       soundOn: true,
       allWords: [],
@@ -72,11 +113,35 @@
   };
 
   shared.createUtils = function createUtils(RoboGame, options = {}) {
+    assertObject(RoboGame, "RoboGame");
+    assertObject(options, "options");
+    assertObject(RoboGame.constants, "RoboGame.constants");
+    assertObject(RoboGame.state, "RoboGame.state");
+    assertObject(RoboGame.els, "RoboGame.els");
+
     const { state, els } = RoboGame;
     const { STORAGE_KEYS, FUN_MESSAGES, DEFAULT_WORDS, ACCESSORY_REWARDS } = RoboGame.constants;
     const { GameCommon } = window;
+    if (!GameCommon) {
+      fail("window.GameCommon is required before createUtils().");
+    }
+    assertFunction(GameCommon.normalizeWord, "GameCommon.normalizeWord");
+    assertFunction(GameCommon.fisherYatesShuffle, "GameCommon.fisherYatesShuffle");
+    assertFunction(GameCommon.shuffleWordLetters, "GameCommon.shuffleWordLetters");
+    assertFunction(GameCommon.getAccessoryForCookies, "GameCommon.getAccessoryForCookies");
+    assertFunction(GameCommon.pickFunMessage, "GameCommon.pickFunMessage");
+    assertFunction(GameCommon.setScreen, "GameCommon.setScreen");
+    assertFunction(GameCommon.playTone, "GameCommon.playTone");
+    assertFunction(GameCommon.speakWord, "GameCommon.speakWord");
+    assertFunction(GameCommon.playFireworks, "GameCommon.playFireworks");
+    assertFunction(GameCommon.loadSavedWords, "GameCommon.loadSavedWords");
+    assertFunction(GameCommon.saveWordsToLocalStorage, "GameCommon.saveWordsToLocalStorage");
+
     const dictionaryManager = window.GameDictionaries;
     const { legacyWordKeys = [] } = options;
+    if (!Array.isArray(legacyWordKeys)) {
+      fail("options.legacyWordKeys must be an array when provided.");
+    }
 
     const normalizeWord = GameCommon.normalizeWord;
     const fisherYatesShuffle = GameCommon.fisherYatesShuffle;
@@ -125,8 +190,24 @@
   };
 
   shared.attachCommonUi = function attachCommonUi(RoboGame, ui) {
+    assertObject(RoboGame, "RoboGame");
+    assertObject(ui, "ui");
+
     const { state, els } = RoboGame;
+    assertObject(state, "RoboGame.state");
+    assertObject(els, "RoboGame.els");
+    assertElement(els, "soundBtn");
+    assertElement(els, "themeBtn");
+    assertElement(els, "accessory");
+    assertElement(els, "roboEmoji");
+    assertElement(els, "cookieCount");
+    assertElement(els, "progressFill");
+    assertElement(els, "progressText");
+    assertElement(els, "wordPosition");
+    assertElement(els, "messageBox");
+
     const { getAccessoryForCookies } = RoboGame.utils;
+    assertFunction(getAccessoryForCookies, "RoboGame.utils.getAccessoryForCookies");
 
     ui.updateSoundButton = function updateSoundButton() {
       els.soundBtn.textContent = state.soundOn ? "Sound On" : "Sound Off";
@@ -168,8 +249,16 @@
   };
 
   shared.attachCommonMainEvents = function attachCommonMainEvents(RoboGame, options = {}) {
+    assertObject(RoboGame, "RoboGame");
+    assertObject(options, "options");
+
     const { state, els } = RoboGame;
     const { utils, ui, game } = RoboGame;
+    assertObject(state, "RoboGame.state");
+    assertObject(els, "RoboGame.els");
+    assertObject(utils, "RoboGame.utils");
+    assertObject(ui, "RoboGame.ui");
+    assertObject(game, "RoboGame.game");
     const {
       dictionaryManagerPath = "../dictionary-manager/",
       onHint,
@@ -178,6 +267,17 @@
       onReset,
       onAfterCommonBindings,
     } = options;
+    assertCallbacks(options, ["onHint", "onReplay", "onCheck", "onReset", "onAfterCommonBindings"]);
+    assertFunction(game.startGame, "RoboGame.game.startGame");
+    assertFunction(game.nextWord, "RoboGame.game.nextWord");
+    assertFunction(game.restartWithSameWords, "RoboGame.game.restartWithSameWords");
+    assertFunction(game.enterNewWords, "RoboGame.game.enterNewWords");
+    assertFunction(ui.updateSoundButton, "RoboGame.ui.updateSoundButton");
+    assertFunction(ui.showMessage, "RoboGame.ui.showMessage");
+    assertFunction(utils.playTone, "RoboGame.utils.playTone");
+
+    assertElement(els, "startBtn");
+    assertElement(els, "soundBtn");
 
     const dictionaryManagerUrl = new URL(dictionaryManagerPath, window.location.href).toString();
 
@@ -213,9 +313,22 @@
   };
 
   shared.initGameShell = function initGameShell(RoboGame, options = {}) {
+    assertObject(RoboGame, "RoboGame");
+    assertObject(options, "options");
+
     const { state, els } = RoboGame;
     const { utils, ui } = RoboGame;
     const { startupMessage = "Choose a word list and start the game!", beforeReady } = options;
+    assertCallbacks(options, ["beforeReady"]);
+    assertObject(state, "RoboGame.state");
+    assertObject(els, "RoboGame.els");
+    assertObject(utils, "RoboGame.utils");
+    assertObject(ui, "RoboGame.ui");
+
+    assertElement(els, "themeBtn");
+    assertFunction(ui.updateSoundButton, "RoboGame.ui.updateSoundButton");
+    assertFunction(ui.showMessage, "RoboGame.ui.showMessage");
+    assertFunction(utils.setScreen, "RoboGame.utils.setScreen");
 
     if (window.GameDictionaries?.initDictionaryManager) {
       window.GameDictionaries.initDictionaryManager(els);
@@ -224,15 +337,25 @@
     if (typeof beforeReady === "function") {
       beforeReady();
     }
-    GameTheme.initTheme(els.themeBtn);
+    if (window.GameTheme?.initTheme) {
+      window.GameTheme.initTheme(els.themeBtn);
+    }
     ui.updateSoundButton();
     utils.setScreen("setup");
     ui.showMessage(startupMessage, "good");
   };
 
   shared.attachBaseGame = function attachBaseGame(RoboGame, game, options = {}) {
+    assertObject(RoboGame, "RoboGame");
+    assertObject(game, "game");
+    assertObject(options, "options");
+
     const { state, els } = RoboGame;
     const { utils, ui } = RoboGame;
+    assertObject(state, "RoboGame.state");
+    assertObject(els, "RoboGame.els");
+    assertObject(utils, "RoboGame.utils");
+    assertObject(ui, "RoboGame.ui");
 
     const {
       noWordsMessage = "Please choose a word list with words in it!",
@@ -244,6 +367,16 @@
       retryStatusMessage = "Try the word again — listen closely!",
       retryMessage = "Listen carefully!",
     } = options;
+    assertCallbacks(options, ["onAfterStart", "replayCurrentWord", "onResetCurrentWord"]);
+    assertFunction(utils.loadSavedWords, "RoboGame.utils.loadSavedWords");
+    assertFunction(utils.normalizeWord, "RoboGame.utils.normalizeWord");
+    assertFunction(utils.fisherYatesShuffle, "RoboGame.utils.fisherYatesShuffle");
+    assertFunction(utils.shuffleWordLetters, "RoboGame.utils.shuffleWordLetters");
+    assertFunction(utils.setScreen, "RoboGame.utils.setScreen");
+    assertFunction(utils.playTone, "RoboGame.utils.playTone");
+    assertFunction(utils.speakWord, "RoboGame.utils.speakWord");
+    assertFunction(utils.playFireworks, "RoboGame.utils.playFireworks");
+    assertFunction(ui.showMessage, "RoboGame.ui.showMessage");
 
     game.parseWordsFromTextarea = function parseWordsFromTextarea() {
       return utils
@@ -268,6 +401,11 @@
 
       state.allWords = words;
       state.gameWords = game.buildGameWords(words);
+      if (!Array.isArray(state.gameWords) || !state.gameWords.length) {
+        ui.showMessage(noWordsMessage, "bad");
+        utils.setScreen("setup");
+        return;
+      }
       state.currentIndex = 0;
       state.cookies = 0;
       state.solved = 0;

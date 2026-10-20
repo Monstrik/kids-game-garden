@@ -1,6 +1,10 @@
 (function () {
   const api = (window.GameCommon = window.GameCommon || {});
 
+  function isNonEmptyString(value) {
+    return typeof value === "string" && value.trim().length > 0;
+  }
+
   api.WORDS = ["apple", "banana", "robot", "school", "friend"];
   api.DEFAULT_WORDS = api.WORDS.join("\n");
   api.ACCESSORY_REWARDS = [
@@ -19,6 +23,9 @@
   };
 
   api.fisherYatesShuffle = function fisherYatesShuffle(arr) {
+    if (!Array.isArray(arr)) {
+      throw new TypeError("GameCommon.fisherYatesShuffle expects an array.");
+    }
     const copy = [...arr];
     for (let i = copy.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -41,14 +48,17 @@
   };
 
   api.getAccessoryForCookies = function getAccessoryForCookies(cookieCount, rewards = api.ACCESSORY_REWARDS) {
+    const safeRewards = Array.isArray(rewards) ? rewards : api.ACCESSORY_REWARDS;
     let current = "";
-    for (const reward of rewards) {
-      if (cookieCount >= reward.cookies) current = reward.emoji;
+    for (const reward of safeRewards) {
+      if (!reward || typeof reward.cookies !== "number") continue;
+      if (cookieCount >= reward.cookies) current = reward.emoji || "";
     }
     return current;
   };
 
   api.pickFunMessage = function pickFunMessage(messages = []) {
+    if (!Array.isArray(messages)) return "";
     if (!messages.length) return "";
     return messages[Math.floor(Math.random() * messages.length)];
   };
@@ -152,10 +162,15 @@
 
   api.loadSavedWords = function loadSavedWords(storageKeys, defaultWords = api.DEFAULT_WORDS, legacyKeys = []) {
     if (window.GameDictionaries?.getActiveWords) return window.GameDictionaries.getActiveWords();
-    const keys = [storageKeys?.words, ...legacyKeys].filter(Boolean);
+    const fallbackKeys = Array.isArray(legacyKeys) ? legacyKeys : [];
+    const keys = [storageKeys?.words, ...fallbackKeys].filter(isNonEmptyString);
     for (const key of keys) {
-      const saved = localStorage.getItem(key);
-      if (saved) return saved;
+      try {
+        const saved = localStorage.getItem(key);
+        if (saved) return saved;
+      } catch {
+        // Ignore storage read failures and continue with fallbacks.
+      }
     }
     return defaultWords;
   };
@@ -165,7 +180,14 @@
       window.GameDictionaries.setActiveWords(text);
       return;
     }
-    const keys = [storageKeys?.words, ...legacyKeys].filter(Boolean);
-    for (const key of keys) localStorage.setItem(key, text);
+    const fallbackKeys = Array.isArray(legacyKeys) ? legacyKeys : [];
+    const keys = [storageKeys?.words, ...fallbackKeys].filter(isNonEmptyString);
+    for (const key of keys) {
+      try {
+        localStorage.setItem(key, text);
+      } catch {
+        // Ignore storage write failures so gameplay still works.
+      }
+    }
   };
 })();

@@ -15,6 +15,16 @@ module.exports = {
     GameDictionaries: "readonly",
   },
   ignorePatterns: ["node_modules/"],
+  overrides: [
+    {
+      files: ["tests/**/*.test.js"],
+      globals: {
+        describe: "readonly",
+        it: "readonly",
+        expect: "readonly",
+      },
+    },
+  ],
   rules: {
     "no-console": "off",
   },

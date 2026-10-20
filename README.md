@@ -35,6 +35,18 @@ npm start
 
 Open `http://127.0.0.1:3000/` in your browser for the hub, `http://127.0.0.1:3000/games/robo/` for Robo's Adventure, `http://127.0.0.1:3000/games/robo-hero/` for Robo Hero, or `http://127.0.0.1:3000/games/spell-match/` for Robo Match.
 
+## Quality checks
+
+```bash
+npm run test
+npm run lint
+npm run check-format
+npm run check
+```
+
+- `npm run test` runs unit tests for high-risk shared helpers.
+- `npm run check` runs format check, lint, and tests in one command.
+
 For GitHub Pages, publish the repository root and use the same `games/.../` routes from the hub.
 
 ## Easy to improve
