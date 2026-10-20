@@ -1,8 +1,20 @@
 (function () {
   const api = (window.GameCommon = window.GameCommon || {});
+  let voicesPrimed = false;
 
   function isNonEmptyString(value) {
     return typeof value === "string" && value.trim().length > 0;
+  }
+
+  function primeSpeechVoices() {
+    if (voicesPrimed || !("speechSynthesis" in window)) return;
+    voicesPrimed = true;
+    try {
+      // Chrome often loads voices asynchronously; this primes the list early.
+      window.speechSynthesis.getVoices();
+    } catch {
+      // Ignore synthesis readiness errors so gameplay still works.
+    }
   }
 
   api.WORDS = ["apple", "banana", "robot", "school", "friend"];
@@ -117,12 +129,36 @@
 
   api.speakWord = function speakWord(soundOn, word) {
     if (!soundOn || !("speechSynthesis" in window)) return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(String(word || "").toLowerCase());
-    utterance.rate = 0.85;
-    utterance.pitch = 1.1;
-    utterance.lang = "en-US";
-    window.speechSynthesis.speak(utterance);
+    primeSpeechVoices();
+
+    const text = String(word || "").trim().toLowerCase();
+    if (!text) return;
+
+    const synth = window.speechSynthesis;
+    let didSpeak = false;
+    const speakOnce = () => {
+      if (didSpeak) return;
+      didSpeak = true;
+      try {
+        synth.cancel();
+      } catch {
+        // Ignore cancel failures and still try to speak.
+      }
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 0.85;
+      utterance.pitch = 1.1;
+      utterance.lang = "en-US";
+      synth.speak(utterance);
+    };
+
+    if (synth.getVoices().length) {
+      speakOnce();
+      return;
+    }
+
+    const onVoicesChanged = () => speakOnce();
+    synth.addEventListener?.("voiceschanged", onVoicesChanged, { once: true });
+    setTimeout(speakOnce, 300);
   };
 
   api.playFireworks = function playFireworks(bursts = 7) {

@@ -416,7 +416,6 @@
         onAfterStart();
       }
       game.loadCurrentWord();
-      utils.playTone(523, 0.08, "triangle", 0.03);
     };
 
     game.nextWord = function nextWord() {
