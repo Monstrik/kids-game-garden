@@ -114,10 +114,11 @@
 
           <div class="wordCard">
             <div id="emojiHint" class="emojiHint" style="display: none" aria-hidden="true"></div>
-            <div class="bigWordLabel">Type the word you hear</div>
+<!--        <div class="bigWordLabel">Type the word you hear</div>-->
+            Listen to Robo, type the word, and then press Check.
 
             <div class="card" style="margin-top: 14px; padding: 16px">
-              <label for="answerInput">Your answer</label>
+<!--              <label for="answerInput">Your answer</label>-->
               <input
                 id="answerInput"
                 type="text"
@@ -126,17 +127,7 @@
                 autocapitalize="none"
                 placeholder="Type the word here"
               />
-              <div
-                style="
-                  margin-top: 10px;
-                  font-size: 0.96rem;
-                  line-height: 1.55;
-                  color: var(--ink-soft);
-                  font-weight: 700;
-                "
-              >
-                Listen to Robo, type the word, and then press Check Word.
-              </div>
+
               <button
                 id="keyboardModeToggle"
                 class="btn ghost keyboardModeToggle"
@@ -146,6 +137,13 @@
               >
                 Use game keyboard
               </button>
+            </div>
+
+            <div class="footerActions">
+              <button id="replayBtn" class="btn secondary" type="button">🔊 Replay</button>
+              <button id="resetBtn" class="btn ghost" type="button">Reset</button>
+              <button id="checkBtn" class="btn ghost" type="button">Check</button>
+              <button id="nextBtn" class="btn warn" type="button" style="display: none">Next</button>
             </div>
 
             <div id="keyboard" class="keyboardWrap" aria-label="On-screen keyboard">
@@ -192,13 +190,6 @@
             </div>
 
             <div id="messageBox" class="messageBox" aria-live="polite">Listen carefully!</div>
-
-            <div class="footerActions">
-              <button id="replayBtn" class="btn secondary" type="button">🔊 Replay</button>
-              <button id="resetBtn" class="btn ghost" type="button">Reset</button>
-              <button id="checkBtn" class="btn ghost" type="button">Check</button>
-              <button id="nextBtn" class="btn warn" type="button" style="display: none">Next</button>
-            </div>
           </div>
         </div>
       </section>
