@@ -1,5 +1,35 @@
 (function () {
   const shared = (window.GameEngine = window.GameEngine || {});
+  const COMMON_ELEMENT_IDS = [
+    "setupScreen",
+    "gameScreen",
+    "endScreen",
+    "dictionarySelect",
+    "dictionaryNameInput",
+    "newListBtn",
+    "deleteListBtn",
+    "dictionaryInfo",
+    "wordInput",
+    "startBtn",
+    "clearBtn",
+    "themeBtn",
+    "soundBtn",
+    "cookieCount",
+    "accessory",
+    "roboEmoji",
+    "roboStatus",
+    "progressFill",
+    "progressText",
+    "wordPosition",
+    "emojiHint",
+    "messageBox",
+    "nextBtn",
+    "resetBtn",
+    "finalCookies",
+    "endStats",
+    "playAgainBtn",
+    "newWordsBtn",
+  ];
 
   shared.createConstants = function createConstants(options = {}) {
     const gameCommon = window.GameCommon || {};
@@ -16,6 +46,28 @@
       ACCESSORY_REWARDS,
       WORDS,
       DEFAULT_WORDS,
+    };
+  };
+
+  shared.collectEls = function collectEls(extraElementIds = []) {
+    const allElementIds = [...new Set([...COMMON_ELEMENT_IDS, ...extraElementIds])];
+    return allElementIds.reduce((elements, id) => {
+      elements[id] = document.getElementById(id);
+      return elements;
+    }, {});
+  };
+
+  shared.createBaseState = function createBaseState(extraState = {}) {
+    return {
+      soundOn: true,
+      allWords: [],
+      gameWords: [],
+      currentIndex: 0,
+      cookies: 0,
+      solved: 0,
+      currentWord: null,
+      locked: false,
+      ...extraState,
     };
   };
 
@@ -113,6 +165,69 @@
     };
 
     return ui;
+  };
+
+  shared.attachCommonMainEvents = function attachCommonMainEvents(RoboGame, options = {}) {
+    const { state, els } = RoboGame;
+    const { utils, ui, game } = RoboGame;
+    const {
+      dictionaryManagerPath = "../dictionary-manager/",
+      onHint,
+      onReplay,
+      onCheck,
+      onReset,
+      onAfterCommonBindings,
+    } = options;
+
+    const dictionaryManagerUrl = new URL(dictionaryManagerPath, window.location.href).toString();
+
+    els.startBtn.addEventListener("click", game.startGame);
+    document.getElementById("dictionaryManagerBtn")?.addEventListener("click", () => {
+      window.location.href = dictionaryManagerUrl;
+    });
+    els.soundBtn.addEventListener("click", () => {
+      state.soundOn = !state.soundOn;
+      ui.updateSoundButton();
+      ui.showMessage(state.soundOn ? "Sound turned on!" : "Sound turned off!", "good");
+      if (state.soundOn) utils.playTone(523, 0.08, "triangle", 0.03);
+    });
+    els.nextBtn?.addEventListener("click", game.nextWord);
+    els.playAgainBtn?.addEventListener("click", game.restartWithSameWords);
+    els.newWordsBtn?.addEventListener("click", game.enterNewWords);
+
+    if (typeof onHint === "function") {
+      els.hintBtn?.addEventListener("click", onHint);
+    }
+    if (typeof onReplay === "function") {
+      els.replayBtn?.addEventListener("click", onReplay);
+    }
+    if (typeof onCheck === "function") {
+      els.checkBtn?.addEventListener("click", onCheck);
+    }
+    if (typeof onReset === "function") {
+      els.resetBtn?.addEventListener("click", onReset);
+    }
+    if (typeof onAfterCommonBindings === "function") {
+      onAfterCommonBindings();
+    }
+  };
+
+  shared.initGameShell = function initGameShell(RoboGame, options = {}) {
+    const { state, els } = RoboGame;
+    const { utils, ui } = RoboGame;
+    const { startupMessage = "Choose a word list and start the game!", beforeReady } = options;
+
+    if (window.GameDictionaries?.initDictionaryManager) {
+      window.GameDictionaries.initDictionaryManager(els);
+    }
+    state.soundOn = localStorage.getItem(RoboGame.constants.STORAGE_KEYS.sound) !== "false";
+    if (typeof beforeReady === "function") {
+      beforeReady();
+    }
+    GameTheme.initTheme(els.themeBtn);
+    ui.updateSoundButton();
+    utils.setScreen("setup");
+    ui.showMessage(startupMessage, "good");
   };
 
   shared.attachBaseGame = function attachBaseGame(RoboGame, game, options = {}) {
