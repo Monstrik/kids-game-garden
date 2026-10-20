@@ -3,7 +3,7 @@
   const { state, els } = RoboGame;
   const { utils, ui, game } = RoboGame;
   const dictionaryManagerUrl = new URL(
-    "../../../games/dictionary-manager/",
+    "../dictionary-manager/",
     window.location.href,
   ).toString();
 

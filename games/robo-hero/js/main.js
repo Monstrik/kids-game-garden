@@ -6,7 +6,7 @@
     window.matchMedia && window.matchMedia("(max-width: 560px)");
   let useCustomKeyboardOnSmallScreen = false;
   const dictionaryManagerUrl = new URL(
-    "../../../games/dictionary-manager/",
+    "../dictionary-manager/",
     window.location.href,
   ).toString();
 
